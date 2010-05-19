@@ -29,6 +29,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -36,34 +37,27 @@ import com.konreu.android.wagz.R;
 import com.konreu.android.wagz.StepService;
 
 public class Wagz extends Activity {
+	private static String TAG = "Wagz";	
         
     private StepService mService;
 
     private boolean isRunning() {
-    	if (mService == null) { return false; }
-    	return mService.isRunning();
+    	Log.v(TAG + ".isRunning", "StepService.isRunning = " + StepService.isRunning());
+		return StepService.isRunning();
     }
-    private void setRunning(boolean bRunning) {
-    	if (mService != null) {
-    		mService.setRunning(bRunning);	
-    	}
-    }    
         
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
         setContentView(R.layout.main);
-        
-        startStepService();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         if (this.isRunning()) {
-            bindStepService();
+        	bindStepService();	
         }
     }
     
@@ -88,7 +82,7 @@ public class Wagz extends Activity {
         public void onServiceConnected(ComponentName className, IBinder service) {
         	mService = ((StepService.StepBinder) service).getService();
         	mService.registerCallback(mCallback);
-        	mService.reloadSettings();            
+        	mService.reloadSettings();
         }
 
         public void onServiceDisconnected(ComponentName className) {
@@ -97,7 +91,6 @@ public class Wagz extends Activity {
     };
     
     private void startStepService() {
-        this.setRunning(true);
         startService(new Intent(Wagz.this, StepService.class));
     }
     
@@ -111,7 +104,6 @@ public class Wagz extends Activity {
     }
     
     private void stopStepService() {
-    	this.setRunning(false);
         if (mService != null) {
             stopService(new Intent(Wagz.this,
                   StepService.class));
@@ -119,7 +111,7 @@ public class Wagz extends Activity {
     }
     
     private void resetValues(boolean updateDisplay) {
-        if (mService != null && this.isRunning()) {
+        if (this.isRunning()) {
             mService.resetValues();                    
         } else {
             SharedPreferences state = getSharedPreferences("state", 0);

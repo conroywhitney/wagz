@@ -30,6 +30,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -39,6 +40,7 @@ import com.konreu.android.wagz.R;
 import com.konreu.android.wagz.StepService;
 
 public class Detailz extends Activity {
+	private static String TAG = "Detailz";	
    
     private SharedPreferences mSettings;
     private PedometerSettings mPedometerSettings;
@@ -48,6 +50,7 @@ public class Detailz extends Activity {
     private TextView mDistanceValueView;
     private TextView mSpeedValueView;
     private TextView mCaloriesValueView;
+    
     private int mStepValue;
     private int mPaceValue;
     private float mDistanceValue;
@@ -57,13 +60,8 @@ public class Detailz extends Activity {
     private boolean mIsMetric;
     
     private boolean isRunning() {
-    	if (mService == null) { return false; }
-    	return mService.isRunning();
-    }
-    private void setRunning(boolean bRunning) {
-    	if (mService != null) {
-    		mService.setRunning(bRunning);	
-    	}
+    	Log.v(TAG + ".isRunning", "StepService.isRunning = " + StepService.isRunning());
+		return StepService.isRunning();
     }
     
     /** Called when the activity is first created. */
@@ -82,7 +80,7 @@ public class Detailz extends Activity {
         super.onResume();
         
         if (this.isRunning()) {
-            bindStepService();
+        	bindStepService();	
         }
         
         mSettings = PreferenceManager.getDefaultSharedPreferences(this);
@@ -129,18 +127,16 @@ public class Detailz extends Activity {
     
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
-            mService = ((StepService.StepBinder)service).getService();
-            mService.registerCallback(mCallback);    
+            mService = ((StepService.StepBinder) service).getService();
+            mService.registerCallback(mCallback);
         }
 
         public void onServiceDisconnected(ComponentName className) {
             mService = null;
         }
-    };
-    
+    };    
 
     private void startStepService() {
-    	this.setRunning(true);
         startService(new Intent(Detailz.this, StepService.class));
     }
     
@@ -154,7 +150,6 @@ public class Detailz extends Activity {
     }
     
     private void stopStepService() {
-    	this.setRunning(false);
         if (mService != null) {
             stopService(new Intent(Detailz.this,
                   StepService.class));
@@ -162,7 +157,7 @@ public class Detailz extends Activity {
     }
     
     private void resetValues(boolean updateDisplay) {
-        if (mService != null && this.isRunning()) {
+        if (this.isRunning()) {
             mService.resetValues();                    
         } else {
             mStepValueView.setText("0");

@@ -55,8 +55,10 @@ public class StepService extends Service {
 
     private SharedPreferences mSettings;
     private PedometerSettings mPedometerSettings;
+    
     private SharedPreferences mState;
     private SharedPreferences.Editor mStateEditor;
+    
     private SensorManager mSensorManager;
     private StepDetector mStepDetector;
     // private StepBuzzer mStepBuzzer; // used for debugging
@@ -75,14 +77,11 @@ public class StepService extends Service {
     private float mSpeed;
     private float mCalories;
     
-    private boolean mRunning;
-    public boolean isRunning() {
-    	return mRunning;
+    private static boolean bRunning;
+    public static boolean isRunning() {
+    	return bRunning;
     }
-    public void setRunning(boolean b) {
-    	mRunning = b;
-    }
-    
+        
     /**
      * Class for clients to access.  Because we know this service always
      * runs in the same process as its clients, we don't need to deal with
@@ -97,6 +96,8 @@ public class StepService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        
+        bRunning = false;
         
         mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         showNotification();
@@ -156,6 +157,7 @@ public class StepService extends Service {
 
         // Tell the user we started.
         Toast.makeText(this, getText(R.string.started), Toast.LENGTH_SHORT).show();
+        bRunning = true;
     }
 
     @Override
@@ -180,6 +182,7 @@ public class StepService extends Service {
         
         // Tell the user we stopped.
         Toast.makeText(this, getText(R.string.stopped), Toast.LENGTH_SHORT).show();
+        bRunning = false;
     }
 
     @Override
@@ -204,7 +207,7 @@ public class StepService extends Service {
 
     public void registerCallback(ICallback cb) {
         mCallback = cb;
-        //mStepDisplayer.passValue();
+        //mStepDisplayerarg1.passValue();
         //mPaceListener.passValue();
     }
     
