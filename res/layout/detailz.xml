@@ -146,52 +146,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <!-- Desired pace/speed row -->
-    <LinearLayout
-        android:id="@+id/desired_pace_control"
-        android:paddingTop="@dimen/distance" 
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-    
-        <!-- Button "-", for decrementing desired pace/speed -->
-        <Button android:id="@+id/button_desired_pace_lower"
-            android:text="-"
-            android:textSize="@dimen/button_sign"
-            android:layout_width="@dimen/button"
-            android:layout_height="@dimen/button"/>
-        
-        <!-- Container for desired pace/speed -->
-        <LinearLayout
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:layout_width="@dimen/desired_pace_width"
-            android:layout_height="wrap_content">
-            
-            <TextView android:id="@+id/desired_pace_label"
-                android:gravity="center_horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/desired_pace"/>
-        
-            <!-- Current desired pace/speed -->
-            <TextView android:id="@+id/desired_pace_value"
-                android:gravity="center_horizontal"
-                android:textSize="@dimen/desired_pace"
-                android:layout_width="@dimen/desired_pace_width"
-                android:layout_height="wrap_content"/>
-        
-        </LinearLayout>
-
-        <!-- Button "+", for incrementing desired pace/speed -->
-        <Button android:id="@+id/button_desired_pace_raise"
-            android:text="+"
-            android:textSize="@dimen/button_sign"
-            android:layout_width="@dimen/button"
-            android:layout_height="@dimen/button"/>
-
-    </LinearLayout>
    
 </LinearLayout>

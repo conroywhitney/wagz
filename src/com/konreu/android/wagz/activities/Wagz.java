@@ -29,28 +29,19 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.konreu.android.wagz.PedometerSettings;
 import com.konreu.android.wagz.R;
 import com.konreu.android.wagz.StepService;
 
 public class Wagz extends Activity {
    
-    private SharedPreferences mSettings;
-    private PedometerSettings mPedometerSettings;
-
     private int mStepValue;
     private int mPaceValue;
     private float mDistanceValue;
     private float mSpeedValue;
     private int mCaloriesValue;
-    private float mDesiredPaceOrSpeed;
-    private int mMaintain;
-    private boolean mIsMetric;
-    private float mMaintainInc;
     
     private boolean mIsRunning;
     
@@ -71,9 +62,6 @@ public class Wagz extends Activity {
     protected void onResume() {
         super.onResume();
         
-        mSettings = PreferenceManager.getDefaultSharedPreferences(this);
-        mPedometerSettings = new PedometerSettings(mSettings);
-        
         if (mIsRunning) {
             bindStepService();
         }
@@ -85,7 +73,6 @@ public class Wagz extends Activity {
             unbindStepService();
         }
         super.onPause();
-        savePaceSetting();
     }
 
     @Override
@@ -95,22 +82,6 @@ public class Wagz extends Activity {
 
     protected void onDestroy() {
         super.onDestroy();
-    }
-    
-    private void setDesiredPaceOrSpeed(float desiredPaceOrSpeed) {
-        if (mService != null) {
-            if (mMaintain == PedometerSettings.M_PACE) {
-                mService.setDesiredPace((int)desiredPaceOrSpeed);
-            }
-            else
-            if (mMaintain == PedometerSettings.M_SPEED) {
-                mService.setDesiredSpeed(desiredPaceOrSpeed);
-            }
-        }
-    }
-    
-    private void savePaceSetting() {
-        mPedometerSettings.savePaceOrSpeedSetting(mMaintain, mDesiredPaceOrSpeed);
     }
 
     private StepService mService;
@@ -127,7 +98,6 @@ public class Wagz extends Activity {
         }
     };
     
-
     private void startStepService() {
         mIsRunning = true;
         startService(new Intent(Wagz.this, StepService.class));
@@ -246,51 +216,54 @@ public class Wagz extends Activity {
     private static final int SPEED_MSG = 4;
     private static final int CALORIES_MSG = 5;
     
+    public int getStepValue() {
+    	return mStepValue;
+    }
+    
+    public int getPaceValue() {
+    	return mPaceValue;
+    }
+    
+    public float getDistanceValue() {
+    	return mDistanceValue;
+    }
+    
+    public float getSpeedValue() {
+    	return mSpeedValue;
+    }
+    
+    public int getCaloriesValue() {
+    	return mCaloriesValue;
+    }
+    
     private Handler mHandler = new Handler() {
         @Override public void handleMessage(Message msg) {
             switch (msg.what) {
                 case STEPS_MSG:
                     mStepValue = (int)msg.arg1;
-//                    mStepValueView.setText("" + mStepValue);
                     break;
                 case PACE_MSG:
                     mPaceValue = msg.arg1;
                     if (mPaceValue <= 0) { 
-//                        mPaceValueView.setText("0");
-                    }
-                    else {
-//                        mPaceValueView.setText("" + (int)mPaceValue);
+                    	mPaceValue = 0;
                     }
                     break;
                 case DISTANCE_MSG:
                     mDistanceValue = ((int)msg.arg1)/1000f;
                     if (mDistanceValue <= 0) { 
-//                        mDistanceValueView.setText("0");
-                    }
-                    else {
-//                        mDistanceValueView.setText(
-//                                ("" + (mDistanceValue + 0.000001f)).substring(0, 5)
-//                        );
+                    	mDistanceValue = 0;
                     }
                     break;
                 case SPEED_MSG:
                     mSpeedValue = ((int)msg.arg1)/1000f;
                     if (mSpeedValue <= 0) { 
-//                        mSpeedValueView.setText("0");
-                    }
-                    else {
-//                        mSpeedValueView.setText(
-//                                ("" + (mSpeedValue + 0.000001f)).substring(0, 4)
-//                        );
+                    	mSpeedValue = 0;
                     }
                     break;
                 case CALORIES_MSG:
                     mCaloriesValue = msg.arg1;
                     if (mCaloriesValue <= 0) { 
-//                        mCaloriesValueView.setText("0");
-                    }
-                    else {
-//                        mCaloriesValueView.setText("" + (int)mCaloriesValue);
+                    	mCaloriesValue = 0;
                     }
                     break;
                 default:
