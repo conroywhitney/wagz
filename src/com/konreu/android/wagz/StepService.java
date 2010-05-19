@@ -75,6 +75,14 @@ public class StepService extends Service {
     private float mSpeed;
     private float mCalories;
     
+    private boolean mRunning;
+    public boolean isRunning() {
+    	return mRunning;
+    }
+    public void setRunning(boolean b) {
+    	mRunning = b;
+    }
+    
     /**
      * Class for clients to access.  Because we know this service always
      * runs in the same process as its clients, we don't need to deal with

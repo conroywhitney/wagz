@@ -36,22 +36,23 @@ import com.konreu.android.wagz.R;
 import com.konreu.android.wagz.StepService;
 
 public class Wagz extends Activity {
-   
-    private int mStepValue;
-    private int mPaceValue;
-    private float mDistanceValue;
-    private float mSpeedValue;
-    private int mCaloriesValue;
-    
-    private boolean mIsRunning;
-    
+        
+    private StepService mService;
+
+    private boolean isRunning() {
+    	if (mService == null) { return false; }
+    	return mService.isRunning();
+    }
+    private void setRunning(boolean bRunning) {
+    	if (mService != null) {
+    		mService.setRunning(bRunning);	
+    	}
+    }    
+        
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        mStepValue = 0;
-        mPaceValue = 0;
         
         setContentView(R.layout.main);
         
@@ -61,15 +62,14 @@ public class Wagz extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        
-        if (mIsRunning) {
+        if (this.isRunning()) {
             bindStepService();
         }
     }
     
     @Override
     protected void onPause() {
-        if (mIsRunning) {
+        if (this.isRunning()) {
             unbindStepService();
         }
         super.onPause();
@@ -83,14 +83,12 @@ public class Wagz extends Activity {
     protected void onDestroy() {
         super.onDestroy();
     }
-
-    private StepService mService;
     
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
-            mService = ((StepService.StepBinder)service).getService();
-            mService.registerCallback(mCallback);
-            mService.reloadSettings();            
+        	mService = ((StepService.StepBinder) service).getService();
+        	mService.registerCallback(mCallback);
+        	mService.reloadSettings();            
         }
 
         public void onServiceDisconnected(ComponentName className) {
@@ -99,7 +97,7 @@ public class Wagz extends Activity {
     };
     
     private void startStepService() {
-        mIsRunning = true;
+        this.setRunning(true);
         startService(new Intent(Wagz.this, StepService.class));
     }
     
@@ -113,7 +111,7 @@ public class Wagz extends Activity {
     }
     
     private void stopStepService() {
-        mIsRunning = false;
+    	this.setRunning(false);
         if (mService != null) {
             stopService(new Intent(Wagz.this,
                   StepService.class));
@@ -121,7 +119,7 @@ public class Wagz extends Activity {
     }
     
     private void resetValues(boolean updateDisplay) {
-        if (mService != null && mIsRunning) {
+        if (mService != null && this.isRunning()) {
             mService.resetValues();                    
         } else {
             SharedPreferences state = getSharedPreferences("state", 0);
@@ -139,7 +137,6 @@ public class Wagz extends Activity {
 
     private static final int MENU_SETTINGS = 8;
     private static final int MENU_QUIT     = 9;
-
     private static final int MENU_PAUSE = 1;
     private static final int MENU_RESUME = 2;
     private static final int MENU_DETAILS = 3;
@@ -147,12 +144,11 @@ public class Wagz extends Activity {
     /* Creates the menu items */
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
-        if (mIsRunning) {
+        if (this.isRunning()) {
             menu.add(0, MENU_PAUSE, 0, R.string.pause)
             .setIcon(android.R.drawable.ic_media_pause)
             .setShortcut('1', 'p');
-        }
-        else {
+        } else {
             menu.add(0, MENU_RESUME, 0, R.string.resume)
             .setIcon(android.R.drawable.ic_media_play)
             .setShortcut('1', 'p');
@@ -197,74 +193,26 @@ public class Wagz extends Activity {
             mHandler.sendMessage(mHandler.obtainMessage(STEPS_MSG, value, 0));
         }
         public void paceChanged(int value) {
-            mHandler.sendMessage(mHandler.obtainMessage(PACE_MSG, value, 0));
+            // do nothing
         }
         public void distanceChanged(float value) {
-            mHandler.sendMessage(mHandler.obtainMessage(DISTANCE_MSG, (int)(value*1000), 0));
+            // do nothing
         }
         public void speedChanged(float value) {
-            mHandler.sendMessage(mHandler.obtainMessage(SPEED_MSG, (int)(value*1000), 0));
+            // do nothing
         }
         public void caloriesChanged(float value) {
-            mHandler.sendMessage(mHandler.obtainMessage(CALORIES_MSG, (int)(value), 0));
+            // do nothing
         }
     };
     
     private static final int STEPS_MSG = 1;
-    private static final int PACE_MSG = 2;
-    private static final int DISTANCE_MSG = 3;
-    private static final int SPEED_MSG = 4;
-    private static final int CALORIES_MSG = 5;
-    
-    public int getStepValue() {
-    	return mStepValue;
-    }
-    
-    public int getPaceValue() {
-    	return mPaceValue;
-    }
-    
-    public float getDistanceValue() {
-    	return mDistanceValue;
-    }
-    
-    public float getSpeedValue() {
-    	return mSpeedValue;
-    }
-    
-    public int getCaloriesValue() {
-    	return mCaloriesValue;
-    }
     
     private Handler mHandler = new Handler() {
         @Override public void handleMessage(Message msg) {
             switch (msg.what) {
                 case STEPS_MSG:
-                    mStepValue = (int)msg.arg1;
-                    break;
-                case PACE_MSG:
-                    mPaceValue = msg.arg1;
-                    if (mPaceValue <= 0) { 
-                    	mPaceValue = 0;
-                    }
-                    break;
-                case DISTANCE_MSG:
-                    mDistanceValue = ((int)msg.arg1)/1000f;
-                    if (mDistanceValue <= 0) { 
-                    	mDistanceValue = 0;
-                    }
-                    break;
-                case SPEED_MSG:
-                    mSpeedValue = ((int)msg.arg1)/1000f;
-                    if (mSpeedValue <= 0) { 
-                    	mSpeedValue = 0;
-                    }
-                    break;
-                case CALORIES_MSG:
-                    mCaloriesValue = msg.arg1;
-                    if (mCaloriesValue <= 0) { 
-                    	mCaloriesValue = 0;
-                    }
+//                	mTimeValue = mStartTime;
                     break;
                 default:
                     super.handleMessage(msg);

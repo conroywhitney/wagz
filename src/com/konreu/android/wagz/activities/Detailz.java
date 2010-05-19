@@ -56,7 +56,15 @@ public class Detailz extends Activity {
 
     private boolean mIsMetric;
     
-    private boolean mIsRunning;
+    private boolean isRunning() {
+    	if (mService == null) { return false; }
+    	return mService.isRunning();
+    }
+    private void setRunning(boolean bRunning) {
+    	if (mService != null) {
+    		mService.setRunning(bRunning);	
+    	}
+    }
     
     /** Called when the activity is first created. */
     @Override
@@ -72,6 +80,10 @@ public class Detailz extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        
+        if (this.isRunning()) {
+            bindStepService();
+        }
         
         mSettings = PreferenceManager.getDefaultSharedPreferences(this);
         mPedometerSettings = new PedometerSettings(mSettings);
@@ -98,6 +110,9 @@ public class Detailz extends Activity {
     
     @Override
     protected void onPause() {
+        if (this.isRunning()) {
+            unbindStepService();
+        }
         super.onPause();
     }
 
@@ -115,8 +130,7 @@ public class Detailz extends Activity {
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             mService = ((StepService.StepBinder)service).getService();
-            mService.registerCallback(mCallback);
-            mService.reloadSettings();            
+            mService.registerCallback(mCallback);    
         }
 
         public void onServiceDisconnected(ComponentName className) {
@@ -126,9 +140,8 @@ public class Detailz extends Activity {
     
 
     private void startStepService() {
-        mIsRunning = true;
-        startService(new Intent(Detailz.this,
-                StepService.class));
+    	this.setRunning(true);
+        startService(new Intent(Detailz.this, StepService.class));
     }
     
     private void bindStepService() {
@@ -141,7 +154,7 @@ public class Detailz extends Activity {
     }
     
     private void stopStepService() {
-        mIsRunning = false;
+    	this.setRunning(false);
         if (mService != null) {
             stopService(new Intent(Detailz.this,
                   StepService.class));
@@ -149,10 +162,9 @@ public class Detailz extends Activity {
     }
     
     private void resetValues(boolean updateDisplay) {
-        if (mService != null && mIsRunning) {
+        if (mService != null && this.isRunning()) {
             mService.resetValues();                    
-        }
-        else {
+        } else {
             mStepValueView.setText("0");
             mPaceValueView.setText("0");
             mDistanceValueView.setText("0");
@@ -181,12 +193,11 @@ public class Detailz extends Activity {
     /* Creates the menu items */
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
-        if (mIsRunning) {
+        if (this.isRunning()) {
             menu.add(0, MENU_PAUSE, 0, R.string.pause)
             .setIcon(android.R.drawable.ic_media_pause)
             .setShortcut('1', 'p');
-        }
-        else {
+        } else {
             menu.add(0, MENU_RESUME, 0, R.string.resume)
 	            .setIcon(android.R.drawable.ic_media_play)
 	            .setShortcut('1', 'p');
