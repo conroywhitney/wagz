@@ -21,9 +21,10 @@ package com.konreu.android.wagz;
 
 import java.util.ArrayList;
 
-import com.konreu.android.wagz.StepListener;
 import android.hardware.SensorListener;
 import android.hardware.SensorManager;
+
+import com.konreu.android.wagz.listeners.StepListener;
 
 /**
  * Detects steps and notifies all listeners (that implement StepListener).

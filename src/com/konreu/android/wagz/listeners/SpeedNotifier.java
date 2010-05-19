@@ -17,7 +17,9 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.konreu.android.wagz;
+package com.konreu.android.wagz.listeners;
+
+import com.konreu.android.wagz.PedometerSettings;
 
 /**
  * Calculates and displays pace (steps / minute), handles input of desired pace,

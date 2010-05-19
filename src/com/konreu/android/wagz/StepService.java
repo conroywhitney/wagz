@@ -33,6 +33,13 @@ import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
+import com.konreu.android.wagz.activities.Pedometer;
+import com.konreu.android.wagz.listeners.CaloriesNotifier;
+import com.konreu.android.wagz.listeners.DistanceNotifier;
+import com.konreu.android.wagz.listeners.PaceNotifier;
+import com.konreu.android.wagz.listeners.SpeedNotifier;
+import com.konreu.android.wagz.listeners.StepDisplayer;
+
 /**
  * This is an example of implementing an application service that runs locally
  * in the same process as the application.  The {@link StepServiceController}
@@ -58,7 +65,6 @@ public class StepService extends Service {
     private DistanceNotifier mDistanceNotifier;
     private SpeedNotifier mSpeedNotifier;
     private CaloriesNotifier mCaloriesNotifier;
-    private SpeakingTimer mSpeakingTimer;
     
     private PowerManager.WakeLock wakeLock;
     private NotificationManager mNM;
@@ -75,7 +81,7 @@ public class StepService extends Service {
      * IPC.
      */
     public class StepBinder extends Binder {
-        StepService getService() {
+        public StepService getService() {
             return StepService.this;
         }
     }
@@ -234,7 +240,6 @@ public class StepService extends Service {
         if (mDistanceNotifier != null) mDistanceNotifier.reloadSettings();
         if (mSpeedNotifier    != null) mSpeedNotifier.reloadSettings();
         if (mCaloriesNotifier != null) mCaloriesNotifier.reloadSettings();
-        if (mSpeakingTimer    != null) mSpeakingTimer.reloadSettings();
     }
     
     public void resetValues() {

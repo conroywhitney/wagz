@@ -17,7 +17,10 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.konreu.android.wagz;
+package com.konreu.android.wagz.listeners;
+
+import com.konreu.android.wagz.PedometerSettings;
+import com.konreu.android.wagz.listeners.StepListener;
 
 /**
  * Calculates and displays the distance walked.  

@@ -17,64 +17,59 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.konreu.android.wagz;
+package com.konreu.android.wagz.listeners;
 
 import java.util.ArrayList;
 
-/**
- * Call all listening objects repeatedly. 
- * The interval is defined by the user settings.
- * @author Levente Bagi
- */
-public class SpeakingTimer implements StepListener {
+import com.konreu.android.wagz.PedometerSettings;
 
+/**
+ * Counts steps provided by StepDetector and passes the current
+ * step count to the activity.
+ */
+public class StepDisplayer implements StepListener {
+
+    private int mCount = 0;
     PedometerSettings mSettings;
-    boolean mShouldSpeak;
-    float mInterval;
-    long mLastSpeakTime;
     
-    public SpeakingTimer(PedometerSettings settings) {
-        mLastSpeakTime = System.currentTimeMillis();
+    public StepDisplayer(PedometerSettings settings) {
         mSettings = settings;
-        reloadSettings();
+        notifyListener();
     }
     
-    public void reloadSettings() {
-        mShouldSpeak = mSettings.shouldSpeak();
-        mInterval = mSettings.getSpeakingInterval();
+    public void setSteps(int steps) {
+        mCount = steps;
+        notifyListener();
     }
     
     public void onStep() {
-        long now = System.currentTimeMillis();
-        long delta = now - mLastSpeakTime;
-        
-        if (delta / 60000.0 >= mInterval) {
-            mLastSpeakTime = now;
-            notifyListeners();
-        }
+        mCount ++;
+        notifyListener();
+    }
+    
+    public void reloadSettings() {
+        notifyListener();
     }
     
     public void passValue() {
-        // not used
+    	
     }
 
-    
     //-----------------------------------------------------
-    // Listener
-    
+    // Listener    
     public interface Listener {
-        public void speak();
+        public void stepsChanged(int value);
+        public void passValue();
     }
     private ArrayList<Listener> mListeners = new ArrayList<Listener>();
 
     public void addListener(Listener l) {
         mListeners.add(l);
     }
-    public void notifyListeners() {
+    public void notifyListener() {
         for (Listener listener : mListeners) {
-            listener.speak();
+            listener.stepsChanged((int)mCount);
         }
-    }
-
+    }    
+    
 }
-

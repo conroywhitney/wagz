@@ -17,7 +17,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.konreu.android.wagz;
+package com.konreu.android.wagz.activities;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -36,6 +36,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.konreu.android.wagz.PedometerSettings;
+import com.konreu.android.wagz.R;
+import com.konreu.android.wagz.StepService;
 
 public class Pedometer extends Activity {
    
@@ -196,10 +200,8 @@ public class Pedometer extends Activity {
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             mService = ((StepService.StepBinder)service).getService();
-
             mService.registerCallback(mCallback);
-            mService.reloadSettings();
-            
+            mService.reloadSettings();            
         }
 
         public void onServiceDisconnected(ComponentName className) {

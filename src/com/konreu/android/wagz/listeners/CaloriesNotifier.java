@@ -17,7 +17,10 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.konreu.android.wagz;
+package com.konreu.android.wagz.listeners;
+
+import com.konreu.android.wagz.PedometerSettings;
+import com.konreu.android.wagz.listeners.StepListener;
 
 /**
  * Calculates and displays the approximate calories.  
@@ -51,10 +54,12 @@ public class CaloriesNotifier implements StepListener {
         mSettings = settings;
         reloadSettings();
     }
+    
     public void setCalories(float calories) {
         mCalories = calories;
         notifyListener();
     }
+    
     public void reloadSettings() {
         mIsMetric = mSettings.isMetric();
         mIsRunning = mSettings.isRunning();
@@ -62,6 +67,7 @@ public class CaloriesNotifier implements StepListener {
         mBodyWeight = mSettings.getBodyWeight();
         notifyListener();
     }
+    
     public void resetValues() {
         mCalories = 0;
     }
