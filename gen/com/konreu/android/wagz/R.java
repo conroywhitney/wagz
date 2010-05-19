@@ -60,6 +60,8 @@ public final class R {
         public static final int box_pace=0x7f0a0008;
         public static final int box_speed=0x7f0a000b;
         public static final int box_steps=0x7f0a0001;
+        public static final int btn_ignore_reminder=0x7f0a0019;
+        public static final int btn_start_walk=0x7f0a0018;
         public static final int button_desired_pace_lower=0x7f0a0012;
         public static final int button_desired_pace_raise=0x7f0a0015;
         public static final int calories_units=0x7f0a0010;
@@ -69,6 +71,8 @@ public final class R {
         public static final int desired_pace_value=0x7f0a0014;
         public static final int distance_units=0x7f0a0006;
         public static final int distance_value=0x7f0a0005;
+        public static final int energy_bar=0x7f0a0016;
+        public static final int happiness_rating=0x7f0a0017;
         public static final int pace_units=0x7f0a000a;
         public static final int pace_value=0x7f0a0009;
         public static final int row_1=0x7f0a0000;
@@ -79,7 +83,8 @@ public final class R {
         public static final int step_value=0x7f0a0002;
     }
     public static final class layout {
-        public static final int main=0x7f030000;
+        public static final int detailz=0x7f030000;
+        public static final int main=0x7f030001;
     }
     public static final class raw {
         public static final int bark_twice=0x7f050000;
@@ -100,6 +105,7 @@ public final class R {
         public static final int exercise_type_setting_title=0x7f09002c;
         public static final int exercise_type_walking=0x7f09002e;
         public static final int high=0x7f09001b;
+        public static final int ignore_reminder=0x7f090053;
         public static final int inches=0x7f09000c;
         public static final int incorrect_step_length=0x7f09004d;
         public static final int interval_10_minutes=0x7f09003f;
@@ -139,6 +145,7 @@ public final class R {
         public static final int settings=0x7f090014;
         public static final int speaking_interval_setting=0x7f090038;
         public static final int speaking_interval_setting_details=0x7f090039;
+        public static final int start_walk=0x7f090052;
         public static final int started=0x7f090002;
         public static final int step_length_setting=0x7f090024;
         public static final int step_length_setting_details=0x7f090025;

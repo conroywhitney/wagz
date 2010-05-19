@@ -72,7 +72,7 @@ public class Detailz extends Activity {
         mStepValue = 0;
         mPaceValue = 0;
         
-        setContentView(R.layout.main);
+        setContentView(R.layout.detailz);
         
         startStepService();
     }
@@ -273,19 +273,19 @@ public class Detailz extends Activity {
         }
         else {
             menu.add(0, MENU_RESUME, 0, R.string.resume)
-            .setIcon(android.R.drawable.ic_media_play)
-            .setShortcut('1', 'p');
+	            .setIcon(android.R.drawable.ic_media_play)
+	            .setShortcut('1', 'p');
         }
         menu.add(0, MENU_RESET, 0, R.string.reset)
-        .setIcon(android.R.drawable.ic_menu_close_clear_cancel)
-        .setShortcut('2', 'r');
+	        .setIcon(android.R.drawable.ic_menu_close_clear_cancel)
+	        .setShortcut('2', 'r');
         menu.add(0, MENU_SETTINGS, 0, R.string.settings)
-        .setIcon(android.R.drawable.ic_menu_preferences)
-        .setShortcut('8', 's')
-        .setIntent(new Intent(this, Settingz.class));
+	        .setIcon(android.R.drawable.ic_menu_preferences)
+	        .setShortcut('8', 's')
+	        .setIntent(new Intent(this, Settingz.class));
         menu.add(0, MENU_QUIT, 0, R.string.quit)
-        .setIcon(android.R.drawable.ic_lock_power_off)
-        .setShortcut('9', 'q');
+	        .setIcon(android.R.drawable.ic_lock_power_off)
+	        .setShortcut('9', 'q');
         return true;
     }
 
