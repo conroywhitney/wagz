@@ -124,6 +124,9 @@ public final class R {
         public static final int notification_subtitle=0x7f090001;
         public static final int pause=0x7f090011;
         public static final int pounds=0x7f09000e;
+        public static final int pref_category_advanced=0x7f090016;
+        public static final int pref_category_notifications=0x7f090050;
+        public static final int pref_category_snaptic=0x7f09004f;
         public static final int quit=0x7f09004e;
         public static final int reset=0x7f090013;
         public static final int resume=0x7f090012;
@@ -141,7 +144,6 @@ public final class R {
         public static final int step_length_setting_title=0x7f090026;
         public static final int steps=0x7f090004;
         public static final int steps_per_minute=0x7f090007;
-        public static final int steps_settings_title=0x7f090016;
         public static final int stopped=0x7f090003;
         public static final int tell_calories_setting=0x7f090049;
         public static final int tell_calories_setting_details=0x7f09004a;
