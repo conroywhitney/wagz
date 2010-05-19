@@ -26,9 +26,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -81,7 +79,6 @@ public class Wagz extends Activity {
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
         	mService = ((StepService.StepBinder) service).getService();
-        	mService.registerCallback(mCallback);
         	mService.reloadSettings();
         }
 
@@ -128,7 +125,7 @@ public class Wagz extends Activity {
     }
 
     private static final int MENU_SETTINGS = 8;
-    private static final int MENU_QUIT     = 9;
+    private static final int MENU_QUIT = 9;
     private static final int MENU_PAUSE = 1;
     private static final int MENU_RESUME = 2;
     private static final int MENU_DETAILS = 3;
@@ -177,40 +174,5 @@ public class Wagz extends Activity {
                 return true;
         }
         return false;
-    }
- 
-    // TODO: unite all into 1 type of message
-    private StepService.ICallback mCallback = new StepService.ICallback() {
-        public void stepsChanged(int value) {
-            mHandler.sendMessage(mHandler.obtainMessage(STEPS_MSG, value, 0));
-        }
-        public void paceChanged(int value) {
-            // do nothing
-        }
-        public void distanceChanged(float value) {
-            // do nothing
-        }
-        public void speedChanged(float value) {
-            // do nothing
-        }
-        public void caloriesChanged(float value) {
-            // do nothing
-        }
-    };
-    
-    private static final int STEPS_MSG = 1;
-    
-    private Handler mHandler = new Handler() {
-        @Override public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case STEPS_MSG:
-//                	mTimeValue = mStartTime;
-                    break;
-                default:
-                    super.handleMessage(msg);
-            }
-        }
-        
-    };
-    
+    }    
 }

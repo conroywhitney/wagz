@@ -45,17 +45,10 @@ public class Detailz extends Activity {
     private SharedPreferences mSettings;
     private PedometerSettings mPedometerSettings;
     
-    private TextView mStepValueView;
-    private TextView mPaceValueView;
     private TextView mDistanceValueView;
-    private TextView mSpeedValueView;
-    private TextView mCaloriesValueView;
+//    private TextView mTimeValueView;
     
-    private int mStepValue;
-    private int mPaceValue;
     private float mDistanceValue;
-    private float mSpeedValue;
-    private int mCaloriesValue;
 
     private boolean mIsMetric;
     
@@ -67,11 +60,7 @@ public class Detailz extends Activity {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        
-        mStepValue = 0;
-        mPaceValue = 0;
-        
+        super.onCreate(savedInstanceState);        
         setContentView(R.layout.detailz);
     }
 
@@ -86,11 +75,8 @@ public class Detailz extends Activity {
         mSettings = PreferenceManager.getDefaultSharedPreferences(this);
         mPedometerSettings = new PedometerSettings(mSettings);
         
-        mStepValueView     = (TextView) findViewById(R.id.step_value);
-        mPaceValueView     = (TextView) findViewById(R.id.pace_value);
         mDistanceValueView = (TextView) findViewById(R.id.distance_value);
-        mSpeedValueView    = (TextView) findViewById(R.id.speed_value);
-        mCaloriesValueView = (TextView) findViewById(R.id.calories_value);
+//        mTimeValueView = (TextView) findViewById(R.id.time_value);
 
         mIsMetric = mPedometerSettings.isMetric();
         ((TextView) findViewById(R.id.distance_units)).setText(getString(
@@ -98,12 +84,6 @@ public class Detailz extends Activity {
                 ? R.string.kilometers
                 : R.string.miles
         ));
-        
-        ((TextView) findViewById(R.id.speed_units)).setText(getString(
-                mIsMetric
-                ? R.string.kilometers_per_hour
-                : R.string.miles_per_hour
-        ));     
     }
     
     @Override
@@ -161,27 +141,20 @@ public class Detailz extends Activity {
         if (this.isRunning()) {
             mService.resetValues();                    
         } else {
-            mStepValueView.setText("0");
-            mPaceValueView.setText("0");
             mDistanceValueView.setText("0");
-            mSpeedValueView.setText("0");
-            mCaloriesValueView.setText("0");
+//            mTimeValueView.setText("0");
             SharedPreferences state = getSharedPreferences("state", 0);
             SharedPreferences.Editor stateEditor = state.edit();
             if (updateDisplay) {
-                stateEditor.putInt("steps", 0);
-                stateEditor.putInt("pace", 0);
                 stateEditor.putFloat("distance", 0);
-                stateEditor.putFloat("speed", 0);
-                stateEditor.putFloat("calories", 0);
+                stateEditor.putFloat("time", 0);
                 stateEditor.commit();
             }
         }
     }
 
     private static final int MENU_SETTINGS = 8;
-    private static final int MENU_QUIT     = 9;
-
+    private static final int MENU_QUIT = 9;
     private static final int MENU_PAUSE = 1;
     private static final int MENU_RESUME = 2;
     private static final int MENU_RESET = 3;
@@ -236,45 +209,16 @@ public class Detailz extends Activity {
  
     // TODO: unite all into 1 type of message
     private StepService.ICallback mCallback = new StepService.ICallback() {
-        public void stepsChanged(int value) {
-            mHandler.sendMessage(mHandler.obtainMessage(STEPS_MSG, value, 0));
-        }
-        public void paceChanged(int value) {
-            mHandler.sendMessage(mHandler.obtainMessage(PACE_MSG, value, 0));
-        }
         public void distanceChanged(float value) {
             mHandler.sendMessage(mHandler.obtainMessage(DISTANCE_MSG, (int)(value*1000), 0));
         }
-        public void speedChanged(float value) {
-            mHandler.sendMessage(mHandler.obtainMessage(SPEED_MSG, (int)(value*1000), 0));
-        }
-        public void caloriesChanged(float value) {
-            mHandler.sendMessage(mHandler.obtainMessage(CALORIES_MSG, (int)(value), 0));
-        }
     };
     
-    private static final int STEPS_MSG = 1;
-    private static final int PACE_MSG = 2;
-    private static final int DISTANCE_MSG = 3;
-    private static final int SPEED_MSG = 4;
-    private static final int CALORIES_MSG = 5;
+    private static final int DISTANCE_MSG = 1;
     
     private Handler mHandler = new Handler() {
         @Override public void handleMessage(Message msg) {
             switch (msg.what) {
-                case STEPS_MSG:
-                    mStepValue = (int)msg.arg1;
-                    mStepValueView.setText("" + mStepValue);
-                    break;
-                case PACE_MSG:
-                    mPaceValue = msg.arg1;
-                    if (mPaceValue <= 0) { 
-                        mPaceValueView.setText("0");
-                    }
-                    else {
-                        mPaceValueView.setText("" + (int)mPaceValue);
-                    }
-                    break;
                 case DISTANCE_MSG:
                     mDistanceValue = ((int)msg.arg1)/1000f;
                     if (mDistanceValue <= 0) { 
@@ -284,26 +228,6 @@ public class Detailz extends Activity {
                         mDistanceValueView.setText(
                                 ("" + (mDistanceValue + 0.000001f)).substring(0, 5)
                         );
-                    }
-                    break;
-                case SPEED_MSG:
-                    mSpeedValue = ((int)msg.arg1)/1000f;
-                    if (mSpeedValue <= 0) { 
-                        mSpeedValueView.setText("0");
-                    }
-                    else {
-                        mSpeedValueView.setText(
-                                ("" + (mSpeedValue + 0.000001f)).substring(0, 4)
-                        );
-                    }
-                    break;
-                case CALORIES_MSG:
-                    mCaloriesValue = msg.arg1;
-                    if (mCaloriesValue <= 0) { 
-                        mCaloriesValueView.setText("0");
-                    }
-                    else {
-                        mCaloriesValueView.setText("" + (int)mCaloriesValue);
                     }
                     break;
                 default:

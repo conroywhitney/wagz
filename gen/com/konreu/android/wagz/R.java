@@ -55,27 +55,30 @@ public final class R {
         public static final int line40=0x7f020004;
     }
     public static final class id {
-        public static final int box_calories=0x7f0a000e;
+        public static final int box_calories=0x7f0a0011;
         public static final int box_distance=0x7f0a0004;
-        public static final int box_pace=0x7f0a0008;
-        public static final int box_speed=0x7f0a000b;
-        public static final int box_steps=0x7f0a0001;
-        public static final int btn_ignore_reminder=0x7f0a0014;
-        public static final int btn_start_walk=0x7f0a0013;
-        public static final int calories_units=0x7f0a0010;
-        public static final int calories_value=0x7f0a000f;
+        public static final int box_pace=0x7f0a000b;
+        public static final int box_speed=0x7f0a000e;
+        public static final int box_steps=0x7f0a0007;
+        public static final int box_time=0x7f0a0001;
+        public static final int btn_ignore_reminder=0x7f0a0017;
+        public static final int btn_start_walk=0x7f0a0016;
+        public static final int calories_units=0x7f0a0013;
+        public static final int calories_value=0x7f0a0012;
         public static final int distance_units=0x7f0a0006;
         public static final int distance_value=0x7f0a0005;
-        public static final int energy_bar=0x7f0a0011;
-        public static final int happiness_rating=0x7f0a0012;
-        public static final int pace_units=0x7f0a000a;
-        public static final int pace_value=0x7f0a0009;
+        public static final int energy_bar=0x7f0a0014;
+        public static final int happiness_rating=0x7f0a0015;
+        public static final int pace_units=0x7f0a000d;
+        public static final int pace_value=0x7f0a000c;
         public static final int row_1=0x7f0a0000;
-        public static final int row_2=0x7f0a0007;
-        public static final int speed_units=0x7f0a000d;
-        public static final int speed_value=0x7f0a000c;
-        public static final int step_units=0x7f0a0003;
-        public static final int step_value=0x7f0a0002;
+        public static final int row_2=0x7f0a000a;
+        public static final int speed_units=0x7f0a0010;
+        public static final int speed_value=0x7f0a000f;
+        public static final int step_units=0x7f0a0009;
+        public static final int step_value=0x7f0a0008;
+        public static final int time_units=0x7f0a0003;
+        public static final int time_value=0x7f0a0002;
     }
     public static final class layout {
         public static final int detailz=0x7f030000;
@@ -161,6 +164,7 @@ public final class R {
         public static final int tell_steps_setting=0x7f090041;
         public static final int tell_steps_setting_details=0x7f090042;
         public static final int tell_what=0x7f090040;
+        public static final int time_units=0x7f090054;
         public static final int units_imperial=0x7f090023;
         public static final int units_metric=0x7f090022;
         public static final int units_setting=0x7f09001f;
