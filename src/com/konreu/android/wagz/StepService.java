@@ -158,6 +158,8 @@ public class StepService extends Service {
         // Tell the user we started.
         Toast.makeText(this, getText(R.string.started), Toast.LENGTH_SHORT).show();
         bRunning = true;
+        
+        this.reloadSettings();
     }
 
     @Override

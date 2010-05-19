@@ -129,6 +129,7 @@ public class Detailz extends Activity {
         public void onServiceConnected(ComponentName className, IBinder service) {
             mService = ((StepService.StepBinder) service).getService();
             mService.registerCallback(mCallback);
+            mService.reloadSettings();
         }
 
         public void onServiceDisconnected(ComponentName className) {
