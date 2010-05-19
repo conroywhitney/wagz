@@ -33,9 +33,6 @@ import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
-import com.google.tts.TTS;
-
-
 /**
  * This is an example of implementing an application service that runs locally
  * in the same process as the application.  The {@link StepServiceController}
@@ -53,7 +50,6 @@ public class StepService extends Service {
     private PedometerSettings mPedometerSettings;
     private SharedPreferences mState;
     private SharedPreferences.Editor mStateEditor;
-    private TTS mTts;
     private SensorManager mSensorManager;
     private StepDetector mStepDetector;
     // private StepBuzzer mStepBuzzer; // used for debugging
@@ -109,35 +105,27 @@ public class StepService extends Service {
                 SensorManager.SENSOR_ORIENTATION,
                 SensorManager.SENSOR_DELAY_FASTEST);
 
-        mStepDisplayer = new StepDisplayer(mPedometerSettings, mTts);
+        mStepDisplayer = new StepDisplayer(mPedometerSettings);
         mStepDisplayer.setSteps(mSteps = mState.getInt("steps", 0));
         mStepDisplayer.addListener(mStepListener);
         mStepDetector.addStepListener(mStepDisplayer);
 
-        mPaceNotifier     = new PaceNotifier(mPedometerSettings, mTts);
+        mPaceNotifier     = new PaceNotifier(mPedometerSettings);
         mPaceNotifier.setPace(mPace = mState.getInt("pace", 0));
         mPaceNotifier.addListener(mPaceListener);
         mStepDetector.addStepListener(mPaceNotifier);
 
-        mDistanceNotifier = new DistanceNotifier(mDistanceListener, mPedometerSettings, mTts);
+        mDistanceNotifier = new DistanceNotifier(mDistanceListener, mPedometerSettings);
         mDistanceNotifier.setDistance(mDistance = mState.getFloat("distance", 0));
         mStepDetector.addStepListener(mDistanceNotifier);
         
-        mSpeedNotifier    = new SpeedNotifier(mSpeedListener,    mPedometerSettings, mTts);
+        mSpeedNotifier    = new SpeedNotifier(mSpeedListener,    mPedometerSettings);
         mSpeedNotifier.setSpeed(mSpeed = mState.getFloat("speed", 0));
         mPaceNotifier.addListener(mSpeedNotifier);
         
-        mCaloriesNotifier = new CaloriesNotifier(mCaloriesListener, mPedometerSettings, mTts);
+        mCaloriesNotifier = new CaloriesNotifier(mCaloriesListener, mPedometerSettings);
         mCaloriesNotifier.setCalories(mCalories = mState.getFloat("calories", 0));
         mStepDetector.addStepListener(mCaloriesNotifier);
-        
-        mSpeakingTimer = new SpeakingTimer(mPedometerSettings);
-        mSpeakingTimer.addListener(mStepDisplayer);
-        mSpeakingTimer.addListener(mPaceNotifier);
-        mSpeakingTimer.addListener(mDistanceNotifier);
-        mSpeakingTimer.addListener(mSpeedNotifier);
-        mSpeakingTimer.addListener(mCaloriesNotifier);
-        mStepDetector.addStepListener(mSpeakingTimer);
         
         // Used when debugging:
         // mStepBuzzer = new StepBuzzer(this);
@@ -175,11 +163,6 @@ public class StepService extends Service {
         
         // Stop detecting
         mSensorManager.unregisterListener(mStepDetector);
-        
-        // Stop voice
-        if (mTts != null) {
-            mTts.shutdown();
-        }
         
         // Tell the user we stopped.
         Toast.makeText(this, getText(R.string.stopped), Toast.LENGTH_SHORT).show();
@@ -246,30 +229,6 @@ public class StepService extends Service {
             );
         }
         
-        boolean userWantsVoice = mPedometerSettings.shouldSpeak();
-        
-        if (mTts == null && userWantsVoice && TTS.isInstalled(this)) {
-            mTts = new TTS(this, null, false);
-            if (mSpeakingTimer != null) {
-                mSpeakingTimer.setTts(mTts);
-            }
-            if (mStepDisplayer != null) {
-                mStepDisplayer.setTts(mTts);
-            }
-            if (mPaceNotifier != null) {
-                mPaceNotifier.setTts(mTts);
-            }
-            if (mSpeedNotifier != null) {
-                mSpeedNotifier.setTts(mTts);
-            }
-            if (mDistanceNotifier != null) {
-                mDistanceNotifier.setTts(mTts);
-            }
-            if (mCaloriesNotifier != null) {
-                mCaloriesNotifier.setTts(mTts);
-            }
-        }
-        
         if (mStepDisplayer    != null) mStepDisplayer.reloadSettings();
         if (mPaceNotifier     != null) mPaceNotifier.reloadSettings();
         if (mDistanceNotifier != null) mDistanceNotifier.reloadSettings();
@@ -300,6 +259,7 @@ public class StepService extends Service {
             }
         }
     };
+    
     /**
      * Forwards pace values from PaceNotifier to the activity. 
      */
@@ -314,6 +274,7 @@ public class StepService extends Service {
             }
         }
     };
+    
     /**
      * Forwards distance values from DistanceNotifier to the activity. 
      */
@@ -328,6 +289,7 @@ public class StepService extends Service {
             }
         }
     };
+    
     /**
      * Forwards speed values from SpeedNotifier to the activity. 
      */
@@ -342,6 +304,7 @@ public class StepService extends Service {
             }
         }
     };
+    
     /**
      * Forwards calories values from CaloriesNotifier to the activity. 
      */

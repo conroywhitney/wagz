@@ -19,13 +19,11 @@
 
 package com.konreu.android.wagz;
 
-import com.google.tts.TTS;
-
 /**
  * Calculates and displays the approximate calories.  
  * @author Levente Bagi
  */
-public class CaloriesNotifier implements StepListener, SpeakingTimer.Listener {
+public class CaloriesNotifier implements StepListener {
 
     public interface Listener {
         public void valueChanged(float value);
@@ -42,16 +40,14 @@ public class CaloriesNotifier implements StepListener, SpeakingTimer.Listener {
     private double mCalories = 0;
     
     PedometerSettings mSettings;
-    TTS mTts;
     
     boolean mIsMetric;
     boolean mIsRunning;
     float mStepLength;
     float mBodyWeight;
 
-    public CaloriesNotifier(Listener listener, PedometerSettings settings, TTS tts) {
+    public CaloriesNotifier(Listener listener, PedometerSettings settings) {
         mListener = listener;
-        mTts = tts;
         mSettings = settings;
         reloadSettings();
     }
@@ -69,13 +65,11 @@ public class CaloriesNotifier implements StepListener, SpeakingTimer.Listener {
     public void resetValues() {
         mCalories = 0;
     }
-    
-    public void setTts(TTS tts) {
-        mTts = tts;
-    }
+
     public void isMetric(boolean isMetric) {
         mIsMetric = isMetric;
     }
+    
     public void setStepLength(float stepLength) {
         mStepLength = stepLength;
     }
@@ -88,8 +82,7 @@ public class CaloriesNotifier implements StepListener, SpeakingTimer.Listener {
                 // Distance:
                 * mStepLength // centimeters
                 / 100000.0; // centimeters/kilometer
-        }
-        else {
+        } else {
             mCalories += 
                 (mBodyWeight * (mIsRunning ? IMPERIAL_RUNNING_FACTOR : IMPERIAL_WALKING_FACTOR))
                 // Distance:
@@ -106,18 +99,7 @@ public class CaloriesNotifier implements StepListener, SpeakingTimer.Listener {
     
     public void passValue() {
         
-    }
-    
-    @Override
-    public void speak() {
-        if (mSettings.shouldTellCalories() && mTts != null) {
-            if (mCalories > 0) {
-                mTts.speak("" + (int)mCalories + " calories burned", 1, null);
-            }
-        }
-        
-    }
-    
+    }    
 
 }
 

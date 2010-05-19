@@ -19,13 +19,11 @@
 
 package com.konreu.android.wagz;
 
-import com.google.tts.TTS;
-
 /**
  * Calculates and displays the distance walked.  
  * @author Levente Bagi
  */
-public class DistanceNotifier implements StepListener, SpeakingTimer.Listener {
+public class DistanceNotifier implements StepListener {
 
     public interface Listener {
         public void valueChanged(float value);
@@ -36,25 +34,21 @@ public class DistanceNotifier implements StepListener, SpeakingTimer.Listener {
     float mDistance = 0;
     
     PedometerSettings mSettings;
-    TTS mTts;
     
     boolean mIsMetric;
     float mStepLength;
 
-    public DistanceNotifier(Listener listener, PedometerSettings settings, TTS tts) {
+    public DistanceNotifier(Listener listener, PedometerSettings settings) {
         mListener = listener;
-        mTts = tts;
         mSettings = settings;
         reloadSettings();
     }
+    
     public void setDistance(float distance) {
         mDistance = distance;
         notifyListener();
     }
     
-    public void setTts(TTS tts) {
-        mTts = tts;
-    }
     public void reloadSettings() {
         mIsMetric = mSettings.isMetric();
         mStepLength = mSettings.getStepLength();
@@ -67,8 +61,7 @@ public class DistanceNotifier implements StepListener, SpeakingTimer.Listener {
             mDistance += (float)(// kilometers
                 mStepLength // centimeters
                 / 100000.0); // centimeters/kilometer
-        }
-        else {
+        } else {
             mDistance += (float)(// miles
                 mStepLength // inches
                 / 63360.0); // inches/mile
@@ -84,17 +77,6 @@ public class DistanceNotifier implements StepListener, SpeakingTimer.Listener {
     public void passValue() {
         // Callback of StepListener - Not implemented
     }
-
-    @Override
-    public void speak() {
-        if (mSettings.shouldTellDistance() && mTts != null) {
-            if (mDistance >= .001f) {
-                mTts.speak(("" + (mDistance + 0.000001f)).substring(0, 4) + (mIsMetric ? " kilometers" : " miles"), 1, null);
-                // TODO: format numbers (no "." at the end)
-            }
-        }
-    }
-    
 
 }
 

@@ -21,19 +21,18 @@ package com.konreu.android.wagz;
 
 import java.util.ArrayList;
 
-import com.google.tts.TTS;
-
 /**
  * Calculates and displays pace (steps / minute), handles input of desired pace,
  * notifies user if he/she has to go faster or slower.  
  * @author Levente Bagi
  */
-public class PaceNotifier implements StepListener, SpeakingTimer.Listener {
+public class PaceNotifier implements StepListener {
 
     public interface Listener {
         public void paceChanged(int value);
         public void passValue();
     }
+    
     private ArrayList<Listener> mListeners = new ArrayList<Listener>();
     
     int mCounter = 0;
@@ -44,7 +43,6 @@ public class PaceNotifier implements StepListener, SpeakingTimer.Listener {
     private long mPace = 0;
     
     PedometerSettings mSettings;
-    TTS mTts;
 
     /** Desired pace, adjusted by the user */
     int mDesiredPace;
@@ -52,15 +50,12 @@ public class PaceNotifier implements StepListener, SpeakingTimer.Listener {
     /** Should we speak? */
     boolean mShouldTellFasterslower;
 
-    /** When did the TTS speak last time */
-    private long mSpokenAt = 0;
-
-    public PaceNotifier(PedometerSettings settings, TTS tts) {
-        mTts = tts;
+    public PaceNotifier(PedometerSettings settings) {
         mSettings = settings;
         mDesiredPace = mSettings.getDesiredPace();
         reloadSettings();
     }
+    
     public void setPace(int pace) {
         mPace = pace;
         int avg = (int)(60*1000.0 / mPace);
@@ -69,6 +64,7 @@ public class PaceNotifier implements StepListener, SpeakingTimer.Listener {
         }
         notifyListener();
     }
+    
     public void reloadSettings() {
         mShouldTellFasterslower = 
             mSettings.shouldTellFasterslower()
@@ -82,10 +78,6 @@ public class PaceNotifier implements StepListener, SpeakingTimer.Listener {
 
     public void setDesiredPace(int desiredPace) {
         mDesiredPace = desiredPace;
-    }
-    
-    public void setTts(TTS tts) {
-        mTts = tts;
     }
     
     public void onStep() {
@@ -108,51 +100,11 @@ public class PaceNotifier implements StepListener, SpeakingTimer.Listener {
                 }
                 sum += mLastStepDeltas[i];
             }
+            
             if (isMeaningfull) {
                 long avg = sum / mLastStepDeltas.length;
                 mPace = 60*1000 / avg;
-                
-                // TODO: remove duplication. This also exists in SpeedNotifier
-                if (mShouldTellFasterslower && mTts != null) {
-                    if (now - mSpokenAt > 3000 && !mTts.isSpeaking()) {
-                        float little = 0.10f;
-                        float normal = 0.30f;
-                        float much = 0.50f;
-                        
-                        boolean spoken = true;
-                        if (mPace < mDesiredPace * (1 - much)) {
-                            mTts.speak("much faster!", 0, null);
-                        }
-                        else
-                        if (mPace > mDesiredPace * (1 + much)) {
-                            mTts.speak("much slower!", 0, null);
-                        }
-                        else
-                        if (mPace < mDesiredPace * (1 - normal)) {
-                            mTts.speak("faster!", 0, null);
-                        }
-                        else
-                        if (mPace > mDesiredPace * (1 + normal)) {
-                            mTts.speak("slower!", 0, null);
-                        }
-                        else
-                        if (mPace < mDesiredPace * (1 - little)) {
-                            mTts.speak("a little faster!", 0, null);
-                        }
-                        else
-                        if (mPace > mDesiredPace * (1 + little)) {
-                            mTts.speak("a little slower!", 0, null);
-                        }
-                        else {
-                            spoken = false;
-                        }
-                        if (spoken) {
-                            mSpokenAt = now;
-                        }
-                    }
-                }
-            }
-            else {
+            } else {
                 mPace = -1;
             }
         }
@@ -168,19 +120,7 @@ public class PaceNotifier implements StepListener, SpeakingTimer.Listener {
     
     public void passValue() {
         // Not used
-    }
-
-    //-----------------------------------------------------
-    // Speaking
-    
-    public void speak() {
-        if (mSettings.shouldTellPace() && mTts != null) {
-            if (mPace > 0) {
-                mTts.speak(mPace + " steps per minute", 1, null);
-            }
-        }
-    }
-    
+    }    
 
 }
 

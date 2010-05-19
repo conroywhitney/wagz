@@ -21,41 +21,40 @@ package com.konreu.android.wagz;
 
 import java.util.ArrayList;
 
-import com.google.tts.TTS;
-
 /**
  * Counts steps provided by StepDetector and passes the current
  * step count to the activity.
  */
-public class StepDisplayer implements StepListener, SpeakingTimer.Listener {
+public class StepDisplayer implements StepListener {
 
     private int mCount = 0;
     PedometerSettings mSettings;
     
-    public StepDisplayer(PedometerSettings settings, TTS tts) {
-        mTts = tts;
+    public StepDisplayer(PedometerSettings settings) {
         mSettings = settings;
         notifyListener();
     }
+    
     public void setSteps(int steps) {
         mCount = steps;
         notifyListener();
     }
+    
     public void onStep() {
         mCount ++;
         notifyListener();
     }
+    
     public void reloadSettings() {
         notifyListener();
     }
+    
     public void passValue() {
+    	
     }
-    
-    
 
     //-----------------------------------------------------
-    // Listener
-    
+    // Listener    
     public interface Listener {
         public void stepsChanged(int value);
         public void passValue();
@@ -69,23 +68,6 @@ public class StepDisplayer implements StepListener, SpeakingTimer.Listener {
         for (Listener listener : mListeners) {
             listener.stepsChanged((int)mCount);
         }
-    }
-    
-    //-----------------------------------------------------
-    // Speaking
-    
-    TTS mTts;
-
-    public void setTts(TTS tts) {
-        mTts = tts;
-    }
-    public void speak() {
-        if (mSettings.shouldTellSteps() && mTts != null) { 
-            if (mCount > 0) {
-                mTts.speak("" + mCount + " steps", 1, null);
-            }
-        }
-    }
-    
+    }    
     
 }

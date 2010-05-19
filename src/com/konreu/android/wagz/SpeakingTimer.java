@@ -21,8 +21,6 @@ package com.konreu.android.wagz;
 
 import java.util.ArrayList;
 
-import com.google.tts.TTS;
-
 /**
  * Call all listening objects repeatedly. 
  * The interval is defined by the user settings.
@@ -40,6 +38,7 @@ public class SpeakingTimer implements StepListener {
         mSettings = settings;
         reloadSettings();
     }
+    
     public void reloadSettings() {
         mShouldSpeak = mSettings.shouldSpeak();
         mInterval = mSettings.getSpeakingInterval();
@@ -77,16 +76,5 @@ public class SpeakingTimer implements StepListener {
         }
     }
 
-    //-----------------------------------------------------
-    // Speaking
-    
-    TTS mTts;
-    
-    public void setTts(TTS tts) {
-        mTts = tts;
-    }
-    public boolean isSpeaking() {
-        return mTts.isSpeaking();
-    }
 }
 

@@ -37,9 +37,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.tts.TTS;
-
-
 public class Pedometer extends Activity {
    
     private SharedPreferences mSettings;
@@ -50,7 +47,7 @@ public class Pedometer extends Activity {
     private TextView mDistanceValueView;
     private TextView mSpeedValueView;
     private TextView mCaloriesValueView;
-    TextView mDesiredPaceView;
+    private TextView mDesiredPaceView;
     private int mStepValue;
     private int mPaceValue;
     private float mDistanceValue;
@@ -82,10 +79,6 @@ public class Pedometer extends Activity {
         
         mSettings = PreferenceManager.getDefaultSharedPreferences(this);
         mPedometerSettings = new PedometerSettings(mSettings);
-
-        if (mSettings.getBoolean("desired_pace_voice", false)) {
-            ensureTtsInstalled();
-        }
         
         if (mIsRunning) {
             bindStepService();
@@ -395,10 +388,5 @@ public class Pedometer extends Activity {
         }
         
     };
-    
-    private void ensureTtsInstalled() {
-        TTS t = new TTS(this, null, true);
-        t.shutdown();
-    }
     
 }
