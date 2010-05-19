@@ -29,7 +29,7 @@ import com.konreu.android.wagz.R;
  * Started when the user click Settings from the main menu.
  * @author Levente Bagi
  */
-public class Settings extends PreferenceActivity {
+public class Settingz extends PreferenceActivity {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -119,6 +119,7 @@ public final class R {
         public static final int maintain_setting_title=0x7f090031;
         public static final int maintain_speed=0x7f090034;
         public static final int medium=0x7f09001c;
+        public static final int menu_details=0x7f090051;
         public static final int miles=0x7f090006;
         public static final int miles_per_hour=0x7f090009;
         public static final int notification_subtitle=0x7f090001;

@@ -41,7 +41,7 @@ import com.konreu.android.wagz.PedometerSettings;
 import com.konreu.android.wagz.R;
 import com.konreu.android.wagz.StepService;
 
-public class Pedometer extends Activity {
+public class Wagz extends Activity {
    
     private SharedPreferences mSettings;
     private PedometerSettings mPedometerSettings;
@@ -212,12 +212,12 @@ public class Pedometer extends Activity {
 
     private void startStepService() {
         mIsRunning = true;
-        startService(new Intent(Pedometer.this,
+        startService(new Intent(Wagz.this,
                 StepService.class));
     }
     
     private void bindStepService() {
-        bindService(new Intent(Pedometer.this, 
+        bindService(new Intent(Wagz.this, 
                 StepService.class), mConnection, Context.BIND_AUTO_CREATE);
     }
 
@@ -228,7 +228,7 @@ public class Pedometer extends Activity {
     private void stopStepService() {
         mIsRunning = false;
         if (mService != null) {
-            stopService(new Intent(Pedometer.this,
+            stopService(new Intent(Wagz.this,
                   StepService.class));
         }
     }
@@ -261,7 +261,7 @@ public class Pedometer extends Activity {
 
     private static final int MENU_PAUSE = 1;
     private static final int MENU_RESUME = 2;
-    private static final int MENU_RESET = 3;
+    private static final int MENU_DETAILS = 3;
     
     /* Creates the menu items */
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -276,16 +276,17 @@ public class Pedometer extends Activity {
             .setIcon(android.R.drawable.ic_media_play)
             .setShortcut('1', 'p');
         }
-        menu.add(0, MENU_RESET, 0, R.string.reset)
-        .setIcon(android.R.drawable.ic_menu_close_clear_cancel)
-        .setShortcut('2', 'r');
+        menu.add(0, MENU_DETAILS, 0, R.string.menu_details)
+	        .setIcon(android.R.drawable.ic_menu_info_details)
+	        .setShortcut('2', 'd')
+        	.setIntent(new Intent(this, Detailz.class));
         menu.add(0, MENU_SETTINGS, 0, R.string.settings)
-        .setIcon(android.R.drawable.ic_menu_preferences)
-        .setShortcut('8', 's')
-        .setIntent(new Intent(this, Settings.class));
+	        .setIcon(android.R.drawable.ic_menu_preferences)
+	        .setShortcut('8', 's')
+	        .setIntent(new Intent(this, Settingz.class));
         menu.add(0, MENU_QUIT, 0, R.string.quit)
-        .setIcon(android.R.drawable.ic_lock_power_off)
-        .setShortcut('9', 'q');
+	        .setIcon(android.R.drawable.ic_lock_power_off)
+	        .setShortcut('9', 'q');
         return true;
     }
 
@@ -299,9 +300,6 @@ public class Pedometer extends Activity {
             case MENU_RESUME:
                 startStepService();
                 bindStepService();
-                return true;
-            case MENU_RESET:
-                resetValues(true);
                 return true;
             case MENU_QUIT:
                 resetValues(false);

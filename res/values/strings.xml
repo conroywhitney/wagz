@@ -89,4 +89,5 @@
 
 <string name="pref_category_snaptic">Snaptic Settings</string>
 <string name="pref_category_notifications">Notification Settings</string>
+<string name="menu_details">Details</string>
 </resources>

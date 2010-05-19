@@ -33,7 +33,7 @@ import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
-import com.konreu.android.wagz.activities.Pedometer;
+import com.konreu.android.wagz.activities.Wagz;
 import com.konreu.android.wagz.listeners.CaloriesNotifier;
 import com.konreu.android.wagz.listeners.DistanceNotifier;
 import com.konreu.android.wagz.listeners.PaceNotifier;
@@ -334,7 +334,7 @@ public class StepService extends Service {
                 System.currentTimeMillis());
         notification.flags = Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, Pedometer.class), 0);
+                new Intent(this, Wagz.class), 0);
         notification.setLatestEventInfo(this, text,
                 getText(R.string.notification_subtitle), contentIntent);
 
