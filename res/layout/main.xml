@@ -53,5 +53,13 @@
 		android:layout_height="wrap_content"
 		android:layout_gravity="bottom"
 	/>
+	
+	<!-- Stop Walk -->
+	<Button android:id="@+id/btn_stop_walk"
+		android:text="@string/stop_walk"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="bottom"
+	/>	
    
 </LinearLayout>

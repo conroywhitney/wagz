@@ -30,6 +30,8 @@ import android.os.IBinder;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.SeekBar;
 
 import com.konreu.android.wagz.R;
@@ -53,16 +55,73 @@ public class Wagz extends Activity {
         
         SeekBar sb = (SeekBar) findViewById(R.id.happiness_bar);
         sb.setEnabled(false);
+        
+    	Button btnStartWalk = (Button) findViewById(R.id.btn_start_walk);
+    	btnStartWalk.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startWalk();
+            }
+        });
+    	
+    	Button btnStopWalk = (Button) findViewById(R.id.btn_stop_walk);
+    	btnStopWalk.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                stopWalk();
+            }
+        });
+
+    	setButtonStartWalk();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        
         if (this.isRunning()) {
-        	bindStepService();	
+        	bindStepService();
+        	
+        	// If already running, want to show "Stop" button
+        	setButtonStopWalk();
+        } else {
+        	// If not yet running, show "Start" button
+        	setButtonStartWalk();
         }
     }
     
+    /***
+     * Show Start button, hide Stop button
+     */
+    protected void setButtonStartWalk() {
+    	((Button) findViewById(R.id.btn_start_walk)).setVisibility(View.VISIBLE);
+    	((Button) findViewById(R.id.btn_stop_walk)).setVisibility(View.GONE);
+    }
+    
+    /***
+     * Hide Start button, show Stop button
+     */
+    protected void setButtonStopWalk() {
+    	((Button) findViewById(R.id.btn_start_walk)).setVisibility(View.GONE);
+    	((Button) findViewById(R.id.btn_stop_walk)).setVisibility(View.VISIBLE);
+    }
+    
+    /***
+     * Bind to StepService and show "Stop" button
+     */
+    protected void startWalk() {
+    	startStepService();
+        bindStepService();
+        setButtonStopWalk();
+    }
+    
+    /***
+     * Unbind from StepService and show "Start" button
+     */
+    protected void stopWalk() {
+        unbindStepService();
+        stopStepService();
+        setButtonStartWalk();
+    }
+        
     @Override
     protected void onPause() {
         if (this.isRunning()) {
@@ -164,12 +223,10 @@ public class Wagz extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case MENU_PAUSE:
-                unbindStepService();
-                stopStepService();
+                stopWalk();
                 return true;
             case MENU_RESUME:
-                startStepService();
-                bindStepService();
+                startWalk();
                 return true;
             case MENU_QUIT:
                 resetValues(false);

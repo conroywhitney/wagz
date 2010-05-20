@@ -97,4 +97,5 @@
 <string name="create_quick_note_button">Save Walk Details</string>
 <string name="loyalty_desc">Walk your dog consistently to gain loyalty</string>
 <string name="happiness_desc">Walk your dog to increase its happiness</string>
+<string name="stop_walk">I'm Done Walking</string>
 </resources>
