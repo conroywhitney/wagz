@@ -5,39 +5,53 @@
     android:layout_height="fill_parent"
     android:padding="@dimen/margin" android:background="@color/screen_background">
     
-    <!-- Energy Bar -->
-	<SeekBar android:id="@+id/energy_bar"
-		android:thumb="@drawable/energy_current"
-		android:progressDrawable="@color/clear"
-		android:background="@drawable/energy_grad"
+	<!-- Dog -->
+	<ImageView android:id="@+id/dog_image" 
+		android:layout_width="300px"
+		android:layout_height="193px"
+		android:src="@drawable/dachshund"
+		android:layout_gravity="top"
+	/>       
+    
+    <TextView android:id="@+id/happiness_desc"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:text="@string/happiness_desc"
+    	android:layout_gravity="center_horizontal"
+    />
+    	
+	<!-- Happiness Bar -->
+	<SeekBar android:id="@+id/happiness_bar"
+		android:background="@drawable/happiness_grad"
 		android:layout_width="300px"
 		android:layout_height="30px"
-		android:progress="0"
-        android:secondaryProgress="25"
+		android:progress="75"
 		android:paddingLeft="8px"
 		android:paddingRight="8px"
-	/>
-	
-	<!-- Happiness Rating -->
-	<RatingBar 
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		style="?android:attr/ratingBarStyleIndicator"
-		android:id="@+id/happiness_rating" 
-	/>
+		android:progressDrawable="@drawable/clear"
+		android:enabled="false"
+	/>    	
+    	
+	<TextView android:id="@+id/loyalty_desc"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:text="@string/loyalty_desc" 
+    	android:layout_gravity="center_horizontal"
+    />    	
+    	
+	<!-- Loyalty -->
+	<ImageView android:id="@+id/loyalty_rating" 
+		android:layout_width="350px"
+		android:layout_height="49px"
+		android:src="@drawable/heart_1of7" 
+	/>     	
 
 	<!-- Start Walk -->
 	<Button android:id="@+id/btn_start_walk"
 		android:text="@string/start_walk"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
+		android:layout_gravity="bottom"
 	/>
-		
-	<!-- Ignore Reminder -->
-	<Button android:id="@+id/btn_ignore_reminder"
-		android:text="@string/ignore_reminder"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-	/>		
    
 </LinearLayout>

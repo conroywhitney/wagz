@@ -30,6 +30,7 @@ import android.os.IBinder;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SeekBar;
 
 import com.konreu.android.wagz.R;
 import com.konreu.android.wagz.StepService;
@@ -49,6 +50,9 @@ public class Wagz extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
+        SeekBar sb = (SeekBar) findViewById(R.id.happiness_bar);
+        sb.setEnabled(false);
     }
 
     @Override

@@ -48,12 +48,15 @@ public final class R {
         public static final int value=0x7f09000b;
     }
     public static final class drawable {
-        public static final int energy_current=0x7f020000;
-        public static final int energy_grad=0x7f020001;
-        public static final int ic_notification=0x7f020002;
-        public static final int icon=0x7f020003;
-        public static final int line40=0x7f020004;
-        public static final int market_icon=0x7f020005;
+        public static final int clear=0x7f020000;
+        public static final int dachshund=0x7f020001;
+        public static final int happiness_current=0x7f020002;
+        public static final int happiness_grad=0x7f020003;
+        public static final int heart_1of7=0x7f020004;
+        public static final int ic_notification=0x7f020005;
+        public static final int icon=0x7f020006;
+        public static final int line40=0x7f020007;
+        public static final int market_icon=0x7f020008;
     }
     public static final class id {
         public static final int box_calories=0x7f0a0012;
@@ -62,15 +65,17 @@ public final class R {
         public static final int box_speed=0x7f0a000f;
         public static final int box_steps=0x7f0a0008;
         public static final int box_time=0x7f0a0001;
-        public static final int btn_ignore_reminder=0x7f0a0018;
-        public static final int btn_start_walk=0x7f0a0017;
+        public static final int btn_start_walk=0x7f0a001a;
         public static final int calories_units=0x7f0a0014;
         public static final int calories_value=0x7f0a0013;
         public static final int create_quick_note_button=0x7f0a0007;
         public static final int distance_units=0x7f0a0006;
         public static final int distance_value=0x7f0a0005;
-        public static final int energy_bar=0x7f0a0015;
-        public static final int happiness_rating=0x7f0a0016;
+        public static final int dog_image=0x7f0a0015;
+        public static final int happiness_bar=0x7f0a0017;
+        public static final int happiness_desc=0x7f0a0016;
+        public static final int loyalty_desc=0x7f0a0018;
+        public static final int loyalty_rating=0x7f0a0019;
         public static final int pace_units=0x7f0a000e;
         public static final int pace_value=0x7f0a000d;
         public static final int row_1=0x7f0a0000;
@@ -107,6 +112,7 @@ public final class R {
         public static final int exercise_type_setting_details=0x7f060036;
         public static final int exercise_type_setting_title=0x7f060037;
         public static final int exercise_type_walking=0x7f060039;
+        public static final int happiness_desc=0x7f060063;
         public static final int high=0x7f060026;
         public static final int ignore_reminder=0x7f06005e;
         public static final int inches=0x7f060017;
@@ -124,6 +130,7 @@ public final class R {
         public static final int kilometers=0x7f060010;
         public static final int kilometers_per_hour=0x7f060013;
         public static final int low=0x7f060028;
+        public static final int loyalty_desc=0x7f060062;
         public static final int maintain_nothing=0x7f06003d;
         public static final int maintain_pace=0x7f06003e;
         public static final int maintain_setting=0x7f06003a;
