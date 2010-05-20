@@ -20,11 +20,15 @@
 package com.konreu.android.wagz.activities;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -33,6 +37,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.konreu.android.wagz.R;
 import com.konreu.android.wagz.StepService;
@@ -41,6 +46,8 @@ public class Wagz extends Activity {
 	private static String TAG = "Wagz";	
         
     private StepService mService;
+    
+    static final int DIALOG_ABOUT = 1;
 
     private boolean isRunning() {
     	Log.v(TAG + ".isRunning", "StepService.isRunning = " + StepService.isRunning());
@@ -51,6 +58,7 @@ public class Wagz extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+                
         setContentView(R.layout.main);
         
         SeekBar sb = (SeekBar) findViewById(R.id.happiness_bar);
@@ -69,7 +77,7 @@ public class Wagz extends Activity {
                 stopWalk();
             }
         });
-
+    	
     	setButtonStartWalk();
     }
 
@@ -192,6 +200,7 @@ public class Wagz extends Activity {
     private static final int MENU_PAUSE = 1;
     private static final int MENU_RESUME = 2;
     private static final int MENU_DETAILS = 3;
+    private static final int MENU_ABOUT = 4;
     
     /* Creates the menu items */
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -211,8 +220,11 @@ public class Wagz extends Activity {
         	.setIntent(new Intent(this, Detailz.class));
         menu.add(0, MENU_SETTINGS, 0, R.string.settings)
 	        .setIcon(android.R.drawable.ic_menu_preferences)
-	        .setShortcut('8', 's')
+	        .setShortcut('7', 's')
 	        .setIntent(new Intent(this, Settingz.class));
+        menu.add(0, MENU_ABOUT, 0, R.string.menu_about)
+        	.setIcon(android.R.drawable.ic_menu_help)
+        	.setShortcut('8', 'a');
         menu.add(0, MENU_QUIT, 0, R.string.quit)
 	        .setIcon(android.R.drawable.ic_lock_power_off)
 	        .setShortcut('9', 'q');
@@ -233,7 +245,42 @@ public class Wagz extends Activity {
                 stopStepService();
                 finish();
                 return true;
+            case MENU_ABOUT:
+            	showDialog(DIALOG_ABOUT);
+            	return true;
         }
         return false;
+    }  
+    
+    protected Dialog onCreateDialog(int id) {
+    	Dialog dialog;
+    	switch(id) {
+    		case DIALOG_ABOUT:
+    			dialog = new Dialog(this);
+    	    	dialog.setContentView(R.layout.about);
+    	    	dialog.setTitle("About " + getString(R.string.app_name));
+    	    	
+    	    	// Set the application version
+    	    	// HOLY SHIT THIS IS ALOT OF WORK FOR ONE NUMBER
+    	    	PackageManager pm = getPackageManager();
+    	    	PackageInfo pi = null;
+    	        try {
+    	        	pi = pm.getPackageInfo("com.konreu.android.wagz", 0);
+    	        } catch (NameNotFoundException nnfe) {
+    	        	pi = null;
+    	        	Log.e(TAG, "error getting package info: " + nnfe.getMessage());
+    	        }
+    	        TextView text = (TextView) dialog.findViewById(R.id.app_version);
+    	        if (pi != null) {
+    	        	text.setText(pi.versionName);
+    	        } else {
+    	        	text.setVisibility(View.GONE);
+    	        }
+    	    	
+    	    	break;
+	        default:
+	            dialog = null;
+        }
+        return dialog;
     }    
 }

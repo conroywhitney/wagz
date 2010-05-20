@@ -99,4 +99,14 @@
 <string name="happiness_desc">Walk Your Dog Longer and He Will Be Happier!</string>
 <string name="stop_walk">We Are Done Walking For Now</string>
 <string name="about_snaptic">You can save your Walk Details on Snaptic to remember how long you walked and how far you went. Snaptic is free and easy to use! Simply install their 3banana Notes application from the Android Marketplace and press &quot;Save Walk Details&quot;!</string>
+<string name="menu_about">About</string>
+<string name="about_text">A virtual dog who reminds you to walk every day for a recommended amount of time. Allows you to see how long and far you walked, and save this data to Snaptic.</string>
+<string name="about_code_copyright">Copyright (c) 2010 Konreu (Conroy Whitney)</string>
+<string name="about_license">This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</string>
+<string name="about_url">Visit http://android.konreu.com/ for the source code to this application.</string>
+<string name="about_code_attribution">Based on the Pedometer Android App by Levente Bagi (http://code.google.com/p/pedometer/)</string>
+<string name="about_image_attribution">Paw icon based on the image at http://www.dog-paw-print.com/dog-paw-print-clip-art.html.Heart images based on http://www.hooplovers.com/_src/sc813/heart-128x100.jpg. </string>
+<string name="about_snaptic_disclaimer">Wagz by Konreu (Conroy Whitney) is not directly affiliated with Snaptic, the makers of 3banana Notes and Snaptic.com (located at www.snaptic.com). Wagz uses the 3banana application to save and retrieve information from Snaptic.</string>
+<string name="about_contest">Wagz was developed by Konreu as an entry into the Snaptic \&quot;Move Your App! Developer Challenge\&quot; located at https://www.snaptic.com/challenge/.</string>
+<string name="about_thanks">Special thanks to Jessica Whitney and Brian Stoddard for their help and support in finalizing the original concept of this application.</string>
 </resources>
