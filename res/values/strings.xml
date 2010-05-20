@@ -93,4 +93,6 @@
 <string name="start_walk">Let's Go For a Walk !</string>
 <string name="ignore_reminder">Sorry, No Walk Today</string>
 <string name="time_units">minutes</string>
+<string name="toast_quick_note">Walk Details Saved to Snaptic</string>
+<string name="create_quick_note_button">Save Walk Details</string>
 </resources>

@@ -33,17 +33,23 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.konreu.android.wagz.PedometerSettings;
 import com.konreu.android.wagz.R;
 import com.konreu.android.wagz.StepService;
+import com.snaptic.integration.IntentIntegrator;
 
 public class Detailz extends Activity {
 	private static String TAG = "Detailz";	
    
     private SharedPreferences mSettings;
     private PedometerSettings mPedometerSettings;
+    
+    private IntentIntegrator _notesIntent;
     
     private TextView mDistanceValueView;
 //    private TextView mTimeValueView;
@@ -62,6 +68,18 @@ public class Detailz extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);        
         setContentView(R.layout.detailz);
+        
+        if (_notesIntent == null) {
+        	_notesIntent = new IntentIntegrator(this);	
+        }
+        
+        ((Button)findViewById(R.id.create_quick_note_button)).setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				_notesIntent.createNote("I walked " + mDistanceValue + " " + 
+							getDistanceUnits() + " with my virtual dog " + 
+							"" + "\n\n#wagz");
+			}        	
+        });
     }
 
     @Override
@@ -79,11 +97,16 @@ public class Detailz extends Activity {
 //        mTimeValueView = (TextView) findViewById(R.id.time_value);
 
         mIsMetric = mPedometerSettings.isMetric();
-        ((TextView) findViewById(R.id.distance_units)).setText(getString(
-                mIsMetric
-                ? R.string.kilometers
-                : R.string.miles
-        ));
+        ((TextView) findViewById(R.id.distance_units)).setText(getDistanceUnits());
+    }
+    
+    protected String getDistanceUnits() {
+    	 mIsMetric = mPedometerSettings.isMetric();
+    	 return getString(
+    	    mIsMetric
+         	? R.string.kilometers
+         	: R.string.miles
+         );
     }
     
     @Override
@@ -101,6 +124,7 @@ public class Detailz extends Activity {
 
     protected void onDestroy() {
         super.onDestroy();
+        _notesIntent = null;
     }
 
     private StepService mService;

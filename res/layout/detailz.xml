@@ -67,5 +67,14 @@
 
         </LinearLayout>
     </LinearLayout>
+    
+    <Button 
+		android:text="@string/create_quick_note_button"
+		android:id="@+id/create_quick_note_button"
+		android:layout_width="225px"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_horizontal"
+	    android:layout_marginTop="15px"
+	/>
            
 </LinearLayout>
