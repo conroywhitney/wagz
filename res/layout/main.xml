@@ -9,6 +9,7 @@
 	<ImageView android:id="@+id/dog_image" 
 		android:layout_width="300px"
 		android:layout_height="193px"
+		android:layout_marginBottom="10px"
 		android:src="@drawable/dachshund"
 		android:layout_gravity="top"
 	/>       
@@ -25,9 +26,10 @@
 		android:background="@drawable/happiness_grad"
 		android:layout_width="300px"
 		android:layout_height="30px"
+		android:layout_marginBottom="10px"
 		android:progress="75"
-		android:paddingLeft="8px"
-		android:paddingRight="8px"
+		android:paddingLeft="30px"
+		android:paddingRight="30px"
 		android:progressDrawable="@drawable/clear"
 		android:enabled="false"
 	/>    	
@@ -43,6 +45,7 @@
 	<ImageView android:id="@+id/loyalty_rating" 
 		android:layout_width="350px"
 		android:layout_height="49px"
+		android:layout_marginBottom="15px"
 		android:src="@drawable/heart_1of7" 
 	/>     	
 

@@ -162,7 +162,7 @@ public class StepService extends Service {
         mSensorManager.unregisterListener(mStepDetector);
         
         // Tell the user we stopped.
-        Toast.makeText(this, getText(R.string.stopped), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getText(R.string.stopped), Toast.LENGTH_LONG).show();
         bRunning = false;
         mBeginTime = -1;
     }

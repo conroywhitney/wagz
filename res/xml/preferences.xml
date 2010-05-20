@@ -6,16 +6,7 @@
 	<PreferenceCategory
 		android:title="@string/pref_category_notifications">        
 
-
-
 	</PreferenceCategory>
-	
-	<PreferenceCategory
-		android:title="@string/pref_category_snaptic">        
-
-
-
-	</PreferenceCategory>	
 	
 	<PreferenceCategory
 		android:title="@string/pref_category_advanced">
@@ -45,21 +36,6 @@
 		        android:dialogTitle="@string/step_length_setting_title"
 		        android:defaultValue="20" />
 		    
-		<com.konreu.android.wagz.preferences.BodyWeightPreference
-		        android:key="body_weight"
-		        android:title="@string/body_weight_setting"
-		        android:summary="@string/body_weight_setting_details"
-		        android:dialogTitle="@string/body_weight_setting_title"
-		        android:defaultValue="50" />
-		    
-		<ListPreference
-		        android:key="exercise_type"
-		        android:title="@string/exercise_type_setting"
-		        android:summary="@string/exercise_type_setting_details"
-		        android:entries="@array/exercise_type_preference"
-		        android:entryValues="@array/exercise_type_preference_values"
-		        android:dialogTitle="@string/exercise_type_setting_title"
-		        android:defaultValue="running" />
 	</PreferenceCategory>
 
 </PreferenceScreen>
