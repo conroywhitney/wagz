@@ -84,5 +84,13 @@
 		android:layout_gravity="center_horizontal"
 	    android:layout_marginTop="5px"
 	/>
+	
+	<TextView android:id="@+id/about_snaptic"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="5px"
+		android:layout_gravity="fill_horizontal"
+		android:text="@string/about_snaptic"	
+	/>
            
 </LinearLayout>
