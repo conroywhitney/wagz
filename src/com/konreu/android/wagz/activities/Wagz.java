@@ -50,6 +50,8 @@ import com.konreu.android.wagz.StepService;
 public class Wagz extends Activity {
 	private static String TAG = "Wagz";	
 	
+	private final int MIN_PERCENT_FOR_LOYALTY_GAIN = 10;
+	
     private StepService mService;
         
     private SeekBar mHappinessBar;
@@ -57,6 +59,7 @@ public class Wagz extends Activity {
     private TextView mLoyaltyView;    
     
     private long mElapsedTime;
+    private int mLoyalty;
     
     static final int DIALOG_ABOUT = 1;
 
@@ -64,7 +67,7 @@ public class Wagz extends Activity {
     	Log.v(TAG + ".isRunning", "StepService.isRunning = " + StepService.isRunning());
 		return StepService.isRunning();
     }
-        
+            
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -94,13 +97,44 @@ public class Wagz extends Activity {
     	mLoyaltyView = (TextView) findViewById(R.id.loyalty_value);
     	    	    	
     	setButtonStartWalk();
+    	
+    	// Take away hearts
+    	double dblNumDaysSinceLastActivity = getNumDaysSinceLastActivity();
+    	Log.i(TAG, "dblNumDaysSinceLastActivity: " + Double.toString(dblNumDaysSinceLastActivity));
+    	int iNumDays = (int)(Math.floor(dblNumDaysSinceLastActivity));
+    	Log.i(TAG, "iNumDays: " + Integer.toString(iNumDays));
+    	if (dblNumDaysSinceLastActivity > 1.5) {	// give them 36 hour window
+    		Log.i(TAG, "it has been too long...");
+    		mLoyalty = AppState.getInstance(this).getLoyalty();
+    		Log.i(TAG, "before loyalty: " + mLoyalty);
+    		if (iNumDays > mLoyalty) {
+    			Log.i(TAG, "it has been a very long time ... no more loyalty");
+    			// It has been too long ... they have no more loyalty   =(
+    			mLoyalty = 0;
+    		} else {
+    			Log.i(TAG, "reducing loyalty");
+    			// Take away how long it's been since they have last had activity
+    			mLoyalty -= iNumDays;
+    		}
+    		
+    		AppState.getInstance(this).setLoyalty(mLoyalty);
+    	} else {
+    		Log.i(TAG, "they are still within the threshold...");
+    	}
     }
+        
+    private double getNumDaysSinceLastActivity() {
+    	long elapsedMS = System.currentTimeMillis() - AppState.getInstance(this).getLastWalkDate();
+    	return (double) (elapsedMS / 86400000.0);	// 129600000 = 36hrs
+    }
+    
 
     @Override
     protected void onResume() {
         super.onResume();
         
         mElapsedTime = AppState.getInstance(this).getElapsedTime();
+        mLoyalty = AppState.getInstance(this).getLoyalty();
         
         if (this.isRunning()) {
         	bindStepService();
@@ -118,9 +152,23 @@ public class Wagz extends Activity {
         
     private void updateUI() {
         // These have to be *after* we get our settings ...
-        mHappinessView.setText(getPercentDone() + "%");
-    	mHappinessBar.setProgress(getPercentDone());
-    	mLoyaltyView.setText("1");
+    	int percentDone = getPercentDone();
+    	
+        mHappinessView.setText(percentDone + "%");
+    	mHappinessBar.setProgress(percentDone);
+    	
+    	if (percentDone >= MIN_PERCENT_FOR_LOYALTY_GAIN && !AppState.getInstance(this).hasUpdatedLoyaltyLately()) {
+    		Log.i(TAG, "greater than 90% and not updated since last activity: updating loyalty from " + mLoyalty + " to " + (mLoyalty+1));
+    		// Add hearts !
+    		mLoyalty += 1;
+    		
+    		// We have made our dog happy -- this date will live in infamy !
+    		AppState.getInstance(this).setLastWalkDate(System.currentTimeMillis());
+    		AppState.getInstance(this).setLoyalty(mLoyalty);
+    		AppState.getInstance(this).setHasUpdatedLoyaltyLately(true);
+    	}
+    	
+    	mLoyaltyView.setText(Integer.toString(mLoyalty));
     }
     
     /***

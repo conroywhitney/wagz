@@ -37,11 +37,13 @@ public class AppState {
 	private final String STATE_ELAPSED_TIME = "elapsed_time";
 	private final String STATE_LAST_WALK_DATE = "last_walk_date";
 	private final String STATE_LOYALTY = "loyalty";
+	private final String STATE_HAS_UPDATED_LOYALTY_LATELY = "loyalty_updated_lately";
 	
 	private final float DEFAULT_DISTANCE = (float) 0.0;
 	private final long DEFAULT_ELAPSED_TIME = 0;
 	private final long DEFAULT_LAST_WALK_DATE = System.currentTimeMillis();
-	private final int DEFAULT_LOYALTY = 1;
+	private final int DEFAULT_LOYALTY = 4;
+	private final boolean DEFAULT_HAS_UPDATED_LOYALTY_LATELY = false;
 	
     SharedPreferences mState;
     Editor mStateEditor;
@@ -63,63 +65,53 @@ public class AppState {
     public void clear() {
     	mStateEditor.remove(STATE_DISTANCE);
     	mStateEditor.remove(STATE_ELAPSED_TIME);
+    	mStateEditor.remove(STATE_HAS_UPDATED_LOYALTY_LATELY);
     	Log.i(TAG, "clearing state");
     	this.commit();
     }
         
     public float getDistance() {
-//        try {
-//            return Float.valueOf(mState.getString(STATE_DISTANCE, Float.toString(DEFAULT_DISTANCE)).trim());
-//        } catch (NumberFormatException nfe) {
-//        	Log.e(TAG, "error getting state " + STATE_DISTANCE + ": " + nfe.getMessage());
-//            return DEFAULT_DISTANCE;
-//        }
     	return mState.getFloat(STATE_DISTANCE, DEFAULT_DISTANCE);
     }
     public void setDistance(float distance) {
+    	Log.v(TAG, "setting distance: " + distance);
     	mStateEditor.putFloat(STATE_DISTANCE, distance);
     	this.commit();
     }
     
     public long getElapsedTime() {
-//    	try {
-//    		return Long.valueOf(mState.getString(STATE_ELAPSED_TIME, Long.toString(DEFAULT_ELAPSED_TIME)));
-//    	} catch (NumberFormatException nfe) {
-//    		Log.e(TAG, "error getting preference " + STATE_ELAPSED_TIME + ": " + nfe.getMessage());
-//    		return DEFAULT_ELAPSED_TIME;
-//    	}
     	return mState.getLong(STATE_ELAPSED_TIME, DEFAULT_ELAPSED_TIME);
     }
     public void setElapsedTime(long elapsedTime) {
+    	Log.v(TAG, "setting elapsed time: " + elapsedTime);
     	mStateEditor.putLong(STATE_ELAPSED_TIME, elapsedTime);
     	this.commit();
     }
     
     public long getLastWalkDate() {
-//    	try {
-//    		return Long.valueOf(mState.getString(STATE_LAST_WALK_DATE, Long.toString(DEFAULT_LAST_WALK_DATE)));
-//    	} catch (NumberFormatException nfe) {
-//    		Log.e(TAG, "error getting preference " + STATE_LAST_WALK_DATE + ": " + nfe.getMessage());
-//    		return DEFAULT_LAST_WALK_DATE;
-//    	}
     	return mState.getLong(STATE_LAST_WALK_DATE, DEFAULT_LAST_WALK_DATE);
     }
     public void setLastWalkDate(long dateMS) {
+    	Log.v(TAG, "setting last walking date: " + dateMS);
     	mStateEditor.putLong(STATE_LAST_WALK_DATE, dateMS);
     	this.commit();
     }
     
     public int getLoyalty() {
-//    	try {
-//    		return Integer.valueOf(mState.getString(STATE_LOYALTY, Integer.toString(DEFAULT_LOYALTY)));
-//    	} catch (NumberFormatException nfe) {
-//    		Log.e(TAG, "error getting preference " + STATE_LOYALTY + ": " + nfe.getMessage());
-//    		return DEFAULT_LOYALTY;
-//    	}
     	return mState.getInt(STATE_LOYALTY, DEFAULT_LOYALTY);
     }
     public void setLoyalty(int loyalty) {
+    	Log.v(TAG, "setting loyalty: " + loyalty);
     	mStateEditor.putInt(STATE_LOYALTY, loyalty);
+    	mStateEditor.commit();
+    }
+    
+    public boolean hasUpdatedLoyaltyLately() {
+    	return mState.getBoolean(STATE_HAS_UPDATED_LOYALTY_LATELY, DEFAULT_HAS_UPDATED_LOYALTY_LATELY);
+    }
+    public void setHasUpdatedLoyaltyLately(boolean b) {
+    	Log.v(TAG, "setting hasUpdatedLoyaltyLately: " + b);
+    	mStateEditor.putBoolean(STATE_HAS_UPDATED_LOYALTY_LATELY, b);
     	mStateEditor.commit();
     }
     
