@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -141,6 +142,10 @@ public class Wagz extends BetterDefaultActivity {
             unbindStepService();
         }
         super.onPause();
+    }
+    
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        resetValues(true);
     }
 
     @Override

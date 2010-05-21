@@ -19,9 +19,14 @@
 
 package com.konreu.android.wagz.activities;
 
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.util.Log;
 
+import com.konreu.android.wagz.AppState;
+import com.konreu.android.wagz.Dog;
 import com.konreu.android.wagz.R;
 
 /**
@@ -29,7 +34,9 @@ import com.konreu.android.wagz.R;
  * Started when the user click Settings from the main menu.
  * @author Levente Bagi
  */
-public class Settingz extends PreferenceActivity {
+public class Settingz extends PreferenceActivity implements OnSharedPreferenceChangeListener {
+	private static final String TAG = "Settingz";
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,4 +44,24 @@ public class Settingz extends PreferenceActivity {
         
         addPreferencesFromResource(R.xml.preferences);
     }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+    	getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+    }
+    
+    @Override
+    protected void onPause() {
+        super.onPause();       
+        getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);    
+    }
+
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+		// Clear everything if they changed a preference ...
+		Log.v(TAG + "onSharedPreferenceChanged", "resetting AppState and Dog");
+		AppState.getInstance(this).clear();
+		Dog.resetInstance(this);
+	}
 }
