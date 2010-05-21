@@ -22,6 +22,8 @@
         <activity android:name="com.konreu.android.wagz.activities.Settingz" 
         	android:label="@string/activity_settings"
         	android:screenOrientation="portrait" />
+        	
+		<receiver android:name="com.konreu.android.wagz.activities.Alarmz" />        	
         
         <service android:name=".StepService"/>
 

@@ -225,6 +225,7 @@ public class StepService extends Service {
         Notification notification = new Notification(R.drawable.ic_notification, null,
                 System.currentTimeMillis());
         notification.flags = Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;
+        notification.icon = R.drawable.ic_notification;
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, Wagz.class), 0);
         notification.setLatestEventInfo(this, text,

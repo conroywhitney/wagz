@@ -152,6 +152,8 @@ public final class R {
         public static final int miles_per_hour=0x7f060014;
         public static final int notes_intent_error=0x7f060007;
         public static final int notification_subtitle=0x7f06000c;
+        public static final int notification_walk_subtitle=0x7f06005b;
+        public static final int notification_walk_title=0x7f06005a;
         public static final int ok=0x7f060054;
         public static final int ok_button=0x7f060002;
         public static final int pause=0x7f06001c;

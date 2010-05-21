@@ -32,7 +32,7 @@ import com.konreu.android.wagz.R;
 /**
  * Activity for Pedometer settings.
  * Started when the user click Settings from the main menu.
- * @author Levente Bagi
+ * @author Conroy Whitney
  */
 public class Settingz extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 	private static final String TAG = "Settingz";
