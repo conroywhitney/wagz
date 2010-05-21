@@ -80,21 +80,5 @@
 		android:layout_marginBottom="5px"
 		android:src="@drawable/heart_1of7" 
 	/>     	
-
-	<!-- Start Walk -->
-	<Button android:id="@+id/btn_start_walk"
-		android:text="@string/start_walk"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_gravity="bottom"
-	/>
-	
-	<!-- Stop Walk -->
-	<Button android:id="@+id/btn_stop_walk"
-		android:text="@string/stop_walk"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_gravity="bottom"
-	/>	
    
 </LinearLayout>

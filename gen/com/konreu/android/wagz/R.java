@@ -77,8 +77,6 @@ public final class R {
         public static final int box_speed=0x7f0a0012;
         public static final int box_steps=0x7f0a000b;
         public static final int box_time=0x7f0a0002;
-        public static final int btn_start_walk=0x7f0a0021;
-        public static final int btn_stop_walk=0x7f0a0022;
         public static final int calories_units=0x7f0a0017;
         public static final int calories_value=0x7f0a0016;
         public static final int create_quick_note_button=0x7f0a0009;

@@ -37,9 +37,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
 import com.github.droidfu.activities.BetterDefaultActivity;
 import com.konreu.android.wagz.AppState;
 import com.konreu.android.wagz.Dog;
@@ -78,26 +78,9 @@ public class Wagz extends BetterDefaultActivity {
         mHappinessBar = (SeekBar) findViewById(R.id.happiness_bar);
         mHappinessBar.setEnabled(false);
         mHappinessBar.setFocusable(false);
-        
-    	Button btnStartWalk = (Button) findViewById(R.id.btn_start_walk);
-    	btnStartWalk.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                startWalk();
-            }
-        });
-    	
-    	Button btnStopWalk = (Button) findViewById(R.id.btn_stop_walk);
-    	btnStopWalk.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                stopWalk();
-            }
-        });
     	
     	mHappinessView = (TextView) findViewById(R.id.happiness_value);
     	mLoyaltyView = (TextView) findViewById(R.id.loyalty_value);
-    	    	
-    	/* Done w/ Views */
-    	setButtonStartWalk();
     }
         
     @Override
@@ -108,12 +91,6 @@ public class Wagz extends BetterDefaultActivity {
         
         if (this.isRunning()) {
         	bindStepService();
-        	
-        	// If already running, want to show "Stop" button
-        	setButtonStopWalk();
-        } else {
-        	// If not yet running, show "Start" button
-        	setButtonStartWalk();
         }
         
     	if (this.isLaunching()) {
@@ -143,28 +120,11 @@ public class Wagz extends BetterDefaultActivity {
     }
     
     /***
-     * Show Start button, hide Stop button
-     */
-    protected void setButtonStartWalk() {
-    	((Button) findViewById(R.id.btn_start_walk)).setVisibility(View.VISIBLE);
-    	((Button) findViewById(R.id.btn_stop_walk)).setVisibility(View.GONE);
-    }
-    
-    /***
-     * Hide Start button, show Stop button
-     */
-    protected void setButtonStopWalk() {
-    	((Button) findViewById(R.id.btn_start_walk)).setVisibility(View.GONE);
-    	((Button) findViewById(R.id.btn_stop_walk)).setVisibility(View.VISIBLE);
-    }
-    
-    /***
      * Bind to StepService and show "Stop" button
      */
     protected void startWalk() {
     	startStepService();
         bindStepService();
-        setButtonStopWalk();
     }
     
     /***
@@ -173,7 +133,6 @@ public class Wagz extends BetterDefaultActivity {
     protected void stopWalk() {
         unbindStepService();
         stopStepService();
-        setButtonStartWalk();
     }
         
     @Override
