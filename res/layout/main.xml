@@ -19,6 +19,7 @@
     	android:layout_height="wrap_content"
     	android:text="@string/happiness_desc"
     	android:layout_gravity="center_horizontal"
+    	android:layout_marginTop="8px"
     />
 
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -55,6 +56,7 @@
     	android:layout_height="wrap_content"
     	android:text="@string/loyalty_desc" 
     	android:layout_gravity="center_horizontal"
+    	android:layout_marginTop="8px"
     />    	
     
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

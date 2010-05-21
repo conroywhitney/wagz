@@ -20,28 +20,37 @@
 		        android:dialogTitle="@string/walk_length_setting_title"
 		        android:defaultValue="15" />
 		        
-		<ListPreference
-		        android:key="walk_percent_complete"
-		        android:title="@string/walk_percent_complete_setting"
-		        android:summary="@string/walk_percent_complete_setting_details"
-		        android:entries="@array/walk_percent_complete_preference"
-		        android:entryValues="@array/walk_percent_complete_preference_values"
-		        android:dialogTitle="@string/walk_percent_complete_setting_title"
-		        android:defaultValue="90" />
-		        
-		<ListPreference
-		        android:key="walk_frequency"
-		        android:title="@string/walk_frequency_setting"
-		        android:summary="@string/walk_frequency_setting_details"
-		        android:entries="@array/walk_frequency_preference"
-		        android:entryValues="@array/walk_frequency_preference_values"
-		        android:dialogTitle="@string/walk_frequency_setting_title"
-		        android:defaultValue="15" />
+<!--		<ListPreference-->
+<!--		        android:key="walk_percent_complete"-->
+<!--		        android:title="@string/walk_percent_complete_setting"-->
+<!--		        android:summary="@string/walk_percent_complete_setting_details"-->
+<!--		        android:entries="@array/walk_percent_complete_preference"-->
+<!--		        android:entryValues="@array/walk_percent_complete_preference_values"-->
+<!--		        android:dialogTitle="@string/walk_percent_complete_setting_title"-->
+<!--		        android:defaultValue="90" />-->
+<!--		        -->
+<!--		<ListPreference-->
+<!--		        android:key="walk_frequency"-->
+<!--		        android:title="@string/walk_frequency_setting"-->
+<!--		        android:summary="@string/walk_frequency_setting_details"-->
+<!--		        android:entries="@array/walk_frequency_preference"-->
+<!--		        android:entryValues="@array/walk_frequency_preference_values"-->
+<!--		        android:dialogTitle="@string/walk_frequency_setting_title"-->
+<!--		        android:defaultValue="15" />-->
 
 	</PreferenceCategory>	
 	
 	<PreferenceCategory
 		android:title="@string/pref_category_advanced">
+
+		<ListPreference
+		        android:key="step_length"
+		        android:title="@string/step_length_setting"
+		        android:summary="@string/step_length_setting_details"
+		        android:dialogTitle="@string/step_length_setting_title"
+		        android:entries="@array/sex_preference"
+		        android:entryValues="@array/sex_preference_values"
+		        android:defaultValue="30" />	            
 	            
 		<ListPreference
 		        android:key="sensitivity"
@@ -60,13 +69,6 @@
 		        android:entryValues="@array/units_preference_values"
 		        android:dialogTitle="@string/units_setting_title"
 		        android:defaultValue="imperial" />
-		
-		<com.konreu.android.wagz.preferences.StepLengthPreference
-		        android:key="step_length"
-		        android:title="@string/step_length_setting"
-		        android:summary="@string/step_length_setting_details"
-		        android:dialogTitle="@string/step_length_setting_title"
-		        android:defaultValue="20" />
 		    
 	</PreferenceCategory>
 

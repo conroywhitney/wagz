@@ -20,6 +20,7 @@
 package com.konreu.android.wagz.activities;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -306,7 +307,8 @@ public class Detailz extends BetterDefaultActivity {
     }
     
     private String getFormattedDistance() {
-    	return ("" + (mDistanceValue + 0.000001f)).substring(0, 4);
+    	DecimalFormat df = new DecimalFormat("#.##");
+        return df.format(mDistanceValue);
     }
     
 }
