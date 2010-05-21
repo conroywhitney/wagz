@@ -65,6 +65,7 @@ public class Wagz extends Activity {
         
         SeekBar sb = (SeekBar) findViewById(R.id.happiness_bar);
         sb.setEnabled(false);
+        sb.setFocusable(false);
         
     	Button btnStartWalk = (Button) findViewById(R.id.btn_start_walk);
     	btnStartWalk.setOnClickListener(new View.OnClickListener() {

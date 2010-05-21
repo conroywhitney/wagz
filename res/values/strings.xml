@@ -94,7 +94,7 @@
 <string name="ignore_reminder">I Will Not Go on a Walk Today</string>
 <string name="time_units">minutes</string>
 <string name="toast_quick_note">Walk Details Saved to Snaptic.com</string>
-<string name="create_quick_note_button">Save Walk Details on Snaptic!</string>
+<string name="create_quick_note_button">Save Walk Details on Snaptic</string>
 <string name="loyalty_desc">Walk Him Every Day and He Will Love You!</string>
 <string name="happiness_desc">Walk Your Dog Longer and He Will Be Happier!</string>
 <string name="stop_walk">We Are Done Walking For Now</string>
@@ -112,5 +112,5 @@
 <string name="really_reset_values">Discard Your Walk Details</string>
 <string name="ok">OK</string>
 <string name="cancel">Cancel</string>
-<string name="warning_reset_values">You will lose your Walk Details. If you would like to save your Walk Details, press Cancel and press the Save Your Walk Details to Snaptic button from the Walk Details section.</string>
+<string name="warning_reset_values">You will lose your Walk Details. If you would like to save your Walk Details, press Cancel and press the \&quot;Save Walk Details on Snaptic\&quot; button from the Walk Details page.\n\nWould you still like to discard your Walk Details?</string>
 </resources>
