@@ -3,8 +3,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:padding="@dimen/margin" 
-    android:background="@color/screen_background">
+    android:padding="@dimen/margin" >
     
     <LinearLayout android:id="@+id/row_1"
         android:orientation="horizontal" 
@@ -23,8 +22,7 @@
                 android:textSize="@dimen/value"
                 android:layout_width="fill_parent" 
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal" 
-                android:background="@color/display_background" 
+                android:gravity="center_horizontal"  
                 android:paddingLeft="@dimen/padding" 
                 android:paddingRight="@dimen/padding" 
                 android:paddingTop="@dimen/padding"/>
@@ -35,7 +33,6 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/units" 
                 android:text="@string/time_units" 
-                android:background="@color/display_background" 
                 android:paddingBottom="@dimen/padding"/>
 
         </LinearLayout>
@@ -50,8 +47,7 @@
                 android:textSize="@dimen/value"
                 android:layout_width="fill_parent" 
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal" 
-                android:background="@color/display_background" 
+                android:gravity="center_horizontal"  
                 android:paddingTop="@dimen/padding" 
                 android:paddingRight="@dimen/padding" 
                 android:paddingLeft="@dimen/padding"/>
@@ -62,7 +58,6 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/units"
                 android:text="@string/kilometers" 
-                android:background="@color/display_background" 
                 android:paddingBottom="@dimen/padding"/>
 
         </LinearLayout>

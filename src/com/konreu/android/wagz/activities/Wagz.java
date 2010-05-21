@@ -69,7 +69,7 @@ public class Wagz extends BetterDefaultActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+                
 //        String sTAG = TAG + "onCreate";
                 
         setContentView(R.layout.main);
