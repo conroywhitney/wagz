@@ -35,7 +35,6 @@ import android.widget.Toast;
 
 import com.konreu.android.wagz.activities.Wagz;
 import com.konreu.android.wagz.listeners.DistanceNotifier;
-import com.konreu.android.wagz.listeners.StepBuzzer;
 import com.konreu.android.wagz.listeners.TimerNotifier;
 
 /**
@@ -63,7 +62,7 @@ public class StepService extends Service {
     
     private SensorManager mSensorManager;
     private StepDetector mStepDetector;
-     private StepBuzzer mStepBuzzer; // used for debugging
+//     private StepBuzzer mStepBuzzer; // used for debugging
     private TimerNotifier mTimerNotifier;
     private DistanceNotifier mDistanceNotifier;
     
@@ -124,9 +123,9 @@ public class StepService extends Service {
         mTimerNotifier.setElapsedTime(mElapsedTime = mState.getLong(STATE_ELAPSED_TIME, 0));
         mStepDetector.addStepListener(mTimerNotifier);
         
-		//Used when debugging:
-		mStepBuzzer = new StepBuzzer(this);
-		mStepDetector.addStepListener(mStepBuzzer);
+//		//Used when debugging:
+//		mStepBuzzer = new StepBuzzer(this);
+//		mStepDetector.addStepListener(mStepBuzzer);
 
         // Start voice
         reloadSettings();

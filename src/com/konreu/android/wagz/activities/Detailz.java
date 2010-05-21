@@ -80,8 +80,9 @@ public class Detailz extends Activity {
         
         ((Button)findViewById(R.id.create_quick_note_button)).setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				_notesIntent.createNote("I walked " + mDistanceValue + " " + 
-							getDistanceUnits() + " with my virtual dog " + 
+				_notesIntent.createNote("I walked " + getFormattedDistance() + " " + 
+							getDistanceUnits() + 
+							" in " + getFormattedTime() + " minutes with my virtual dog " + 
 							"" + "\n\n#wagz");
 			}        	
         });
@@ -257,28 +258,28 @@ public class Detailz extends Activity {
             switch (msg.what) {
                 case DISTANCE_MSG:
                     mDistanceValue = ((Integer)msg.obj)/1000f;
-                    Log.v(TAG, "DISTANCE_MSG: " + mDistanceValue);
-                    if (mDistanceValue <= 0) { 
-                        mDistanceValueView.setText("0.00");
-                    }
-                    else {
-                        mDistanceValueView.setText(
-                                ("" + (mDistanceValue + 0.000001f)).substring(0, 4)
-                        );
-                    }
+                    if (mDistanceValue <= 0) { mDistanceValue = 0; }
+                    mDistanceValueView.setText(getFormattedDistance());
                     break;
                 case ELAPSED_TIME_MSG:
                 	mElapsedTime = (Long)msg.obj;
-                	Log.v(TAG, "ELAPSED_TIME_MSG: " + mElapsedTime);
                 	if (mElapsedTime <= 0) { mElapsedTime = 0; }
-                	Date d = new Date(mElapsedTime);
-                	DateFormat formatter = new SimpleDateFormat("mm:ss");
-                	mTimeValueView.setText(formatter.format(d));
+                	mTimeValueView.setText(getFormattedTime());
                 default:
                     super.handleMessage(msg);
             }
         }
         
     };
+    
+    private String getFormattedTime() {
+    	Date d = new Date(mElapsedTime);
+    	DateFormat formatter = new SimpleDateFormat("mm:ss");
+    	return formatter.format(d);
+    }
+    
+    private String getFormattedDistance() {
+    	return ("" + (mDistanceValue + 0.000001f)).substring(0, 4);
+    }
     
 }
