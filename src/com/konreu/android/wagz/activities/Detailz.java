@@ -93,6 +93,10 @@ public class Detailz extends Activity {
     protected void onResume() {
         super.onResume();
         
+        SharedPreferences state = getSharedPreferences(StepService.STATE_KEY, 0);
+        mDistanceValue = state.getFloat(StepService.STATE_DISTANCE, 0);
+        mElapsedTime = state.getLong(StepService.STATE_ELAPSED_TIME, 0);
+        
         if (this.isRunning()) {
         	bindStepService();	
         }
@@ -104,6 +108,13 @@ public class Detailz extends Activity {
 
         mIsMetric = mPedometerSettings.isMetric();
         ((TextView) findViewById(R.id.distance_units)).setText(getDistanceUnits());
+        
+        updateUI();
+    }
+    
+    private void updateUI() {
+    	mDistanceValueView.setText(getFormattedDistance());
+    	mTimeValueView.setText(getFormattedTime());
     }
     
     protected String getDistanceUnits() {
@@ -171,8 +182,8 @@ public class Detailz extends Activity {
         if (this.isRunning()) {
             mService.resetValues();                    
         } else {
-            mDistanceValueView.setText("0");
-            mTimeValueView.setText("0");
+            mDistanceValueView.setText("0.00");
+            mTimeValueView.setText("00:00");
             
             SharedPreferences state = getSharedPreferences(StepService.STATE_KEY, 0);
             SharedPreferences.Editor stateEditor = state.edit();

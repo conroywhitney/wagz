@@ -105,12 +105,11 @@ public class Wagz extends Activity {
     protected void onResume() {
         super.onResume();
         
+        SharedPreferences state = getSharedPreferences(StepService.STATE_KEY, 0);
+        mElapsedTime = state.getLong(StepService.STATE_ELAPSED_TIME, 0);
+        
         mPedometerSettings = new PedometerSettings(PreferenceManager.getDefaultSharedPreferences(this));
-        
-        // These have to be *after* we get our settings ...
-        mHappinessView.setText(getPercentDone() + "%");
-    	mLoyaltyView.setText("1");
-        
+                
         if (this.isRunning()) {
         	bindStepService();
         	
@@ -120,6 +119,16 @@ public class Wagz extends Activity {
         	// If not yet running, show "Start" button
         	setButtonStartWalk();
         }
+        
+        // Do this the very last thing ...
+        updateUI();
+    }
+    
+    private void updateUI() {
+        // These have to be *after* we get our settings ...
+        mHappinessView.setText(getPercentDone() + "%");
+    	mHappinessBar.setProgress(getPercentDone());
+    	mLoyaltyView.setText("1");
     }
     
     /***
@@ -171,6 +180,8 @@ public class Wagz extends Activity {
 
     protected void onDestroy() {
         super.onDestroy();
+//        stopStepService();
+//        clearValues();
     }
     
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -209,14 +220,16 @@ public class Wagz extends Activity {
         if (this.isRunning()) {
             mService.resetValues();                    
         } else {
-            SharedPreferences state = getSharedPreferences(StepService.STATE_KEY, 0);
-            SharedPreferences.Editor stateEditor = state.edit();
-            if (updateDisplay) {
-                stateEditor.putFloat(StepService.STATE_DISTANCE, 0);
-                stateEditor.putLong(StepService.STATE_ELAPSED_TIME, 0);
-                stateEditor.commit();
-            }
+        	clearValues();
         }
+    }
+    
+    private void clearValues() {
+        SharedPreferences state = getSharedPreferences(StepService.STATE_KEY, 0);
+        SharedPreferences.Editor stateEditor = state.edit();
+        stateEditor.putFloat(StepService.STATE_DISTANCE, 0);
+        stateEditor.putLong(StepService.STATE_ELAPSED_TIME, 0);
+        stateEditor.commit();
     }
 
     private static final int MENU_SETTINGS = 8;
@@ -308,8 +321,7 @@ public class Wagz extends Activity {
                 case ELAPSED_TIME_MSG:
                 	mElapsedTime = (Long)msg.obj;
                 	if (mElapsedTime <= 0) { mElapsedTime = 0; }
-                	mHappinessView.setText(Integer.toString(getPercentDone()) + "%");
-                	mHappinessBar.setProgress(getPercentDone());
+                	updateUI();
                 default:
                     super.handleMessage(msg);
             }
