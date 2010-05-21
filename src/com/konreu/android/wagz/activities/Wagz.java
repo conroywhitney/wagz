@@ -32,7 +32,9 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,11 +48,15 @@ import com.konreu.android.wagz.StepService;
 
 public class Wagz extends Activity {
 	private static String TAG = "Wagz";	
+	private static final int GOAL_MINUTES = 1;
         
     private StepService mService;
     
+    private SeekBar mHappinessBar;
     private TextView mHappinessView;
-    private TextView mLoyaltyView;
+    private TextView mLoyaltyView;    
+    
+    private long mElapsedTime;
     
     static final int DIALOG_ABOUT = 1;
 
@@ -66,9 +72,9 @@ public class Wagz extends Activity {
                 
         setContentView(R.layout.main);
         
-        SeekBar sb = (SeekBar) findViewById(R.id.happiness_bar);
-        sb.setEnabled(false);
-        sb.setFocusable(false);
+        mHappinessBar = (SeekBar) findViewById(R.id.happiness_bar);
+        mHappinessBar.setEnabled(false);
+        mHappinessBar.setFocusable(false);
         
     	Button btnStartWalk = (Button) findViewById(R.id.btn_start_walk);
     	btnStartWalk.setOnClickListener(new View.OnClickListener() {
@@ -87,9 +93,11 @@ public class Wagz extends Activity {
     	mHappinessView = (TextView) findViewById(R.id.happiness_value);
     	mLoyaltyView = (TextView) findViewById(R.id.loyalty_value);
     	
-    	mHappinessView.setText("75%");
-    	mLoyaltyView.setText("1");
+    	mElapsedTime = 0;
     	
+    	mHappinessView.setText(getPercentDone() + "%");
+    	mLoyaltyView.setText("1");
+    	    	
     	setButtonStartWalk();
     }
 
@@ -162,6 +170,7 @@ public class Wagz extends Activity {
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
         	mService = ((StepService.StepBinder) service).getService();
+        	mService.registerCallback(mCallback);
         	mService.reloadSettings();
         }
 
@@ -273,6 +282,45 @@ public class Wagz extends Activity {
         }
         return false;
     }  
+    
+    // TODO: unite all into 1 type of message
+    private StepService.ICallback mCallback = new StepService.ICallback() {
+        public void distanceChanged(float value) {
+        	// do nothing
+        }
+        public void elapsedTimeChanged(long value) {
+        	Log.v(TAG, "timeChanged: " + Long.toString(value));
+            mHandler.sendMessage(mHandler.obtainMessage(ELAPSED_TIME_MSG, value));
+        }        
+    };
+    
+    private static final int ELAPSED_TIME_MSG = 1;
+    
+    private Handler mHandler = new Handler() {
+        @Override public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case ELAPSED_TIME_MSG:
+                	mElapsedTime = (Long)msg.obj;
+                	if (mElapsedTime <= 0) { mElapsedTime = 0; }
+                	mHappinessView.setText(Integer.toString(getPercentDone()) + "%");
+                	mHappinessBar.setProgress(getPercentDone());
+                default:
+                    super.handleMessage(msg);
+            }
+        }
+        
+    };  
+    
+    private int getPercentDone() {
+    	float fPercentDone = (float)(mElapsedTime / (GOAL_MINUTES * 60000.0));
+    	if (fPercentDone > 1) {
+    		return 100;
+    	} else if (fPercentDone < 0) {
+    		return 0;
+    	} else {
+    		return (int)(fPercentDone * 100);
+    	}
+    }
     
     protected Dialog onCreateDialog(int id) {
     	Dialog dialog;
