@@ -43,23 +43,20 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.konreu.android.wagz.AppState;
-import com.konreu.android.wagz.PedometerSettings;
+import com.konreu.android.wagz.Dog;
 import com.konreu.android.wagz.R;
 import com.konreu.android.wagz.StepService;
 
 public class Wagz extends Activity {
 	private static String TAG = "Wagz";	
-	
-	private final int MIN_PERCENT_FOR_LOYALTY_GAIN = 10;
-	
+		
     private StepService mService;
         
     private SeekBar mHappinessBar;
     private TextView mHappinessView;
     private TextView mLoyaltyView;    
     
-    private long mElapsedTime;
-    private int mLoyalty;
+    private Dog mDog;
     
     static final int DIALOG_ABOUT = 1;
 
@@ -72,9 +69,13 @@ public class Wagz extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+//        String sTAG = TAG + "onCreate";
                 
         setContentView(R.layout.main);
-                
+          
+        /* Initialize our Views */
+        
         mHappinessBar = (SeekBar) findViewById(R.id.happiness_bar);
         mHappinessBar.setEnabled(false);
         mHappinessBar.setFocusable(false);
@@ -95,46 +96,16 @@ public class Wagz extends Activity {
     	
     	mHappinessView = (TextView) findViewById(R.id.happiness_value);
     	mLoyaltyView = (TextView) findViewById(R.id.loyalty_value);
-    	    	    	
+    	    	
+    	/* Done w/ Views */
     	setButtonStartWalk();
-    	
-    	// Take away hearts
-    	double dblNumDaysSinceLastActivity = getNumDaysSinceLastActivity();
-    	Log.i(TAG, "dblNumDaysSinceLastActivity: " + Double.toString(dblNumDaysSinceLastActivity));
-    	int iNumDays = (int)(Math.floor(dblNumDaysSinceLastActivity));
-    	Log.i(TAG, "iNumDays: " + Integer.toString(iNumDays));
-    	if (dblNumDaysSinceLastActivity > 1.5) {	// give them 36 hour window
-    		Log.i(TAG, "it has been too long...");
-    		mLoyalty = AppState.getInstance(this).getLoyalty();
-    		Log.i(TAG, "before loyalty: " + mLoyalty);
-    		if (iNumDays > mLoyalty) {
-    			Log.i(TAG, "it has been a very long time ... no more loyalty");
-    			// It has been too long ... they have no more loyalty   =(
-    			mLoyalty = 0;
-    		} else {
-    			Log.i(TAG, "reducing loyalty");
-    			// Take away how long it's been since they have last had activity
-    			mLoyalty -= iNumDays;
-    		}
-    		
-    		AppState.getInstance(this).setLoyalty(mLoyalty);
-    	} else {
-    		Log.i(TAG, "they are still within the threshold...");
-    	}
     }
         
-    private double getNumDaysSinceLastActivity() {
-    	long elapsedMS = System.currentTimeMillis() - AppState.getInstance(this).getLastWalkDate();
-    	return (double) (elapsedMS / 86400000.0);	// 129600000 = 36hrs
-    }
-    
-
     @Override
     protected void onResume() {
         super.onResume();
         
-        mElapsedTime = AppState.getInstance(this).getElapsedTime();
-        mLoyalty = AppState.getInstance(this).getLoyalty();
+        mDog = Dog.getInstance(this);        
         
         if (this.isRunning()) {
         	bindStepService();
@@ -151,24 +122,16 @@ public class Wagz extends Activity {
     }
         
     private void updateUI() {
+//    	String sTAG = TAG + "updateUI";
         // These have to be *after* we get our settings ...
-    	int percentDone = getPercentDone();
+    	int iHappiness = mDog.getHappiness();
     	
-        mHappinessView.setText(percentDone + "%");
-    	mHappinessBar.setProgress(percentDone);
+        mHappinessView.setText(iHappiness + "%");
+    	mHappinessBar.setProgress(iHappiness);
     	
-    	if (percentDone >= MIN_PERCENT_FOR_LOYALTY_GAIN && !AppState.getInstance(this).hasUpdatedLoyaltyLately()) {
-    		Log.i(TAG, "greater than 90% and not updated since last activity: updating loyalty from " + mLoyalty + " to " + (mLoyalty+1));
-    		// Add hearts !
-    		mLoyalty += 1;
-    		
-    		// We have made our dog happy -- this date will live in infamy !
-    		AppState.getInstance(this).setLastWalkDate(System.currentTimeMillis());
-    		AppState.getInstance(this).setLoyalty(mLoyalty);
-    		AppState.getInstance(this).setHasUpdatedLoyaltyLately(true);
-    	}
+    	mDog.updateLoyalty();
     	
-    	mLoyaltyView.setText(Integer.toString(mLoyalty));
+    	mLoyaltyView.setText(Integer.toString(mDog.getLoyalty()));
     }
     
     /***
@@ -349,26 +312,14 @@ public class Wagz extends Activity {
         @Override public void handleMessage(Message msg) {
             switch (msg.what) {
                 case ELAPSED_TIME_MSG:
-                	mElapsedTime = (Long)msg.obj;
-                	if (mElapsedTime <= 0) { mElapsedTime = 0; }
+                	mDog.updateHappiness((Long)msg.obj);
                 	updateUI();
                 default:
                     super.handleMessage(msg);
             }
         }
     };  
-    
-    private int getPercentDone() {
-    	float fPercentDone = (float)(mElapsedTime / (PedometerSettings.getInstance(this).getWalkLength() * 60000.0));
-    	if (fPercentDone > 1) {
-    		return 100;
-    	} else if (fPercentDone < 0) {
-    		return 0;
-    	} else {
-    		return (int)(fPercentDone * 100);
-    	}
-    }
-    
+       
     protected Dialog onCreateDialog(int id) {
     	Dialog dialog;
     	switch(id) {

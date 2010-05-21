@@ -34,10 +34,14 @@ public class PedometerSettings {
 	private final String SETTING_STEP_LENGTH = "step_length";
 	private final String SETTING_WALK_LENGTH = "walk_length";
 	private final String SETTING_SENSITIVITY = "sensitivity";
+	private final String SETTING_WALK_PERCENT_COMPLETE = "walk_percent_complete";
+	private final String SETTING_WALK_FREQUENCY = "walk_frequency";
 	
-	private final float DEFAULT_STEP_LENGTH = (float) 20.0;
-	private final int DEFAULT_WALK_LENGTH = 15;
-	private final int DEFAULT_SENSITIVITY = 30;
+	private final float DEFAULT_STEP_LENGTH = (float) 20.0;		// 20cm step
+	private final int DEFAULT_WALK_LENGTH = 15;		// 15 min
+	private final int DEFAULT_SENSITIVITY = 30;		// medium
+	private final int DEFAULT_WALK_PERCENT_COMPLETE = 90;	// 90% complete
+	private final int DEFAULT_WALK_FREQUENCY = 1440;	// once a day
 	
     SharedPreferences mSettings;
     
@@ -63,33 +67,41 @@ public class PedometerSettings {
     }
     
     public float getStepLength() {
-        try {
-            return Float.valueOf(mSettings.getString(SETTING_STEP_LENGTH, Float.toString(DEFAULT_STEP_LENGTH)).trim());
-        } catch (NumberFormatException nfe) {
-        	Log.e(TAG, "error getting preference " + SETTING_STEP_LENGTH + ": " + nfe.getMessage());
-            return DEFAULT_STEP_LENGTH;
-        }
-//        return mSettings.getFloat(SETTING_STEP_LENGTH, DEFAULT_STEP_LENGTH);
+    	return getFloat(SETTING_STEP_LENGTH, DEFAULT_STEP_LENGTH);
     }
     
     public int getWalkLength() {
-    	try {
-    		return Integer.valueOf(mSettings.getString(SETTING_WALK_LENGTH, Integer.toString(DEFAULT_WALK_LENGTH)));
-    	} catch (NumberFormatException nfe) {
-    		Log.e(TAG, "error getting preference " + SETTING_WALK_LENGTH + ": " + nfe.getMessage());
-    		return DEFAULT_WALK_LENGTH;
-    	}
-//    	return mSettings.getInt(SETTING_WALK_LENGTH, DEFAULT_WALK_LENGTH);
+    	return getInt(SETTING_WALK_LENGTH, DEFAULT_WALK_LENGTH);
     }
     
     public int getSensitivity() {
-    	try {
-    		return Integer.valueOf(mSettings.getString(SETTING_SENSITIVITY, Integer.toString(DEFAULT_SENSITIVITY)));
-    	} catch (NumberFormatException nfe) {
-    		Log.e(TAG, "error getting preference " + SETTING_SENSITIVITY + ": " + nfe.getMessage());
-    		return DEFAULT_SENSITIVITY;
-    	}
-//    	return mSettings.getInt(SETTING_SENSITIVITY, DEFAULT_SENSITIVITY);
+    	return getInt(SETTING_SENSITIVITY, DEFAULT_SENSITIVITY);
     }
+    
+    public int getWalkPercentComplete() {
+    	return getInt(SETTING_WALK_PERCENT_COMPLETE, DEFAULT_WALK_PERCENT_COMPLETE);
+    }
+    
+    public int getWalkFrequency() {
+    	return getInt(SETTING_WALK_FREQUENCY, DEFAULT_WALK_FREQUENCY);
+    }
+    
+    public int getInt(String sSettingKey, int iDefaultVal) {
+    	try {
+    		return Integer.valueOf(mSettings.getString(sSettingKey, Integer.toString(iDefaultVal)));
+    	} catch (NumberFormatException nfe) {
+    		Log.e(TAG + ".getInt", "error getting int preference " + sSettingKey + ": " + nfe.getMessage());
+    		return iDefaultVal;
+    	}    	
+    }
+    
+    public float getFloat(String sSettingKey, float fDefaultVal) {
+        try {
+            return Float.valueOf(mSettings.getString(sSettingKey, Float.toString(fDefaultVal)).trim());
+        } catch (NumberFormatException nfe) {
+        	Log.e(TAG + ".getFloat", "error getting float preference " + sSettingKey + ": " + nfe.getMessage());
+            return fDefaultVal;
+        }
+    }    
     
 }
