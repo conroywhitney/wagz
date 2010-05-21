@@ -182,14 +182,11 @@ public class Wagz extends Activity {
         if (this.isRunning()) {
             mService.resetValues();                    
         } else {
-            SharedPreferences state = getSharedPreferences("state", 0);
+            SharedPreferences state = getSharedPreferences(StepService.STATE_KEY, 0);
             SharedPreferences.Editor stateEditor = state.edit();
             if (updateDisplay) {
-                stateEditor.putInt("steps", 0);
-                stateEditor.putInt("pace", 0);
-                stateEditor.putFloat("distance", 0);
-                stateEditor.putFloat("speed", 0);
-                stateEditor.putFloat("calories", 0);
+                stateEditor.putFloat(StepService.STATE_DISTANCE, 0);
+                stateEditor.putLong(StepService.STATE_ELAPSED_TIME, 0);
                 stateEditor.commit();
             }
         }

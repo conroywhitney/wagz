@@ -19,6 +19,10 @@
 
 package com.konreu.android.wagz.activities;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -52,9 +56,10 @@ public class Detailz extends Activity {
     private IntentIntegrator _notesIntent;
     
     private TextView mDistanceValueView;
-//    private TextView mTimeValueView;
+    private TextView mTimeValueView;
     
     private float mDistanceValue;
+    private long mElapsedTime;
 
     private boolean mIsMetric;
     
@@ -94,7 +99,7 @@ public class Detailz extends Activity {
         mPedometerSettings = new PedometerSettings(mSettings);
         
         mDistanceValueView = (TextView) findViewById(R.id.distance_value);
-//        mTimeValueView = (TextView) findViewById(R.id.time_value);
+        mTimeValueView = (TextView) findViewById(R.id.time_value);
 
         mIsMetric = mPedometerSettings.isMetric();
         ((TextView) findViewById(R.id.distance_units)).setText(getDistanceUnits());
@@ -166,12 +171,13 @@ public class Detailz extends Activity {
             mService.resetValues();                    
         } else {
             mDistanceValueView.setText("0");
-//            mTimeValueView.setText("0");
-            SharedPreferences state = getSharedPreferences("state", 0);
+            mTimeValueView.setText("0");
+            
+            SharedPreferences state = getSharedPreferences(StepService.STATE_KEY, 0);
             SharedPreferences.Editor stateEditor = state.edit();
             if (updateDisplay) {
-                stateEditor.putFloat("distance", 0);
-                stateEditor.putFloat("time", 0);
+                stateEditor.putFloat(StepService.STATE_DISTANCE, 0);
+                stateEditor.putLong(StepService.STATE_ELAPSED_TIME, 0);
                 stateEditor.commit();
             }
         }
@@ -234,26 +240,40 @@ public class Detailz extends Activity {
     // TODO: unite all into 1 type of message
     private StepService.ICallback mCallback = new StepService.ICallback() {
         public void distanceChanged(float value) {
-            mHandler.sendMessage(mHandler.obtainMessage(DISTANCE_MSG, (int)(value*1000), 0));
+        	Log.v(TAG, "distanceChanged: " + Float.toString(value));
+            mHandler.sendMessage(mHandler.obtainMessage(DISTANCE_MSG, (int)(value*1000)));
         }
+        public void elapsedTimeChanged(long value) {
+        	Log.v(TAG, "timeChanged: " + Long.toString(value));
+            mHandler.sendMessage(mHandler.obtainMessage(ELAPSED_TIME_MSG, value));
+        }        
     };
     
     private static final int DISTANCE_MSG = 1;
+    private static final int ELAPSED_TIME_MSG = 2;
     
     private Handler mHandler = new Handler() {
         @Override public void handleMessage(Message msg) {
             switch (msg.what) {
                 case DISTANCE_MSG:
-                    mDistanceValue = ((int)msg.arg1)/1000f;
+                    mDistanceValue = ((Integer)msg.obj)/1000f;
+                    Log.v(TAG, "DISTANCE_MSG: " + mDistanceValue);
                     if (mDistanceValue <= 0) { 
-                        mDistanceValueView.setText("0");
+                        mDistanceValueView.setText("0.00");
                     }
                     else {
                         mDistanceValueView.setText(
-                                ("" + (mDistanceValue + 0.000001f)).substring(0, 5)
+                                ("" + (mDistanceValue + 0.000001f)).substring(0, 4)
                         );
                     }
                     break;
+                case ELAPSED_TIME_MSG:
+                	mElapsedTime = (Long)msg.obj;
+                	Log.v(TAG, "ELAPSED_TIME_MSG: " + mElapsedTime);
+                	if (mElapsedTime <= 0) { mElapsedTime = 0; }
+                	Date d = new Date(mElapsedTime);
+                	DateFormat formatter = new SimpleDateFormat("mm:ss");
+                	mTimeValueView.setText(formatter.format(d));
                 default:
                     super.handleMessage(msg);
             }

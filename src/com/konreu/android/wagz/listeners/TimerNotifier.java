@@ -23,21 +23,34 @@ import com.konreu.android.wagz.PedometerSettings;
 import com.konreu.android.wagz.listeners.StepListener;
 
 /**
- * Calculates and displays the approximate calories.  
- * @author Levente Bagi
+ * Calculates and displays the elapsed time.  
+ * @author Conroy Whitney
  */
 public class TimerNotifier implements StepListener {
 
+	private final long TIME_RANGE_MIN = 250;	// 1/4 seconds
+	private final long TIME_RANGE_MAX = 2000;	// 2 seconds
+	
     public interface Listener {
-        public void valueChanged(float value);
+        public void valueChanged(long value);
         public void passValue();
     }
     private Listener mListener;
     
+    private long mElapsedTime = 0;
+    private long mLastLogged = 0;
+    
     PedometerSettings mSettings;
 
     public TimerNotifier(Listener listener, PedometerSettings settings) {
+    	mListener = listener;
+    	mSettings = settings;
         reloadSettings();
+    }
+    
+    public void setElapsedTime(long elapsedTime) {
+    	mElapsedTime = elapsedTime;
+    	notifyListener();
     }
 
     public void reloadSettings() {
@@ -45,15 +58,21 @@ public class TimerNotifier implements StepListener {
     }
     
     public void resetValues() {
-//        mCalories = 0;
+    	mElapsedTime = 0;
+    	mLastLogged = System.currentTimeMillis();
     }
 
     public void onStep() {
+    	long timeSinceLastStep = System.currentTimeMillis() - mLastLogged;
+    	if (timeSinceLastStep > TIME_RANGE_MIN && timeSinceLastStep < TIME_RANGE_MAX) {
+    		mElapsedTime += timeSinceLastStep;
+    	}
+    	mLastLogged = System.currentTimeMillis();
         notifyListener();
     }
     
     private void notifyListener() {
-        mListener.valueChanged((float)0);
+        mListener.valueChanged(mElapsedTime);
     }
     
     public void passValue() {

@@ -1,5 +1,5 @@
 <resources>
-    <dimen name="large_half">160px</dimen>
+    
 
     <dimen name="step_count">30sp</dimen>
     <dimen name="pace">30sp</dimen>
@@ -14,4 +14,5 @@
     <dimen name="row_spacing">10px</dimen>
     <dimen name="distance">20px</dimen>
 
+<dimen name="time_value">20px</dimen>
 </resources>

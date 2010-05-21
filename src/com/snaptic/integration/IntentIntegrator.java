@@ -67,12 +67,12 @@ public class IntentIntegrator {
 		// for this note. Don't use the example below; please arrange with the
 		// Snaptic development team for the string you will use to identify your
 		// app. The object should be a String.
-		intent.putExtra(SnapticIntent.EXTRA_SOURCE, "Snaptic Intent Test Utility");
+		intent.putExtra(SnapticIntent.EXTRA_SOURCE, "Wagz");
 		
 		// Optional; if EXTRA_TITLE is supplied it will appear in the
 		// titlebar of the note editor activity in 3banana. The object should be
 		// a String.
-		intent.putExtra(Intent.EXTRA_TITLE, "Intent Testing");
+		intent.putExtra(Intent.EXTRA_TITLE, "Wagz - Save Your Walk Details on Snaptic");
 
 		// Optional: include an image. Image URIs should point to JPEG images,
 		// accessible to external packages (i.e., don't point to content private

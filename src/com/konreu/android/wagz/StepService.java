@@ -35,6 +35,8 @@ import android.widget.Toast;
 
 import com.konreu.android.wagz.activities.Wagz;
 import com.konreu.android.wagz.listeners.DistanceNotifier;
+import com.konreu.android.wagz.listeners.StepBuzzer;
+import com.konreu.android.wagz.listeners.TimerNotifier;
 
 /**
  * This is an example of implementing an application service that runs locally
@@ -48,6 +50,10 @@ import com.konreu.android.wagz.listeners.DistanceNotifier;
  * calling startActivity().
  */
 public class StepService extends Service {
+	
+	public static final String STATE_KEY = "state";
+	public static final String STATE_DISTANCE = "distance";
+	public static final String STATE_ELAPSED_TIME = "elapsedTime";
 
     private SharedPreferences mSettings;
     private PedometerSettings mPedometerSettings;
@@ -57,21 +63,16 @@ public class StepService extends Service {
     
     private SensorManager mSensorManager;
     private StepDetector mStepDetector;
-    // private StepBuzzer mStepBuzzer; // used for debugging
-//    private TimerNotifier mTimerNotifier;
+     private StepBuzzer mStepBuzzer; // used for debugging
+    private TimerNotifier mTimerNotifier;
     private DistanceNotifier mDistanceNotifier;
     
     private PowerManager.WakeLock wakeLock;
     private NotificationManager mNM;
 
-    private long mBeginTime;
+    private long mElapsedTime;
     private float mDistance;
-    
-    private long getElapsedTime() {
-    	long now = System.currentTimeMillis();
-        return (now - mBeginTime);
-    }
-    
+
     private static boolean bRunning;
     public static boolean isRunning() {
     	return bRunning;
@@ -104,7 +105,7 @@ public class StepService extends Service {
         // Load settings
         mSettings = PreferenceManager.getDefaultSharedPreferences(this);
         mPedometerSettings = new PedometerSettings(mSettings);
-        mState = getSharedPreferences("state", 0);
+        mState = getSharedPreferences(STATE_KEY, 0);
         
         // Start detecting
         mStepDetector = new StepDetector();
@@ -116,16 +117,16 @@ public class StepService extends Service {
                 SensorManager.SENSOR_DELAY_FASTEST);
 
         mDistanceNotifier = new DistanceNotifier(mDistanceListener, mPedometerSettings);
-        mDistanceNotifier.setDistance(mDistance = mState.getFloat("distance", 0));
+        mDistanceNotifier.setDistance(mDistance = mState.getFloat(STATE_DISTANCE, 0));
         mStepDetector.addStepListener(mDistanceNotifier);
         
-//        mTimeNotifier = new TimeNotifier(mTimeListener, mPedometerSettings);
-//        mTimeNotifier.setTime(getElapsedTime());
-//        mStepDetector.addStepListener(mTimeNotifier);
+        mTimerNotifier = new TimerNotifier(mTimerListener, mPedometerSettings);
+        mTimerNotifier.setElapsedTime(mElapsedTime = mState.getLong(STATE_ELAPSED_TIME, 0));
+        mStepDetector.addStepListener(mTimerNotifier);
         
-        // Used when debugging:
-        // mStepBuzzer = new StepBuzzer(this);
-        // mStepDetector.addStepListener(mStepBuzzer);
+		//Used when debugging:
+		mStepBuzzer = new StepBuzzer(this);
+		mStepDetector.addStepListener(mStepBuzzer);
 
         // Start voice
         reloadSettings();
@@ -139,17 +140,15 @@ public class StepService extends Service {
         // Tell the user we started.
         Toast.makeText(this, getText(R.string.started), Toast.LENGTH_SHORT).show();
         bRunning = true;
-        mBeginTime = System.currentTimeMillis();
         
         this.reloadSettings();
     }
 
     @Override
-    public void onDestroy() {
-        
+    public void onDestroy() {        
         mStateEditor = mState.edit();
-        mStateEditor.putFloat("distance", mDistance);
-        mStateEditor.putLong("time", getElapsedTime());
+        mStateEditor.putFloat(StepService.STATE_DISTANCE, mDistance);
+        mStateEditor.putLong(StepService.STATE_ELAPSED_TIME, mElapsedTime);
         mStateEditor.commit();
         
         mNM.cancel(R.string.app_name);
@@ -164,7 +163,6 @@ public class StepService extends Service {
         // Tell the user we stopped.
         Toast.makeText(this, getText(R.string.stopped), Toast.LENGTH_LONG).show();
         bRunning = false;
-        mBeginTime = -1;
     }
 
     @Override
@@ -179,6 +177,7 @@ public class StepService extends Service {
 
     public interface ICallback {
         public void distanceChanged(float value);
+        public void elapsedTimeChanged(long value);
     }
     
     private ICallback mCallback;
@@ -199,12 +198,12 @@ public class StepService extends Service {
         }
         
         if (mDistanceNotifier != null) mDistanceNotifier.reloadSettings();
-//        if (mTimeNotifier != null) mTimeNotifier.reloadSettings();
+        if (mTimerNotifier != null) mTimerNotifier.reloadSettings();
     }
     
     public void resetValues() {
         mDistanceNotifier.setDistance(0);
-//        mTimeNotifier.setElapsedTime(0);
+        mTimerNotifier.setElapsedTime(0);
     }
     
     /**
@@ -222,20 +221,20 @@ public class StepService extends Service {
         }
     };
 
-//    /**
-//     * Forwards calories values from CaloriesNotifier to the activity. 
-//     */
-//    private TimerNotifier.Listener mTimerListener = new TimerNotifier.Listener() {
-//        public void valueChanged(float value) {
-////            mCalories = value;
-//            passValue();
-//        }
-//        public void passValue() {
-//            if (mCallback != null) {
-////                mCallback.caloriesChanged(mCalories);
-//            }
-//        }
-//    };
+    /**
+     * Forwards calories values from CaloriesNotifier to the activity. 
+     */
+    private TimerNotifier.Listener mTimerListener = new TimerNotifier.Listener() {
+        public void valueChanged(long value) {
+        	mElapsedTime = value;
+            passValue();
+        }
+        public void passValue() {
+            if (mCallback != null) {
+            	mCallback.elapsedTimeChanged(mElapsedTime);
+            }
+        }
+    };
     
     /**
      * Show a notification while this service is running.

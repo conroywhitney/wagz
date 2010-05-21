@@ -14,7 +14,7 @@
     
         <LinearLayout android:id="@+id/box_time"
             android:orientation="vertical"
-            android:layout_width="@dimen/box_width" 
+            android:layout_width="@dimen/box_time_width" 
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:paddingRight="@dimen/margin">
@@ -42,7 +42,7 @@
 
         <LinearLayout android:id="@+id/box_distance"
             android:orientation="vertical"
-            android:layout_width="@dimen/box_width" 
+            android:layout_width="@dimen/box_distance_width" 
             android:layout_height="wrap_content"
             android:gravity="center_horizontal">
             
