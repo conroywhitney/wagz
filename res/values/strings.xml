@@ -37,6 +37,9 @@
     <string name="medium">medium</string>
     <string name="low">low</string>
     <string name="very_low">very low</string>
+    <string name="walk_length_setting">Walk Length</string>
+    <string name="walk_length_setting_details">How long do you want to walk?</string>
+    <string name="walk_length_setting_title">Select Walk Length</string>    
     <string name="units_setting">Units</string>
     <string name="units_setting_details">Imperial or metric units</string>
     <string name="units_setting_title">Choose your units</string>
@@ -115,4 +118,5 @@
 <string name="warning_reset_values">You will lose your Walk Details. If you would like to save your Walk Details, press Cancel and press the \&quot;Save Walk Details on Snaptic\&quot; button from the Walk Details page.\n\nWould you still like to discard your Walk Details?</string>
 <string name="loyalty_label">Loyalty:   </string>
 <string name="happiness_label">Happiness:   </string>
+<string name="pref_category_walk">Walk Settings</string>
 </resources>

@@ -20,18 +20,22 @@
 package com.konreu.android.wagz;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 
 /**
  * Wrapper for {@link SharedPreferences}, handles preferences-related tasks.
- * @author Levente Bagi
+ * @author Conroy Whitney
  */
 public class PedometerSettings {
+	private final String TAG = "PedometerSettings";
 
+	private final String SETTING_STEP_LENGTH = "step_length";
+	private final String SETTING_WALK_LENGTH = "walk_length";
+	
+	private final float DEFAULT_STEP_LENGTH = (float) 20.0;
+	private final int DEFAULT_WALK_LENGTH = 15;
+	
     SharedPreferences mSettings;
-    
-    public static int M_NONE = 1;
-    public static int M_PACE = 2;
-    public static int M_SPEED = 3;
     
     public PedometerSettings(SharedPreferences settings) {
         mSettings = settings;
@@ -43,98 +47,20 @@ public class PedometerSettings {
     
     public float getStepLength() {
         try {
-            return Float.valueOf(mSettings.getString("step_length", "20").trim());
-        }
-        catch (NumberFormatException e) {
-            // TODO: reset value, & notify user somehow
-            return 0f;
+            return Float.valueOf(mSettings.getString(SETTING_STEP_LENGTH, Float.toString(DEFAULT_STEP_LENGTH)).trim());
+        } catch (NumberFormatException nfe) {
+        	Log.e(TAG, "error getting preference " + SETTING_STEP_LENGTH + ": " + nfe.getMessage());
+            return DEFAULT_STEP_LENGTH;
         }
     }
     
-    public float getBodyWeight() {
-        try {
-            return Float.valueOf(mSettings.getString("body_weight", "50").trim());
-        }
-        catch (NumberFormatException e) {
-            // TODO: reset value, & notify user somehow
-            return 0f;
-        }
-    }
-
-    public boolean isRunning() {
-        return mSettings.getString("exercise_type", "running").equals("running");
-    }
-
-    public int getMaintainOption() {
-        String p = mSettings.getString("maintain", "none");
-        return 
-            p.equals("none") ? M_NONE : (
-            p.equals("pace") ? M_PACE : (
-            p.equals("speed") ? M_SPEED : ( 
-            0)));
-    }
-    
-    //-------------------------------------------------------------------
-    // Desired pace & speed: 
-    // these can not be set in the preference activity, only on the main
-    // screen if "maintain" is set to "pace" or "speed" 
-    
-    public int getDesiredPace() {
-        return mSettings.getInt("desired_pace", 180); // steps/minute
-    }
-    public float getDesiredSpeed() {
-        return mSettings.getFloat("desired_speed", 4f); // km/h or mph
-    }
-    public void savePaceOrSpeedSetting(int maintain, float desiredPaceOrSpeed) {
-        SharedPreferences.Editor editor = mSettings.edit();
-        if (maintain == M_PACE) {
-            editor.putInt("desired_pace", (int)desiredPaceOrSpeed);
-        }
-        else
-        if (maintain == M_SPEED) {
-            editor.putFloat("desired_speed", desiredPaceOrSpeed);
-        }
-        editor.commit();
-    }
-    
-    //-------------------------------------------------------------------
-    // Speaking:
-    
-    public boolean shouldSpeak() {
-        return mSettings.getBoolean("speak", false);
-    }
-    public float getSpeakingInterval() {
-        try {
-            return Float.valueOf(mSettings.getString("speaking_interval", "1"));
-        }
-        catch (NumberFormatException e) {
-            // This could not happen as the value is selected from a list.
-            return 1;
-        }
-    }
-    public boolean shouldTellSteps() {
-        return mSettings.getBoolean("speak", false) 
-        && mSettings.getBoolean("tell_steps", false);
-    }
-    public boolean shouldTellPace() {
-        return mSettings.getBoolean("speak", false) 
-        && mSettings.getBoolean("tell_pace", false);
-    }
-    public boolean shouldTellDistance() {
-        return mSettings.getBoolean("speak", false) 
-        && mSettings.getBoolean("tell_distance", false);
-    }
-    public boolean shouldTellSpeed() {
-        return mSettings.getBoolean("speak", false) 
-        && mSettings.getBoolean("tell_speed", false);
-    }
-    public boolean shouldTellCalories() {
-        return mSettings.getBoolean("speak", false) 
-        && mSettings.getBoolean("tell_calories", false);
-    }
-    public boolean shouldTellFasterslower() {
-        return mSettings.getBoolean("speak", false) 
-        && mSettings.getBoolean("tell_fasterslower", false);
+    public int getWalkLength() {
+    	try {
+    		return Integer.valueOf(mSettings.getString(SETTING_WALK_LENGTH, Integer.toString(DEFAULT_WALK_LENGTH)));
+    	} catch (NumberFormatException nfe) {
+    		Log.e(TAG, "error getting preference " + SETTING_WALK_LENGTH + ": " + nfe.getMessage());
+    		return DEFAULT_WALK_LENGTH;
+    	}
     }
     
 }

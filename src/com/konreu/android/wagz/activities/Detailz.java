@@ -52,8 +52,7 @@ import com.snaptic.integration.IntentIntegrator;
 public class Detailz extends Activity {
 	private static String TAG = "Detailz";	
    
-    private SharedPreferences mSettings;
-    private PedometerSettings mPedometerSettings;
+	private PedometerSettings mPedometerSettings;
     
     private IntentIntegrator _notesIntent;
     
@@ -98,8 +97,7 @@ public class Detailz extends Activity {
         	bindStepService();	
         }
         
-        mSettings = PreferenceManager.getDefaultSharedPreferences(this);
-        mPedometerSettings = new PedometerSettings(mSettings);
+        mPedometerSettings = new PedometerSettings(PreferenceManager.getDefaultSharedPreferences(this));
         
         mDistanceValueView = (TextView) findViewById(R.id.distance_value);
         mTimeValueView = (TextView) findViewById(R.id.time_value);

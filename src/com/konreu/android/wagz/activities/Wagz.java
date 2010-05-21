@@ -35,6 +35,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,13 +44,15 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.konreu.android.wagz.PedometerSettings;
 import com.konreu.android.wagz.R;
 import com.konreu.android.wagz.StepService;
 
 public class Wagz extends Activity {
 	private static String TAG = "Wagz";	
-	private static final int GOAL_MINUTES = 1;
-        
+    
+	private PedometerSettings mPedometerSettings;
+	
     private StepService mService;
     
     private SeekBar mHappinessBar;
@@ -94,16 +97,19 @@ public class Wagz extends Activity {
     	mLoyaltyView = (TextView) findViewById(R.id.loyalty_value);
     	
     	mElapsedTime = 0;
-    	
-    	mHappinessView.setText(getPercentDone() + "%");
-    	mLoyaltyView.setText("1");
-    	    	
+    	    	    	
     	setButtonStartWalk();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        
+        mPedometerSettings = new PedometerSettings(PreferenceManager.getDefaultSharedPreferences(this));
+        
+        // These have to be *after* we get our settings ...
+        mHappinessView.setText(getPercentDone() + "%");
+    	mLoyaltyView.setText("1");
         
         if (this.isRunning()) {
         	bindStepService();
@@ -312,7 +318,7 @@ public class Wagz extends Activity {
     };  
     
     private int getPercentDone() {
-    	float fPercentDone = (float)(mElapsedTime / (GOAL_MINUTES * 60000.0));
+    	float fPercentDone = (float)(mElapsedTime / (mPedometerSettings.getWalkLength() * 60000.0));
     	if (fPercentDone > 1) {
     		return 100;
     	} else if (fPercentDone < 0) {

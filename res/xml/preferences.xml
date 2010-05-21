@@ -9,6 +9,20 @@
 	</PreferenceCategory>
 	
 	<PreferenceCategory
+		android:title="@string/pref_category_walk">        
+
+		<ListPreference
+		        android:key="walk_length"
+		        android:title="@string/walk_length_setting"
+		        android:summary="@string/walk_length_setting_details"
+		        android:entries="@array/walk_length_preference"
+		        android:entryValues="@array/walk_length_preference_values"
+		        android:dialogTitle="@string/walk_length_setting_title"
+		        android:defaultValue="15" />
+
+	</PreferenceCategory>	
+	
+	<PreferenceCategory
 		android:title="@string/pref_category_advanced">
 	            
 		<ListPreference
