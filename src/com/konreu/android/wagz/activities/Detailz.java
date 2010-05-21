@@ -25,11 +25,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -60,6 +64,8 @@ public class Detailz extends BetterDefaultActivity {
     
     private float mDistanceValue;
     private long mElapsedTime;
+    
+    static final int DIALOG_ABOUT = 1;
     
     private boolean isRunning() {
     	Log.v(TAG + ".isRunning", "StepService.isRunning = " + StepService.isRunning());
@@ -185,11 +191,14 @@ public class Detailz extends BetterDefaultActivity {
         Dog.resetInstance(this);
     }
 
-    private static final int MENU_SETTINGS = 8;
-    private static final int MENU_QUIT = 9;
+    
     private static final int MENU_PAUSE = 1;
     private static final int MENU_RESUME = 2;
     private static final int MENU_RESET = 3;
+    
+    private static final int MENU_SETTINGS = 7;
+    private static final int MENU_ABOUT = 8;
+    private static final int MENU_QUIT = 9;
     
     /* Creates the menu items */
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -197,19 +206,22 @@ public class Detailz extends BetterDefaultActivity {
         if (this.isRunning()) {
             menu.add(0, MENU_PAUSE, 0, R.string.pause)
             .setIcon(android.R.drawable.ic_media_pause)
-            .setShortcut('1', 'p');
+            .setShortcut('1', 'w');
         } else {
             menu.add(0, MENU_RESUME, 0, R.string.resume)
 	            .setIcon(android.R.drawable.ic_media_play)
-	            .setShortcut('1', 'p');
+	            .setShortcut('1', 'w');
         }
         menu.add(0, MENU_RESET, 0, R.string.reset)
 	        .setIcon(android.R.drawable.ic_menu_close_clear_cancel)
 	        .setShortcut('2', 'r');
         menu.add(0, MENU_SETTINGS, 0, R.string.settings)
 	        .setIcon(android.R.drawable.ic_menu_preferences)
-	        .setShortcut('8', 's')
-	        .setIntent(new Intent(this, Settingz.class));
+	        .setShortcut('7', 's')
+        .setIntent(new Intent(this, Settingz.class));
+        menu.add(0, MENU_ABOUT, 0, R.string.menu_about)
+	    	.setIcon(android.R.drawable.ic_menu_help)
+	    	.setShortcut('8', 'a');
         menu.add(0, MENU_QUIT, 0, R.string.quit)
 	        .setIcon(android.R.drawable.ic_lock_power_off)
 	        .setShortcut('9', 'q');
@@ -262,6 +274,9 @@ public class Detailz extends BetterDefaultActivity {
                 .setNegativeButton(R.string.cancel, null)
                 .show();
                 return true;
+            case MENU_ABOUT:
+            	showDialog(DIALOG_ABOUT);
+            	return true;                
         }
         return false;
     }
@@ -310,5 +325,37 @@ public class Detailz extends BetterDefaultActivity {
     	DecimalFormat df = new DecimalFormat("#.##");
         return df.format(mDistanceValue);
     }
+    
+    protected Dialog onCreateDialog(int id) {
+    	Dialog dialog;
+    	switch(id) {
+    		case DIALOG_ABOUT:
+    			dialog = new Dialog(this);
+    	    	dialog.setContentView(R.layout.about);
+    	    	dialog.setTitle("About " + getString(R.string.app_name));
+    	    	
+    	    	// Set the application version
+    	    	// HOLY SHIT THIS IS ALOT OF WORK FOR ONE NUMBER
+    	    	PackageManager pm = getPackageManager();
+    	    	PackageInfo pi = null;
+    	        try {
+    	        	pi = pm.getPackageInfo("com.konreu.android.wagz", 0);
+    	        } catch (NameNotFoundException nnfe) {
+    	        	pi = null;
+    	        	Log.e(TAG, "error getting package info: " + nnfe.getMessage());
+    	        }
+    	        TextView text = (TextView) dialog.findViewById(R.id.app_version);
+    	        if (pi != null) {
+    	        	text.setText(pi.versionName);
+    	        } else {
+    	        	text.setVisibility(View.GONE);
+    	        }
+    	    	
+    	    	break;
+	        default:
+	            dialog = null;
+        }
+        return dialog;
+    }       
     
 }

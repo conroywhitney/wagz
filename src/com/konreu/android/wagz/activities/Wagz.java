@@ -193,13 +193,14 @@ public class Wagz extends BetterDefaultActivity {
         
         Dog.resetInstance(this);
     }
-
-    private static final int MENU_SETTINGS = 8;
-    private static final int MENU_QUIT = 9;
+    
     private static final int MENU_PAUSE = 1;
     private static final int MENU_RESUME = 2;
     private static final int MENU_DETAILS = 3;
-    private static final int MENU_ABOUT = 4;
+    
+    private static final int MENU_SETTINGS = 7;
+    private static final int MENU_ABOUT = 8;
+    private static final int MENU_QUIT = 9;
     
     /* Creates the menu items */
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -207,11 +208,11 @@ public class Wagz extends BetterDefaultActivity {
         if (this.isRunning()) {
             menu.add(0, MENU_PAUSE, 0, R.string.pause)
             .setIcon(android.R.drawable.ic_media_pause)
-            .setShortcut('1', 'p');
+            .setShortcut('1', 'w');
         } else {
             menu.add(0, MENU_RESUME, 0, R.string.resume)
             .setIcon(android.R.drawable.ic_media_play)
-            .setShortcut('1', 'p');
+            .setShortcut('1', 'w');
         }
         menu.add(0, MENU_DETAILS, 0, R.string.menu_details)
 	        .setIcon(android.R.drawable.ic_menu_info_details)
