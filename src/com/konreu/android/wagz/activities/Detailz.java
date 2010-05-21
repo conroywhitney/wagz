@@ -23,7 +23,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -42,6 +41,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.github.droidfu.activities.BetterDefaultActivity;
 import com.konreu.android.wagz.AppState;
 import com.konreu.android.wagz.Dog;
 import com.konreu.android.wagz.PedometerSettings;
@@ -49,7 +49,7 @@ import com.konreu.android.wagz.R;
 import com.konreu.android.wagz.StepService;
 import com.snaptic.integration.IntentIntegrator;
 
-public class Detailz extends Activity {
+public class Detailz extends BetterDefaultActivity {
 	private static String TAG = "Detailz";	
     
     private IntentIntegrator _notesIntent;

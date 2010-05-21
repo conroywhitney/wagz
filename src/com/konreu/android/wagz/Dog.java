@@ -158,7 +158,7 @@ public class Dog {
     		
     		// We have made our dog happy -- this date will live in infamy !
     		mAppState.setLastWalkDate(System.currentTimeMillis());
-    		mAppState.setLoyalty(mLoyalty);
+    		setLoyalty(mLoyalty);
     		
     		// Make sure we don't keep updating loyalty all day .......
     		mHasUpdatedLoyaltyRecently = true;
