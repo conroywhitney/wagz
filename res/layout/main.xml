@@ -35,6 +35,7 @@
 		    <TextView android:id="@+id/happiness_value"
 		    	android:layout_width="wrap_content"
 		    	android:layout_height="wrap_content"
+		    	android:layout_marginLeft="3px"
 		    />
 	</LinearLayout>
     	
@@ -72,13 +73,14 @@
 		    <TextView android:id="@+id/loyalty_value"
 		    	android:layout_width="wrap_content"
 		    	android:layout_height="wrap_content"
+		    	android:layout_marginLeft="3px"
 		    />    
 	</LinearLayout>
 	
 	<!-- Loyalty -->
 	<ImageView android:id="@+id/loyalty_rating" 
-		android:layout_width="350px"
-		android:layout_height="49px"
+		android:layout_width="300px"
+		android:layout_height="wrap_content"
 		android:layout_marginBottom="5px"
 		android:src="@drawable/heart_1of7" 
 	/>     	

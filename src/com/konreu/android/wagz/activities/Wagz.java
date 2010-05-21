@@ -116,7 +116,7 @@ public class Wagz extends BetterDefaultActivity {
     private void updateUI() {   	
         mHappinessView.setText(mDog.getHappiness() + "%");
     	mHappinessBar.setProgress(mDog.getHappiness());
-    	mLoyaltyView.setText(Integer.toString(mDog.getLoyalty()));
+    	mLoyaltyView.setText(Integer.toString(mDog.getLoyalty()) + " of 7");
     }
     
     /***
