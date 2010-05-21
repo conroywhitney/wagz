@@ -109,4 +109,8 @@
 <string name="about_snaptic_disclaimer">Wagz by Konreu (Conroy Whitney) is not directly affiliated with Snaptic, the makers of 3banana Notes and Snaptic.com (located at www.snaptic.com). Wagz uses the 3banana application to save and retrieve information from Snaptic.</string>
 <string name="about_contest">Wagz was developed by Konreu as an entry into the Snaptic \&quot;Move Your App! Developer Challenge\&quot; located at https://www.snaptic.com/challenge/.</string>
 <string name="about_thanks">Special thanks to Jessica Whitney and Brian Stoddard for their help and support in finalizing the original concept of this application.</string>
+<string name="really_reset_values">Discard Your Walk Details</string>
+<string name="ok">OK</string>
+<string name="cancel">Cancel</string>
+<string name="warning_reset_values">You will lose your Walk Details. If you would like to save your Walk Details, press Cancel and press the Save Your Walk Details to Snaptic button from the Walk Details section.</string>
 </resources>

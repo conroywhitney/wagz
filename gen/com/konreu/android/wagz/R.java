@@ -120,6 +120,7 @@ public final class R {
         public static final int body_weight_setting_details=0x7f060033;
         public static final int body_weight_setting_title=0x7f060034;
         public static final int calories_burned=0x7f060015;
+        public static final int cancel=0x7f060071;
         public static final int cancel_button=0x7f060000;
         public static final int centimeters=0x7f060016;
         public static final int create_quick_note_button=0x7f060060;
@@ -164,12 +165,14 @@ public final class R {
         public static final int miles_per_hour=0x7f060014;
         public static final int notes_intent_error=0x7f060007;
         public static final int notification_subtitle=0x7f06000c;
+        public static final int ok=0x7f060070;
         public static final int ok_button=0x7f060002;
         public static final int pause=0x7f06001c;
         public static final int pounds=0x7f060019;
         public static final int pref_category_advanced=0x7f060021;
         public static final int pref_category_notifications=0x7f06005a;
         public static final int quit=0x7f060059;
+        public static final int really_reset_values=0x7f06006f;
         public static final int reset=0x7f06001e;
         public static final int resume=0x7f06001d;
         public static final int sensitivity_setting=0x7f060022;
@@ -217,6 +220,7 @@ public final class R {
         public static final int voice_setting=0x7f060041;
         public static final int voice_setting_details=0x7f060042;
         public static final int voice_settings_title=0x7f060040;
+        public static final int warning_reset_values=0x7f060072;
     }
     public static final class xml {
         public static final int preferences=0x7f040000;

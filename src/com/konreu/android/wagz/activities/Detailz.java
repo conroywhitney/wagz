@@ -24,8 +24,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
@@ -227,12 +229,39 @@ public class Detailz extends Activity {
                 bindStepService();
                 return true;
             case MENU_RESET:
-                resetValues(true);
-                return true;
+            	// Alert the user that they are about to lose their values
+                new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle(R.string.really_reset_values)
+                .setMessage(R.string.warning_reset_values)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    	resetValues(true);
+                    }
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .show();
+
+                return true;            	
             case MENU_QUIT:
-                resetValues(false);
-                stopStepService();
-                finish();
+            	// Alert the user that they are about to lose their values
+                new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle(R.string.really_reset_values)
+                .setMessage(R.string.warning_reset_values)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        resetValues(false);
+                        stopStepService();
+                        finish();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .show();
                 return true;
         }
         return false;
