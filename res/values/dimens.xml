@@ -1,5 +1,6 @@
 <resources>
-    
+    <dimen name="value">56sp</dimen>
+    <dimen name="units">12sp</dimen>    
 
     <dimen name="step_count">30sp</dimen>
     <dimen name="pace">30sp</dimen>
@@ -14,5 +15,7 @@
     <dimen name="row_spacing">10px</dimen>
     <dimen name="distance">20px</dimen>
 
-<dimen name="time_value">20px</dimen>
+    <dimen name="time_value">20px</dimen>
+    <dimen name="box_time_width">160px</dimen>
+    <dimen name="box_distance_width">140px</dimen>
 </resources>
