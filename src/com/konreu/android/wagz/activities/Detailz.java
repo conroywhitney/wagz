@@ -30,12 +30,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,6 +42,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.konreu.android.wagz.AppState;
 import com.konreu.android.wagz.PedometerSettings;
 import com.konreu.android.wagz.R;
 import com.konreu.android.wagz.StepService;
@@ -51,8 +50,6 @@ import com.snaptic.integration.IntentIntegrator;
 
 public class Detailz extends Activity {
 	private static String TAG = "Detailz";	
-   
-	private PedometerSettings mPedometerSettings;
     
     private IntentIntegrator _notesIntent;
     
@@ -61,8 +58,6 @@ public class Detailz extends Activity {
     
     private float mDistanceValue;
     private long mElapsedTime;
-
-    private boolean mIsMetric;
     
     private boolean isRunning() {
     	Log.v(TAG + ".isRunning", "StepService.isRunning = " + StepService.isRunning());
@@ -87,28 +82,24 @@ public class Detailz extends Activity {
 							"" + "\n\n#wagz");
 			}        	
         });
+        
+        mDistanceValueView = (TextView) findViewById(R.id.distance_value);
+        mTimeValueView = (TextView) findViewById(R.id.time_value);
+
+        ((TextView) findViewById(R.id.distance_units)).setText(getDistanceUnits());        
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         
-        SharedPreferences state = getSharedPreferences(StepService.STATE_KEY, 0);
-        mDistanceValue = state.getFloat(StepService.STATE_DISTANCE, 0);
-        mElapsedTime = state.getLong(StepService.STATE_ELAPSED_TIME, 0);
+        mDistanceValue = AppState.getInstance(this).getDistance();
+        mElapsedTime = AppState.getInstance(this).getElapsedTime();
         
         if (this.isRunning()) {
         	bindStepService();	
         }
-        
-        mPedometerSettings = new PedometerSettings(PreferenceManager.getDefaultSharedPreferences(this));
-        
-        mDistanceValueView = (TextView) findViewById(R.id.distance_value);
-        mTimeValueView = (TextView) findViewById(R.id.time_value);
-
-        mIsMetric = mPedometerSettings.isMetric();
-        ((TextView) findViewById(R.id.distance_units)).setText(getDistanceUnits());
-        
+                        
         updateUI();
     }
     
@@ -118,9 +109,8 @@ public class Detailz extends Activity {
     }
     
     protected String getDistanceUnits() {
-    	 mIsMetric = mPedometerSettings.isMetric();
     	 return getString(
-    	    mIsMetric
+    	    PedometerSettings.getInstance(this).isMetric()
          	? R.string.kilometers
          	: R.string.miles
          );
@@ -185,12 +175,8 @@ public class Detailz extends Activity {
             mDistanceValueView.setText("0.00");
             mTimeValueView.setText("00:00");
             
-            SharedPreferences state = getSharedPreferences(StepService.STATE_KEY, 0);
-            SharedPreferences.Editor stateEditor = state.edit();
             if (updateDisplay) {
-                stateEditor.putFloat(StepService.STATE_DISTANCE, 0);
-                stateEditor.putLong(StepService.STATE_ELAPSED_TIME, 0);
-                stateEditor.commit();
+            	AppState.getInstance(this).clear();
             }
         }
     }

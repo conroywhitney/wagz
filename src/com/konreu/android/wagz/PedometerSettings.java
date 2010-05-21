@@ -19,7 +19,9 @@
 
 package com.konreu.android.wagz;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 /**
@@ -31,16 +33,31 @@ public class PedometerSettings {
 
 	private final String SETTING_STEP_LENGTH = "step_length";
 	private final String SETTING_WALK_LENGTH = "walk_length";
+	private final String SETTING_SENSITIVITY = "sensitivity";
 	
 	private final float DEFAULT_STEP_LENGTH = (float) 20.0;
 	private final int DEFAULT_WALK_LENGTH = 15;
+	private final int DEFAULT_SENSITIVITY = 30;
 	
     SharedPreferences mSettings;
     
-    public PedometerSettings(SharedPreferences settings) {
-        mSettings = settings;
+    private static PedometerSettings instance;
+    
+    public static PedometerSettings getInstance(Context c) {
+    	if (instance == null) {
+    		instance = new PedometerSettings(c);
+    	}
+    	return instance;
     }
     
+    public static void reloadSettings(Context c) {
+    	instance = new PedometerSettings(c);
+    }
+    
+    public PedometerSettings(Context c) {
+        mSettings = PreferenceManager.getDefaultSharedPreferences(c);
+    }
+        
     public boolean isMetric() {
         return mSettings.getString("units", "imperial").equals("metric");
     }
@@ -52,6 +69,7 @@ public class PedometerSettings {
         	Log.e(TAG, "error getting preference " + SETTING_STEP_LENGTH + ": " + nfe.getMessage());
             return DEFAULT_STEP_LENGTH;
         }
+//        return mSettings.getFloat(SETTING_STEP_LENGTH, DEFAULT_STEP_LENGTH);
     }
     
     public int getWalkLength() {
@@ -61,6 +79,17 @@ public class PedometerSettings {
     		Log.e(TAG, "error getting preference " + SETTING_WALK_LENGTH + ": " + nfe.getMessage());
     		return DEFAULT_WALK_LENGTH;
     	}
+//    	return mSettings.getInt(SETTING_WALK_LENGTH, DEFAULT_WALK_LENGTH);
+    }
+    
+    public int getSensitivity() {
+    	try {
+    		return Integer.valueOf(mSettings.getString(SETTING_SENSITIVITY, Integer.toString(DEFAULT_SENSITIVITY)));
+    	} catch (NumberFormatException nfe) {
+    		Log.e(TAG, "error getting preference " + SETTING_SENSITIVITY + ": " + nfe.getMessage());
+    		return DEFAULT_SENSITIVITY;
+    	}
+//    	return mSettings.getInt(SETTING_SENSITIVITY, DEFAULT_SENSITIVITY);
     }
     
 }

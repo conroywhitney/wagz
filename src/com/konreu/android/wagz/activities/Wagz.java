@@ -27,7 +27,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -35,7 +34,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,17 +42,16 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.konreu.android.wagz.AppState;
 import com.konreu.android.wagz.PedometerSettings;
 import com.konreu.android.wagz.R;
 import com.konreu.android.wagz.StepService;
 
 public class Wagz extends Activity {
 	private static String TAG = "Wagz";	
-    
-	private PedometerSettings mPedometerSettings;
 	
     private StepService mService;
-    
+        
     private SeekBar mHappinessBar;
     private TextView mHappinessView;
     private TextView mLoyaltyView;    
@@ -74,7 +71,7 @@ public class Wagz extends Activity {
         super.onCreate(savedInstanceState);
                 
         setContentView(R.layout.main);
-        
+                
         mHappinessBar = (SeekBar) findViewById(R.id.happiness_bar);
         mHappinessBar.setEnabled(false);
         mHappinessBar.setFocusable(false);
@@ -95,8 +92,6 @@ public class Wagz extends Activity {
     	
     	mHappinessView = (TextView) findViewById(R.id.happiness_value);
     	mLoyaltyView = (TextView) findViewById(R.id.loyalty_value);
-    	
-    	mElapsedTime = 0;
     	    	    	
     	setButtonStartWalk();
     }
@@ -105,11 +100,8 @@ public class Wagz extends Activity {
     protected void onResume() {
         super.onResume();
         
-        SharedPreferences state = getSharedPreferences(StepService.STATE_KEY, 0);
-        mElapsedTime = state.getLong(StepService.STATE_ELAPSED_TIME, 0);
+        mElapsedTime = AppState.getInstance(this).getElapsedTime();
         
-        mPedometerSettings = new PedometerSettings(PreferenceManager.getDefaultSharedPreferences(this));
-                
         if (this.isRunning()) {
         	bindStepService();
         	
@@ -123,7 +115,7 @@ public class Wagz extends Activity {
         // Do this the very last thing ...
         updateUI();
     }
-    
+        
     private void updateUI() {
         // These have to be *after* we get our settings ...
         mHappinessView.setText(getPercentDone() + "%");
@@ -180,8 +172,6 @@ public class Wagz extends Activity {
 
     protected void onDestroy() {
         super.onDestroy();
-//        stopStepService();
-//        clearValues();
     }
     
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -220,16 +210,8 @@ public class Wagz extends Activity {
         if (this.isRunning()) {
             mService.resetValues();                    
         } else {
-        	clearValues();
+        	AppState.getInstance(this).clear();
         }
-    }
-    
-    private void clearValues() {
-        SharedPreferences state = getSharedPreferences(StepService.STATE_KEY, 0);
-        SharedPreferences.Editor stateEditor = state.edit();
-        stateEditor.putFloat(StepService.STATE_DISTANCE, 0);
-        stateEditor.putLong(StepService.STATE_ELAPSED_TIME, 0);
-        stateEditor.commit();
     }
 
     private static final int MENU_SETTINGS = 8;
@@ -326,11 +308,10 @@ public class Wagz extends Activity {
                     super.handleMessage(msg);
             }
         }
-        
     };  
     
     private int getPercentDone() {
-    	float fPercentDone = (float)(mElapsedTime / (mPedometerSettings.getWalkLength() * 60000.0));
+    	float fPercentDone = (float)(mElapsedTime / (PedometerSettings.getInstance(this).getWalkLength() * 60000.0));
     	if (fPercentDone > 1) {
     		return 100;
     	} else if (fPercentDone < 0) {

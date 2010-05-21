@@ -25,12 +25,10 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.hardware.SensorManager;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.PowerManager;
-import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import com.konreu.android.wagz.activities.Wagz;
@@ -49,16 +47,6 @@ import com.konreu.android.wagz.listeners.TimerNotifier;
  * calling startActivity().
  */
 public class StepService extends Service {
-	
-	public static final String STATE_KEY = "state";
-	public static final String STATE_DISTANCE = "distance";
-	public static final String STATE_ELAPSED_TIME = "elapsedTime";
-
-    private SharedPreferences mSettings;
-    private PedometerSettings mPedometerSettings;
-    
-    private SharedPreferences mState;
-    private SharedPreferences.Editor mStateEditor;
     
     private SensorManager mSensorManager;
     private StepDetector mStepDetector;
@@ -100,12 +88,7 @@ public class StepService extends Service {
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "StepService");
         wakeLock.acquire();
-        
-        // Load settings
-        mSettings = PreferenceManager.getDefaultSharedPreferences(this);
-        mPedometerSettings = new PedometerSettings(mSettings);
-        mState = getSharedPreferences(STATE_KEY, 0);
-        
+                
         // Start detecting
         mStepDetector = new StepDetector();
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -115,12 +98,15 @@ public class StepService extends Service {
                 SensorManager.SENSOR_ORIENTATION,
                 SensorManager.SENSOR_DELAY_FASTEST);
 
-        mDistanceNotifier = new DistanceNotifier(mDistanceListener, mPedometerSettings);
-        mDistanceNotifier.setDistance(mDistance = mState.getFloat(STATE_DISTANCE, 0));
+        PedometerSettings pedometerSettings = PedometerSettings.getInstance(this);
+        AppState appState = AppState.getInstance(this);
+        
+        mDistanceNotifier = new DistanceNotifier(mDistanceListener, pedometerSettings);
+        mDistanceNotifier.setDistance(mDistance = appState.getDistance());
         mStepDetector.addStepListener(mDistanceNotifier);
         
-        mTimerNotifier = new TimerNotifier(mTimerListener, mPedometerSettings);
-        mTimerNotifier.setElapsedTime(mElapsedTime = mState.getLong(STATE_ELAPSED_TIME, 0));
+        mTimerNotifier = new TimerNotifier(mTimerListener, pedometerSettings);
+        mTimerNotifier.setElapsedTime(mElapsedTime = appState.getElapsedTime());
         mStepDetector.addStepListener(mTimerNotifier);
         
 //		//Used when debugging:
@@ -144,17 +130,17 @@ public class StepService extends Service {
     }
 
     @Override
-    public void onDestroy() {        
-        mStateEditor = mState.edit();
-        mStateEditor.putFloat(StepService.STATE_DISTANCE, mDistance);
-        mStateEditor.putLong(StepService.STATE_ELAPSED_TIME, mElapsedTime);
-        mStateEditor.commit();
-        
+    public void onDestroy() {                
         mNM.cancel(R.string.app_name);
 
         wakeLock.release();
         
         super.onDestroy();
+        
+        /* Save our Data */
+        AppState.getInstance(this).setDistance(mDistance);
+        AppState.getInstance(this).setElapsedTime(mElapsedTime);
+        AppState.getInstance(this).setLastWalkDate(System.currentTimeMillis());
         
         // Stop detecting
         mSensorManager.unregisterListener(mStepDetector);
@@ -183,17 +169,13 @@ public class StepService extends Service {
 
     public void registerCallback(ICallback cb) {
         mCallback = cb;
-        //mStepDisplayerarg1.passValue();
-        //mPaceListener.passValue();
     }
     
     public void reloadSettings() {
-        mSettings = PreferenceManager.getDefaultSharedPreferences(this);
-        
+    	PedometerSettings.reloadSettings(this);
+    	 
         if (mStepDetector != null) { 
-            mStepDetector.setSensitivity(
-                    Integer.valueOf(mSettings.getString("sensitivity", "30"))
-            );
+            mStepDetector.setSensitivity(PedometerSettings.getInstance(this).getSensitivity());
         }
         
         if (mDistanceNotifier != null) mDistanceNotifier.reloadSettings();
