@@ -39,30 +39,36 @@ public class Dog {
 		mLastWalkedDate = mAppState.getLastWalkDate();
 		
 		mHasUpdatedLoyaltyRecently = false;
-		
-		updateHappinessOnStartup();
-		updateLoyaltyOnStartup();
 	}
 	
-	private void updateHappinessOnStartup() {
+	public boolean lostHappinessOnStartup() {
+		boolean bLostHappiness = false;
 		String sTAG = TAG + ".updateHappinessOnStartup";
 		
 		if (getNumMinsSinceLastActivity() > NUM_MINS_BEFORE_CLEARING_HAPPINESS) {
 			Log.i(sTAG, "It has been too long since their last activity. Clearing happiness.");
 			updateHappiness(0);
+			bLostHappiness = true;
 		} else {
 			Log.i(sTAG, "It has not been too long since their last activity. Persisting their happiness.");
 		}
+		
+		return bLostHappiness;
 	}
 	
-	private void updateLoyaltyOnStartup() {
+	public boolean lostLoyaltyOnStartup() {
+		boolean bLostLoyalty = false;
 		String sTAG = TAG + ".updateLoyaltyOnStartup";	
+		
 		if (getNumMinsSinceLastActivity() > getMaxMinsSinceLastActivity()) {
 			Log.i(sTAG, "They are over their grace period. Going to lose loyalty points");
 			setLoyalty(mLoyalty - getNumHeartsToLose());
+			bLostLoyalty = true;
 		} else {
 			Log.i(sTAG, "They are still within their grace period. They will not lose any loyalty");
 		}
+		
+		return bLostLoyalty;
 	}
 	
 	private double getMaxMinsSinceLastActivity() {

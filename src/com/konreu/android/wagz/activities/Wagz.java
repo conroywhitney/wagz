@@ -19,7 +19,6 @@
 
 package com.konreu.android.wagz.activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ComponentName;
@@ -41,13 +40,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
+import com.github.droidfu.activities.BetterDefaultActivity;
 import com.konreu.android.wagz.AppState;
 import com.konreu.android.wagz.Dog;
 import com.konreu.android.wagz.R;
 import com.konreu.android.wagz.StepService;
 
-public class Wagz extends Activity {
+public class Wagz extends BetterDefaultActivity {
 	private static String TAG = "Wagz";	
 		
     private StepService mService;
@@ -116,6 +115,22 @@ public class Wagz extends Activity {
         	// If not yet running, show "Start" button
         	setButtonStartWalk();
         }
+        
+    	if (this.isLaunching()) {
+    		// See if we should be updating happiness and loyalty
+    		if (mDog.lostHappinessOnStartup()) {
+    			// No big deal
+    		}
+    		if (mDog.lostLoyaltyOnStartup()) {
+    			// Let them know that they waited too long
+    			new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle(R.string.alert_lost_loyalty_title)
+                .setMessage(R.string.alert_lost_loyalty_explanation)
+                .setNegativeButton(R.string.ok, null)
+                .show();
+    		}
+    	}
         
         // Do this the very last thing ...
         updateUI();
@@ -271,7 +286,6 @@ public class Wagz extends Activity {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle(R.string.really_reset_values)
                 .setMessage(R.string.warning_reset_values)
-                .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

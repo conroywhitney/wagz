@@ -54,6 +54,8 @@
     <string name="step_length_setting">Step length</string>
     <string name="step_length_setting_details">For distance, speed &amp; calorie calculation</string>
     <string name="step_length_setting_title">Enter your step length</string>
+    <string name="alert_lost_loyalty_title">Lost Loyalty</string>
+    <string name="alert_lost_loyalty_explanation">It has been too long since you have walked your dog! He has lost some loyalty for you.\n\nWalk your dog every day and he will love you!</string>
     <string name="body_weight_setting">Body weight</string>
     <string name="body_weight_setting_details">For calorie calculation</string>
     <string name="body_weight_setting_title">Enter your body weight</string>
