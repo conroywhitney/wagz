@@ -37,13 +37,11 @@ public class AppState {
 	private final String STATE_ELAPSED_TIME = "elapsed_time";
 	private final String STATE_LAST_WALK_DATE = "last_walk_date";
 	private final String STATE_LOYALTY = "loyalty";
-	private final String STATE_HAS_UPDATED_LOYALTY_LATELY = "loyalty_updated_lately";
 	
 	private final float DEFAULT_DISTANCE = (float) 0.0;
 	private final long DEFAULT_ELAPSED_TIME = 0;
 	private final long DEFAULT_LAST_WALK_DATE = System.currentTimeMillis();
 	private final int DEFAULT_LOYALTY = 4;
-	private final boolean DEFAULT_HAS_UPDATED_LOYALTY_LATELY = false;
 	
     SharedPreferences mState;
     Editor mStateEditor;
@@ -65,7 +63,6 @@ public class AppState {
     public void clear() {
     	mStateEditor.remove(STATE_DISTANCE);
     	mStateEditor.remove(STATE_ELAPSED_TIME);
-    	mStateEditor.remove(STATE_HAS_UPDATED_LOYALTY_LATELY);
     	Log.i(TAG, "clearing state");
     	this.commit();
     }
@@ -103,15 +100,6 @@ public class AppState {
     public void setLoyalty(int loyalty) {
     	Log.v(TAG, "setting loyalty: " + loyalty);
     	mStateEditor.putInt(STATE_LOYALTY, loyalty);
-    	mStateEditor.commit();
-    }
-    
-    public boolean hasUpdatedLoyaltyLately() {
-    	return mState.getBoolean(STATE_HAS_UPDATED_LOYALTY_LATELY, DEFAULT_HAS_UPDATED_LOYALTY_LATELY);
-    }
-    public void setHasUpdatedLoyaltyLately(boolean b) {
-    	Log.v(TAG, "setting hasUpdatedLoyaltyLately: " + b);
-    	mStateEditor.putBoolean(STATE_HAS_UPDATED_LOYALTY_LATELY, b);
     	mStateEditor.commit();
     }
     

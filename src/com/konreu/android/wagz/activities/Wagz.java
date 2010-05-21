@@ -121,16 +121,9 @@ public class Wagz extends Activity {
         updateUI();
     }
         
-    private void updateUI() {
-//    	String sTAG = TAG + "updateUI";
-        // These have to be *after* we get our settings ...
-    	int iHappiness = mDog.getHappiness();
-    	
-        mHappinessView.setText(iHappiness + "%");
-    	mHappinessBar.setProgress(iHappiness);
-    	
-    	mDog.updateLoyalty();
-    	
+    private void updateUI() {   	
+        mHappinessView.setText(mDog.getHappiness() + "%");
+    	mHappinessBar.setProgress(mDog.getHappiness());
     	mLoyaltyView.setText(Integer.toString(mDog.getLoyalty()));
     }
     
@@ -219,10 +212,12 @@ public class Wagz extends Activity {
     
     private void resetValues(boolean updateDisplay) {
         if (this.isRunning()) {
-            mService.resetValues();                    
+            mService.resetValues();
         } else {
         	AppState.getInstance(this).clear();
         }
+        
+        Dog.resetInstance(this);
     }
 
     private static final int MENU_SETTINGS = 8;

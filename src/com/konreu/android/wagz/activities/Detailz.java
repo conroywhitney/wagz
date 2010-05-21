@@ -43,6 +43,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.konreu.android.wagz.AppState;
+import com.konreu.android.wagz.Dog;
 import com.konreu.android.wagz.PedometerSettings;
 import com.konreu.android.wagz.R;
 import com.konreu.android.wagz.StepService;
@@ -179,6 +180,8 @@ public class Detailz extends Activity {
             	AppState.getInstance(this).clear();
             }
         }
+        
+        Dog.resetInstance(this);
     }
 
     private static final int MENU_SETTINGS = 8;

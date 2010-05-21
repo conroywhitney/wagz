@@ -7,67 +7,110 @@ public class Dog {
 	private static String TAG = "Dog";
 	private static Dog instance;
 	
+	private int NUM_MINS_BEFORE_CLEARING_HAPPINESS = 720;	// give them 12 hours
+	
 	private double PREF_MIN_HAPPINESS_FOR_LOYALTY_GAIN;
-//	private int PREF_DESIRED_WALK_FREQUENCY;
 	private long PREF_DESIRED_WALK_DURATION;
-//	private final double GRACE_MULTIPLIER = 1.5;
+	
+	private int PREF_DESIRED_WALK_FREQUENCY;
+	private final double GRACE_MULTIPLIER = 1.5;
 	
 	private double mHappiness;
 	private int mLoyalty;	
-//	private long mLastWalkedDate;
+	
+	private long mLastWalkedDate;
 	
 	private boolean mHasUpdatedLoyaltyRecently;
 	
 	private AppState mAppState;
 	
 	private Dog(Context c) {
-		PREF_MIN_HAPPINESS_FOR_LOYALTY_GAIN = (double) PedometerSettings.getInstance(c).getWalkPercentComplete() / 100.0;
-//		PREF_DESIRED_WALK_FREQUENCY = PedometerSettings.getInstance(c).getWalkFrequency();
-		PREF_DESIRED_WALK_DURATION = PedometerSettings.getInstance(c).getWalkLength();
-		
+		// Get all of our values from the AppState and PedometerSettings ....
 		mAppState = AppState.getInstance(c);
 		
-		updateHappiness(mAppState.getElapsedTime());
+		PREF_MIN_HAPPINESS_FOR_LOYALTY_GAIN = (double) PedometerSettings.getInstance(c).getWalkPercentComplete() / 100.0;
+		PREF_DESIRED_WALK_FREQUENCY = PedometerSettings.getInstance(c).getWalkFrequency();
+		PREF_DESIRED_WALK_DURATION = PedometerSettings.getInstance(c).getWalkLength();
+		
+		NUM_MINS_BEFORE_CLEARING_HAPPINESS = PREF_DESIRED_WALK_FREQUENCY / 2;	// give them half as long as their frequency
+
+		mHappiness = mAppState.getElapsedTime();
 		mLoyalty = mAppState.getLoyalty();
-//		mLastWalkedDate = mAppState.getLastWalkDate();
+		mLastWalkedDate = mAppState.getLastWalkDate();
 		
 		mHasUpdatedLoyaltyRecently = false;
 		
-//		updateLoyaltyOnStartup();
+		updateHappinessOnStartup();
+		updateLoyaltyOnStartup();
 	}
 	
-//	private void updateLoyaltyOnStartup() {
-//		String sTAG = TAG + ".getLoyalty";
-//		
-//		// Take away hearts
-//		double dblNumMinsSinceLastActivity = getNumMinsSinceLastActivity();
-//		Log.i(sTAG, "dblNumMinsSinceLastActivity: " + Double.toString(dblNumMinsSinceLastActivity));
-//		int iNumMinsSinceLastActivity = (int)(Math.floor(dblNumMinsSinceLastActivity));
-//		Log.i(sTAG, "iNumMinsSinceLastActivity: " + Integer.toString(iNumMinsSinceLastActivity));
-//		if (dblNumMinsSinceLastActivity > (PREF_DESIRED_WALK_FREQUENCY * GRACE_MULTIPLIER)) {	// give them a 1.5 grace window
-//			Log.i(sTAG, "it has been too long... " + dblNumMinsSinceLastActivity + " > " + PREF_DESIRED_WALK_FREQUENCY);
-//			Log.i(sTAG, "before loyalty: " + mLoyalty);
-//			if (iNumMinsSinceLastActivity > mLoyalty) {
-//				Log.i(sTAG, "it has been a very long time ... no more loyalty");
-//				// It has been too long ... they have no more loyalty   =(
-//				mLoyalty = 0;
-//			} else {
-//				Log.i(sTAG, "reducing loyalty");
-//				// Take away how long it's been since they have last had activity
-//				mLoyalty -= iNumMinsSinceLastActivity;
-//			}
-//			
-//			//AppState.getInstance(this).setLoyalty(mLoyalty);
-//		} else {
-//			Log.i(sTAG, "they are still within the threshold...");
-//		}
-//	}
+	private void updateHappinessOnStartup() {
+		String sTAG = TAG + ".updateHappinessOnStartup";
+		
+		if (getNumMinsSinceLastActivity() > NUM_MINS_BEFORE_CLEARING_HAPPINESS) {
+			Log.i(sTAG, "It has been too long since their last activity. Clearing happiness.");
+			updateHappiness(0);
+		} else {
+			Log.i(sTAG, "It has not been too long since their last activity. Persisting their happiness.");
+		}
+	}
+	
+	private void updateLoyaltyOnStartup() {
+		String sTAG = TAG + ".updateLoyaltyOnStartup";	
+		if (getNumMinsSinceLastActivity() > getMaxMinsSinceLastActivity()) {
+			Log.i(sTAG, "They are over their grace period. Going to lose loyalty points");
+			setLoyalty(mLoyalty - getNumHeartsToLose());
+		} else {
+			Log.i(sTAG, "They are still within their grace period. They will not lose any loyalty");
+		}
+	}
+	
+	private double getMaxMinsSinceLastActivity() {
+		String sTAG = TAG + "getMaxMinsSinceLastActivity";
+		// give them a grace window
+		double dblMaxMinsSinceLastActivity = (double) (PREF_DESIRED_WALK_FREQUENCY * GRACE_MULTIPLIER);
+		Log.v(sTAG, "PREF_DESIRED_WALK_FREQUENCY: " + PREF_DESIRED_WALK_FREQUENCY);
+		Log.v(sTAG, "GRACE_MULTIPLIER: " + GRACE_MULTIPLIER);
+		Log.v(sTAG, "dblMaxMinsSinceLastActivity: " + dblMaxMinsSinceLastActivity);
+		return dblMaxMinsSinceLastActivity;
+	}
+	
+	private void setLoyalty(int iNewLoyalty) {
+		String sTAG = TAG + "setLoyalty";
+		Log.v(sTAG, "before loyalty: " + mLoyalty);
+		if (iNewLoyalty < 0) {
+			// Can't have negative loyalty !
+			Log.i(sTAG, "was going to lose more loyalty than they had... keeping at 0");
+			iNewLoyalty = 0;
+		}
+		mLoyalty = iNewLoyalty;
+		// Save this new loyalty value
+		mAppState.setLoyalty(mLoyalty);
+	}
+	
+	private int getNumHeartsToLose() {
+		// How long has it been since you last walked ?
+		// How often were you supposed to walk ?
+		// If it has been 3.5 times as long as it should have been since your last walk, you're going to lose 3 hearts !
+		return (int) Math.floor(getNumMinsSinceLastActivity() / PREF_DESIRED_WALK_FREQUENCY);
+	}
+
+	private double getNumMinsSinceLastActivity() {
+		long elapsedMS = System.currentTimeMillis() - mLastWalkedDate;
+		double dblNumMins = (double) (elapsedMS / 60000.0);
+		Log.i(TAG + "getNumMinsSinceLastActivity", Double.toString(dblNumMins));
+		return dblNumMins;
+	}	
 	
 	public static Dog getInstance(Context c) {
 		if (instance == null) {
 			instance = new Dog(c);
 		}
 		return instance;
+	}
+	
+	public static void resetInstance(Context c) {
+		instance = new Dog(c);
 	}
 	
 	public int getLoyalty() {
@@ -95,11 +138,6 @@ public class Dog {
 		Log.v(TAG + ".updateHappiness", "new happiness: " + mHappiness);
 		updateLoyalty();
 	}
-	
-//    private double getNumMinsSinceLastActivity() {
-//    	long elapsedMS = System.currentTimeMillis() - mLastWalkedDate;
-//    	return (double) (elapsedMS / 60000.0);
-//    }
     	
 	public void updateLoyalty() {
 		String sTAG = TAG + ".updateLoyalty";
