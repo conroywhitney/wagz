@@ -113,4 +113,6 @@
 <string name="ok">OK</string>
 <string name="cancel">Cancel</string>
 <string name="warning_reset_values">You will lose your Walk Details. If you would like to save your Walk Details, press Cancel and press the \&quot;Save Walk Details on Snaptic\&quot; button from the Walk Details page.\n\nWould you still like to discard your Walk Details?</string>
+<string name="loyalty_label">Loyalty:   </string>
+<string name="happiness_label">Happiness:   </string>
 </resources>

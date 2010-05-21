@@ -49,6 +49,9 @@ public class Wagz extends Activity {
         
     private StepService mService;
     
+    private TextView mHappinessView;
+    private TextView mLoyaltyView;
+    
     static final int DIALOG_ABOUT = 1;
 
     private boolean isRunning() {
@@ -80,6 +83,12 @@ public class Wagz extends Activity {
                 stopWalk();
             }
         });
+    	
+    	mHappinessView = (TextView) findViewById(R.id.happiness_value);
+    	mLoyaltyView = (TextView) findViewById(R.id.loyalty_value);
+    	
+    	mHappinessView.setText("75%");
+    	mLoyaltyView.setText("1");
     	
     	setButtonStartWalk();
     }
