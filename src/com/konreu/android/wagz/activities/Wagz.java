@@ -38,6 +38,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -53,8 +54,9 @@ public class Wagz extends BetterDefaultActivity {
     private StepService mService;
         
     private SeekBar mHappinessBar;
-    private TextView mHappinessView;
-    private TextView mLoyaltyView;    
+//    private TextView mHappinessView;
+//    private TextView mLoyaltyView;    
+    private ImageView mLoyaltyRating;
     
     private Dog mDog;
     
@@ -80,8 +82,9 @@ public class Wagz extends BetterDefaultActivity {
         mHappinessBar.setEnabled(false);
         mHappinessBar.setFocusable(false);
     	
-    	mHappinessView = (TextView) findViewById(R.id.happiness_value);
-    	mLoyaltyView = (TextView) findViewById(R.id.loyalty_value);
+//    	mHappinessView = (TextView) findViewById(R.id.happiness_value);
+//    	mLoyaltyView = (TextView) findViewById(R.id.loyalty_value);
+    	mLoyaltyRating = (ImageView) findViewById(R.id.loyalty_rating);
     }
         
     @Override
@@ -115,9 +118,22 @@ public class Wagz extends BetterDefaultActivity {
     }
         
     private void updateUI() {   	
-        mHappinessView.setText(mDog.getHappiness() + "%");
-    	mHappinessBar.setProgress(mDog.getHappiness());
-    	mLoyaltyView.setText(Integer.toString(mDog.getLoyalty()) + " of 7");
+    	int iHappiness = mDog.getHappiness();
+//        mHappinessView.setText(iHappiness + "%");
+    	mHappinessBar.setProgress(iHappiness);
+    	
+    	int iLoyalty = mDog.getLoyalty();
+//    	mLoyaltyView.setText(iLoyalty + " of 7");
+    	
+    	if (iLoyalty == 0) { mLoyaltyRating.setImageResource(R.drawable.heart_0of7); }
+    	else if (iLoyalty == 1) { mLoyaltyRating.setImageResource(R.drawable.heart_1of7); }
+    	else if (iLoyalty == 2) { mLoyaltyRating.setImageResource(R.drawable.heart_2of7); }
+    	else if (iLoyalty == 3) { mLoyaltyRating.setImageResource(R.drawable.heart_3of7); }
+    	else if (iLoyalty == 4) { mLoyaltyRating.setImageResource(R.drawable.heart_4of7); }
+    	else if (iLoyalty == 5) { mLoyaltyRating.setImageResource(R.drawable.heart_5of7); }
+    	else if (iLoyalty == 6) { mLoyaltyRating.setImageResource(R.drawable.heart_6of7); }
+    	else if (iLoyalty == 7) { mLoyaltyRating.setImageResource(R.drawable.heart_7of7); }
+    	else { mLoyaltyRating.setImageResource(R.drawable.heart_3of7); }  // default
     }
     
     /***

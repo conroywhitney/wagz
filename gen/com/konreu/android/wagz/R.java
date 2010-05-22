@@ -49,14 +49,20 @@ public final class R {
     public static final class drawable {
         public static final int clear=0x7f020000;
         public static final int dachshund=0x7f020001;
-        public static final int happiness_current=0x7f020002;
-        public static final int happiness_grad=0x7f020003;
+        public static final int happiness_grad=0x7f020002;
+        public static final int heart_0of7=0x7f020003;
         public static final int heart_1of7=0x7f020004;
-        public static final int ic_notification=0x7f020005;
-        public static final int icon=0x7f020006;
-        public static final int line40=0x7f020007;
-        public static final int market_icon=0x7f020008;
-        public static final int snaptic_logo=0x7f020009;
+        public static final int heart_2of7=0x7f020005;
+        public static final int heart_3of7=0x7f020006;
+        public static final int heart_4of7=0x7f020007;
+        public static final int heart_5of7=0x7f020008;
+        public static final int heart_6of7=0x7f020009;
+        public static final int heart_7of7=0x7f02000a;
+        public static final int ic_notification=0x7f02000b;
+        public static final int icon=0x7f02000c;
+        public static final int line40=0x7f02000d;
+        public static final int market_icon=0x7f02000e;
+        public static final int snaptic_logo=0x7f02000f;
     }
     public static final class id {
         public static final int about_snaptic=0x7f0a000a;
@@ -67,14 +73,10 @@ public final class R {
         public static final int distance_units=0x7f0a0007;
         public static final int distance_value=0x7f0a0006;
         public static final int dog_image=0x7f0a000b;
-        public static final int happiness_bar=0x7f0a000f;
+        public static final int happiness_bar=0x7f0a000d;
         public static final int happiness_desc=0x7f0a000c;
-        public static final int happiness_label=0x7f0a000d;
-        public static final int happiness_value=0x7f0a000e;
-        public static final int loyalty_desc=0x7f0a0010;
-        public static final int loyalty_label=0x7f0a0011;
-        public static final int loyalty_rating=0x7f0a0013;
-        public static final int loyalty_value=0x7f0a0012;
+        public static final int loyalty_desc=0x7f0a000e;
+        public static final int loyalty_rating=0x7f0a000f;
         public static final int row_1=0x7f0a0001;
         public static final int snaptic_logo=0x7f0a0008;
         public static final int time_units=0x7f0a0004;

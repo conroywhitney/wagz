@@ -41,7 +41,7 @@ public class AppState {
 	private final float DEFAULT_DISTANCE = (float) 0.0;
 	private final long DEFAULT_ELAPSED_TIME = 0;
 	private final long DEFAULT_LAST_WALK_DATE = System.currentTimeMillis();
-	private final int DEFAULT_LOYALTY = 4;
+	private final int DEFAULT_LOYALTY = 3;
 	
     SharedPreferences mState;
     Editor mStateEditor;

@@ -9,7 +9,7 @@
 	<ImageView android:id="@+id/dog_image" 
 		android:layout_width="300px"
 		android:layout_height="193px"
-		android:layout_marginBottom="10px"
+		android:layout_marginBottom="15px"
 		android:src="@drawable/dachshund"
 		android:layout_gravity="top"
 	/>       
@@ -19,25 +19,25 @@
     	android:layout_height="wrap_content"
     	android:text="@string/happiness_desc"
     	android:layout_gravity="center_horizontal"
-    	android:layout_marginTop="8px"
+    	android:layout_marginTop="15px"
     />
 
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	    android:orientation="horizontal"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content">  
-			<TextView android:id="@+id/happiness_label"
-		    	android:layout_width="wrap_content"
-		    	android:layout_height="wrap_content"
-		    	android:text="@string/happiness_label"
-		    />
-		    
-		    <TextView android:id="@+id/happiness_value"
-		    	android:layout_width="wrap_content"
-		    	android:layout_height="wrap_content"
-		    	android:layout_marginLeft="3px"
-		    />
-	</LinearLayout>
+<!--	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--	    android:orientation="horizontal"-->
+<!--	    android:layout_width="fill_parent"-->
+<!--	    android:layout_height="wrap_content">  -->
+<!--			<TextView android:id="@+id/happiness_label"-->
+<!--		    	android:layout_width="wrap_content"-->
+<!--		    	android:layout_height="wrap_content"-->
+<!--		    	android:text="@string/happiness_label"-->
+<!--		    />-->
+<!--		    -->
+<!--		    <TextView android:id="@+id/happiness_value"-->
+<!--		    	android:layout_width="wrap_content"-->
+<!--		    	android:layout_height="wrap_content"-->
+<!--		    	android:layout_marginLeft="3px"-->
+<!--		    />-->
+<!--	</LinearLayout>-->
     	
 	<!-- Happiness Bar -->
 	<SeekBar android:id="@+id/happiness_bar"
@@ -57,32 +57,32 @@
     	android:layout_height="wrap_content"
     	android:text="@string/loyalty_desc" 
     	android:layout_gravity="center_horizontal"
-    	android:layout_marginTop="8px"
+    	android:layout_marginTop="15px"
     />    	
     
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	    android:orientation="horizontal"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content">      
-			<TextView android:id="@+id/loyalty_label"
-		    	android:layout_width="wrap_content"
-		    	android:layout_height="wrap_content"
-		    	android:text="@string/loyalty_label"
-		    />
-		    
-		    <TextView android:id="@+id/loyalty_value"
-		    	android:layout_width="wrap_content"
-		    	android:layout_height="wrap_content"
-		    	android:layout_marginLeft="3px"
-		    />    
-	</LinearLayout>
+<!--	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--	    android:orientation="horizontal"-->
+<!--	    android:layout_width="fill_parent"-->
+<!--	    android:layout_height="wrap_content">      -->
+<!--			<TextView android:id="@+id/loyalty_label"-->
+<!--		    	android:layout_width="wrap_content"-->
+<!--		    	android:layout_height="wrap_content"-->
+<!--		    	android:text="@string/loyalty_label"-->
+<!--		    />-->
+<!--		    -->
+<!--		    <TextView android:id="@+id/loyalty_value"-->
+<!--		    	android:layout_width="wrap_content"-->
+<!--		    	android:layout_height="wrap_content"-->
+<!--		    	android:layout_marginLeft="3px"-->
+<!--		    />    -->
+<!--	</LinearLayout>-->
 	
 	<!-- Loyalty -->
 	<ImageView android:id="@+id/loyalty_rating" 
 		android:layout_width="300px"
 		android:layout_height="wrap_content"
-		android:layout_marginBottom="5px"
-		android:src="@drawable/heart_1of7" 
+		android:layout_marginBottom="10px"
+		android:src="@drawable/heart_0of7" 
 	/>     	
    
 </LinearLayout>
