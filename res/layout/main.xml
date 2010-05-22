@@ -9,35 +9,34 @@
 	<ImageView android:id="@+id/dog_image" 
 		android:layout_width="300px"
 		android:layout_height="193px"
-		android:layout_marginBottom="15px"
 		android:src="@drawable/dalmation"
 		android:layout_gravity="top"
 	/>       
+   
+	<TextView android:id="@+id/dog_name"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:textSize="24sp"
+    	android:textStyle="bold"
+    	android:layout_gravity="center_horizontal"
+    />
+    
+	<TextView android:id="@+id/happiness_section"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_marginBottom="3px"
+    	android:text="@string/happiness_section_title"
+    	android:textSize="16sp"
+    	android:textStyle="bold"
+    />    
     
     <TextView android:id="@+id/happiness_desc"
     	android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
     	android:text="@string/happiness_desc"
     	android:layout_gravity="center_horizontal"
-    	android:layout_marginTop="15px"
+    	android:textSize="10sp"
     />
-
-<!--	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--	    android:orientation="horizontal"-->
-<!--	    android:layout_width="fill_parent"-->
-<!--	    android:layout_height="wrap_content">  -->
-<!--			<TextView android:id="@+id/happiness_label"-->
-<!--		    	android:layout_width="wrap_content"-->
-<!--		    	android:layout_height="wrap_content"-->
-<!--		    	android:text="@string/happiness_label"-->
-<!--		    />-->
-<!--		    -->
-<!--		    <TextView android:id="@+id/happiness_value"-->
-<!--		    	android:layout_width="wrap_content"-->
-<!--		    	android:layout_height="wrap_content"-->
-<!--		    	android:layout_marginLeft="3px"-->
-<!--		    />-->
-<!--	</LinearLayout>-->
     	
 	<!-- Happiness Bar -->
 	<SeekBar android:id="@+id/happiness_bar"
@@ -51,37 +50,28 @@
 		android:progressDrawable="@drawable/clear"
 		android:enabled="false"
 	/>    	
+	
+	<TextView android:id="@+id/loyalty_section"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_marginBottom="3px"
+    	android:text="@string/loyalty_section_title"
+    	android:textSize="16sp"
+    	android:textStyle="bold"
+    />    	
     	
 	<TextView android:id="@+id/loyalty_desc"
     	android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
-    	android:text="@string/loyalty_desc" 
+    	android:text="@string/loyalty_desc"
+    	android:textSize="10sp" 
     	android:layout_gravity="center_horizontal"
-    	android:layout_marginTop="15px"
     />    	
-    
-<!--	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--	    android:orientation="horizontal"-->
-<!--	    android:layout_width="fill_parent"-->
-<!--	    android:layout_height="wrap_content">      -->
-<!--			<TextView android:id="@+id/loyalty_label"-->
-<!--		    	android:layout_width="wrap_content"-->
-<!--		    	android:layout_height="wrap_content"-->
-<!--		    	android:text="@string/loyalty_label"-->
-<!--		    />-->
-<!--		    -->
-<!--		    <TextView android:id="@+id/loyalty_value"-->
-<!--		    	android:layout_width="wrap_content"-->
-<!--		    	android:layout_height="wrap_content"-->
-<!--		    	android:layout_marginLeft="3px"-->
-<!--		    />    -->
-<!--	</LinearLayout>-->
 	
 	<!-- Loyalty -->
 	<ImageView android:id="@+id/loyalty_rating" 
 		android:layout_width="300px"
 		android:layout_height="wrap_content"
-		android:layout_marginBottom="10px"
 		android:src="@drawable/heart_1of7" 
 	/>     	
    

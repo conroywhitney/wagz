@@ -36,12 +36,14 @@ public class PedometerSettings {
 	private final String SETTING_SENSITIVITY = "sensitivity";
 	private final String SETTING_WALK_PERCENT_COMPLETE = "walk_percent_complete";
 	private final String SETTING_WALK_FREQUENCY = "walk_frequency";
+	private final String SETTING_DOG_NAME = "dog_name";
 	
 	private final float DEFAULT_STEP_LENGTH = (float) 20.0;		// 20cm step
 	private final int DEFAULT_WALK_LENGTH = 15;		// 15 min
 	private final int DEFAULT_SENSITIVITY = 30;		// medium
 	private final int DEFAULT_WALK_PERCENT_COMPLETE = 90;	// 90% complete
 	private final int DEFAULT_WALK_FREQUENCY = 1440;	// once a day
+	private final String DEFAULT_DOG_NAME = "Wagz";
 	
     SharedPreferences mSettings;
     
@@ -84,6 +86,14 @@ public class PedometerSettings {
     
     public int getWalkFrequency() {
     	return getInt(SETTING_WALK_FREQUENCY, DEFAULT_WALK_FREQUENCY);
+    }
+    
+    public String getDogName() {
+    	return getString(SETTING_DOG_NAME, DEFAULT_DOG_NAME);
+    }
+    
+    public String getString(String sSettingKey, String sDefaultVal) {
+    	return mSettings.getString(sSettingKey, sDefaultVal);  	
     }
     
     public int getInt(String sSettingKey, int iDefaultVal) {

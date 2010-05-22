@@ -5,6 +5,13 @@
         
 	<PreferenceCategory
 		android:title="@string/pref_category_walk">        
+		
+		<EditTextPreference
+			android:key="dog_name"
+			android:title="@string/dog_name_setting_title"
+			android:summary="@string/dog_name_setting_details"
+			android:defaultValue="Wagz"
+		/>
 
 		<ListPreference
 		        android:key="walk_length"
@@ -15,24 +22,6 @@
 		        android:dialogTitle="@string/walk_length_setting_title"
 		        android:defaultValue="15" />
 		        
-<!--		<ListPreference-->
-<!--		        android:key="walk_percent_complete"-->
-<!--		        android:title="@string/walk_percent_complete_setting"-->
-<!--		        android:summary="@string/walk_percent_complete_setting_details"-->
-<!--		        android:entries="@array/walk_percent_complete_preference"-->
-<!--		        android:entryValues="@array/walk_percent_complete_preference_values"-->
-<!--		        android:dialogTitle="@string/walk_percent_complete_setting_title"-->
-<!--		        android:defaultValue="90" />-->
-<!--		        -->
-<!--		<ListPreference-->
-<!--		        android:key="walk_frequency"-->
-<!--		        android:title="@string/walk_frequency_setting"-->
-<!--		        android:summary="@string/walk_frequency_setting_details"-->
-<!--		        android:entries="@array/walk_frequency_preference"-->
-<!--		        android:entryValues="@array/walk_frequency_preference_values"-->
-<!--		        android:dialogTitle="@string/walk_frequency_setting_title"-->
-<!--		        android:defaultValue="15" />-->
-
 	</PreferenceCategory>	        
         
 	<PreferenceCategory
@@ -68,6 +57,15 @@
 		        android:defaultValue="30" />	            
 	            
 		<ListPreference
+		        android:key="units"
+		        android:title="@string/units_setting"
+		        android:summary="@string/units_setting_details"
+		        android:entries="@array/units_preference"
+		        android:entryValues="@array/units_preference_values"
+		        android:dialogTitle="@string/units_setting_title"
+		        android:defaultValue="imperial" />	            
+	            
+		<ListPreference
 		        android:key="sensitivity"
 		        android:title="@string/sensitivity_setting"
 		        android:summary="@string/sensitivity_setting_details"
@@ -75,15 +73,6 @@
 		        android:entryValues="@array/sensitivity_preference_values"
 		        android:dialogTitle="@string/sensitivity_setting_title"
 		        android:defaultValue="30" />
-		
-		<ListPreference
-		        android:key="units"
-		        android:title="@string/units_setting"
-		        android:summary="@string/units_setting_details"
-		        android:entries="@array/units_preference"
-		        android:entryValues="@array/units_preference_values"
-		        android:dialogTitle="@string/units_setting_title"
-		        android:defaultValue="imperial" />
 		    
 	</PreferenceCategory>
 

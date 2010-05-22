@@ -37,9 +37,9 @@
     <string name="medium">medium</string>
     <string name="low">low</string>
     <string name="very_low">very low</string>
-    <string name="walk_length_setting">Dog Type</string>
+    <string name="walk_length_setting">Dog\'s Breed</string>
     <string name="walk_length_setting_details">Larger dogs require longer walks</string>
-    <string name="walk_length_setting_title">Select Dog Type</string>        
+    <string name="walk_length_setting_title">Select Dog\'s Breed</string>        
     <string name="walk_percent_complete_setting">Completed Walk %</string>
     <string name="walk_percent_complete_setting_details">How much of your walking goal do you need to reach?</string>
     <string name="walk_percent_complete_setting_title">Select Completed Walk %</string>
@@ -66,8 +66,8 @@
 <string name="time_units">minutes : seconds</string>
 <string name="toast_quick_note">Walk Details Saved to Snaptic.com</string>
 <string name="create_quick_note_button">Save Walk Details on Snaptic</string>
-<string name="loyalty_desc">Walk Him Every Day and He Will Love You!</string>
-<string name="happiness_desc">Walk Your Dog Longer and He Will Be Happier!</string>
+<string name="loyalty_desc">Walk your dog every day and he will love you more! If you skip walking some days, he will lose loyalty for you.</string>
+<string name="happiness_desc">Walk your dog for the correct amount of time and he will be happy and gain loyalty for you.</string>
 <string name="stop_walk">We Are Done Walking For Now</string>
 <string name="about_snaptic">You can save your Walk Details on Snaptic to remember how long you walked and how far you went. Snaptic is free and easy to use! Simply install their 3banana Notes application from the Android Marketplace and press &quot;Save Walk Details&quot;!</string>
 <string name="menu_about">About</string>
@@ -76,7 +76,7 @@
 <string name="about_license">This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</string>
 <string name="about_url">Visit http://android.konreu.com/ for the source code to this application.</string>
 <string name="about_code_attribution">Based on the Pedometer Android App by Levente Bagi (http://code.google.com/p/pedometer/)</string>
-<string name="about_image_attribution">Paw icon based on the image at http://www.dog-paw-print.com/dog-paw-print-clip-art.html.Heart images based on http://www.hooplovers.com/_src/sc813/heart-128x100.jpg. </string>
+<string name="about_image_attribution">Loyalty hearts and Happiness scale images by Curtis Allen (curtisaallen.com). Paw icon based on an image from dog-paw-print.com. Dalmation image from iconfinder.com.</string>
 <string name="about_snaptic_disclaimer">Wagz by Konreu is not directly affiliated with Snaptic, the makers of 3banana Notes and Snaptic.com (located at www.snaptic.com). Wagz uses the 3banana application to save and retrieve information from Snaptic.</string>
 <string name="about_contest">Wagz was developed by Konreu as an entry into the Snaptic \&quot;Move Your App! Developer Challenge\&quot; located at https://www.snaptic.com/challenge/.</string>
 <string name="about_thanks">Special thanks to Jessica Whitney and Brian Stoddard for their help and support in finalizing the original concept of this application.</string>
@@ -86,13 +86,17 @@
 <string name="warning_reset_values">You will lose your Walk Details. If you would like to save your Walk Details, press Cancel and press the \&quot;Save Walk Details on Snaptic\&quot; button from the Walk Details page.\n\nWould you still like to discard your Walk Details?</string>
 <string name="loyalty_label">Loyalty:   </string>
 <string name="happiness_label">Happiness:   </string>
-<string name="pref_category_walk">Walk Settings</string>
+<string name="pref_category_walk">Dog Settings</string>
 <string name="notification_walk_title">Let's Go For a Walk!</string>
 <string name="notification_walk_subtitle">Your Dog Wants to Go For a Walk</string>
 <string name="menu_dog">Dog Details</string>
 <string name="time_setting_title">Choose Reminder Time</string>
-<string name="time_setting">Walk Reminder Time</string>
-<string name="time_setting_details">What time your dog should remind you to walk</string>
+<string name="time_setting">Set Walk Reminder Time</string>
+<string name="time_setting_details">What time should your dog remind you to go for a walk?</string>
 <string name="remind_setting_details">Have my dog let me know when he wants to go for a walk</string>
 <string name="remind_setting_title">Remind Me To Walk</string>
+<string name="dog_name_setting_title">Dog\'s Name</string>
+<string name="dog_name_setting_details">Give your new best friend a name</string>
+<string name="happiness_section_title">Happiness</string>
+<string name="loyalty_section_title">Loyalty</string>
 </resources>

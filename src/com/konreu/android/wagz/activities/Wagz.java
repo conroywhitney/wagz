@@ -35,6 +35,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,6 +46,7 @@ import android.widget.TextView;
 import com.github.droidfu.activities.BetterDefaultActivity;
 import com.konreu.android.wagz.AppState;
 import com.konreu.android.wagz.Dog;
+import com.konreu.android.wagz.PedometerSettings;
 import com.konreu.android.wagz.R;
 import com.konreu.android.wagz.StepService;
 
@@ -54,8 +56,7 @@ public class Wagz extends BetterDefaultActivity {
     private StepService mService;
         
     private SeekBar mHappinessBar;
-//    private TextView mHappinessView;
-//    private TextView mLoyaltyView;    
+    private TextView mDogNameView;    
     private ImageView mLoyaltyRating;
     
     private Dog mDog;
@@ -83,6 +84,8 @@ public class Wagz extends BetterDefaultActivity {
         mHappinessBar.setFocusable(false);
     	
     	mLoyaltyRating = (ImageView) findViewById(R.id.loyalty_rating);
+    	
+    	mDogNameView = (TextView) findViewById(R.id.dog_name);
     }
         
     @Override
@@ -129,6 +132,9 @@ public class Wagz extends BetterDefaultActivity {
     	else if (iLoyalty == 6) { mLoyaltyRating.setImageResource(R.drawable.heart_6of7); }
     	else if (iLoyalty == 7) { mLoyaltyRating.setImageResource(R.drawable.heart_7of7); }
     	else { mLoyaltyRating.setImageResource(R.drawable.heart_3of7); }  // default
+    	
+    	mDogNameView.setText(PedometerSettings.getInstance(this).getDogName());
+    	mDogNameView.setGravity(Gravity.CENTER_HORIZONTAL);
     }
     
     /***
