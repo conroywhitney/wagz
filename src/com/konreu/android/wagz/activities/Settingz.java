@@ -37,6 +37,8 @@ import com.konreu.android.wagz.R;
 public class Settingz extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 	private static final String TAG = "Settingz";
 	
+	 static final int TIME_DIALOG_ID = 0;
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {

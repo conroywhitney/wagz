@@ -49,20 +49,21 @@ public final class R {
     public static final class drawable {
         public static final int clear=0x7f020000;
         public static final int dachshund=0x7f020001;
-        public static final int happiness_grad=0x7f020002;
-        public static final int heart_0of7=0x7f020003;
-        public static final int heart_1of7=0x7f020004;
-        public static final int heart_2of7=0x7f020005;
-        public static final int heart_3of7=0x7f020006;
-        public static final int heart_4of7=0x7f020007;
-        public static final int heart_5of7=0x7f020008;
-        public static final int heart_6of7=0x7f020009;
-        public static final int heart_7of7=0x7f02000a;
-        public static final int ic_notification=0x7f02000b;
-        public static final int icon=0x7f02000c;
-        public static final int line40=0x7f02000d;
-        public static final int market_icon=0x7f02000e;
-        public static final int snaptic_logo=0x7f02000f;
+        public static final int dalmation=0x7f020002;
+        public static final int happiness_grad=0x7f020003;
+        public static final int heart_0of7=0x7f020004;
+        public static final int heart_1of7=0x7f020005;
+        public static final int heart_2of7=0x7f020006;
+        public static final int heart_3of7=0x7f020007;
+        public static final int heart_4of7=0x7f020008;
+        public static final int heart_5of7=0x7f020009;
+        public static final int heart_6of7=0x7f02000a;
+        public static final int heart_7of7=0x7f02000b;
+        public static final int ic_notification=0x7f02000c;
+        public static final int icon=0x7f02000d;
+        public static final int line40=0x7f02000e;
+        public static final int market_icon=0x7f02000f;
+        public static final int snaptic_logo=0x7f020010;
     }
     public static final class id {
         public static final int about_snaptic=0x7f0a000a;
@@ -147,6 +148,8 @@ public final class R {
         public static final int pref_category_walk=0x7f060059;
         public static final int quit=0x7f06003d;
         public static final int really_reset_values=0x7f060053;
+        public static final int remind_setting_details=0x7f060060;
+        public static final int remind_setting_title=0x7f060061;
         public static final int reset=0x7f06001e;
         public static final int resume=0x7f06001d;
         public static final int sensitivity_setting=0x7f060022;
@@ -164,6 +167,9 @@ public final class R {
         public static final int steps_per_minute=0x7f060012;
         public static final int stop_walk=0x7f060047;
         public static final int stopped=0x7f06000e;
+        public static final int time_setting=0x7f06005e;
+        public static final int time_setting_details=0x7f06005f;
+        public static final int time_setting_title=0x7f06005d;
         public static final int time_units=0x7f060042;
         public static final int toast_quick_note=0x7f060043;
         public static final int units_imperial=0x7f060037;

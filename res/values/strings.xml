@@ -51,7 +51,7 @@
     <string name="units_setting_title">Choose Distance Units</string>
     <string name="units_metric">kilometers</string>
     <string name="units_imperial">miles</string>
-    <string name="step_length_setting">Male or Female?</string>
+    <string name="step_length_setting">Are You Male or Female?</string>
     <string name="step_length_setting_details">To determine how large of steps you take</string>
     <string name="step_length_setting_title">Enter Your Sex</string>
     <string name="alert_lost_loyalty_title">Lost Loyalty</string>
@@ -59,7 +59,7 @@
     <string name="quit">Quit</string>
 
 
-<string name="pref_category_notifications">Notification Settings</string>
+<string name="pref_category_notifications">Walk Reminder Settings</string>
 <string name="menu_details">Walk Details</string>
 <string name="start_walk">Let's Go For a Walk !</string>
 <string name="ignore_reminder">I Will Not Go on a Walk Today</string>
@@ -90,4 +90,9 @@
 <string name="notification_walk_title">Let's Go For a Walk!</string>
 <string name="notification_walk_subtitle">Your Dog Wants to Go For a Walk</string>
 <string name="menu_dog">Dog Details</string>
+<string name="time_setting_title">Choose Reminder Time</string>
+<string name="time_setting">Walk Reminder Time</string>
+<string name="time_setting_details">What time your dog should remind you to walk</string>
+<string name="remind_setting_details">Have my dog let me know when he wants to go for a walk</string>
+<string name="remind_setting_title">Remind Me To Walk</string>
 </resources>
