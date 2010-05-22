@@ -27,6 +27,7 @@ import android.util.Log;
 
 import com.konreu.android.wagz.AppState;
 import com.konreu.android.wagz.Dog;
+import com.konreu.android.wagz.PedometerSettings;
 import com.konreu.android.wagz.R;
 
 /**
@@ -65,5 +66,7 @@ public class Settingz extends PreferenceActivity implements OnSharedPreferenceCh
 		Log.v(TAG + "onSharedPreferenceChanged", "resetting AppState and Dog");
 		AppState.getInstance(this).clear();
 		Dog.resetInstance(this);
+		
+		Log.v(TAG, PedometerSettings.getInstance(this).getReminderTime());
 	}
 }

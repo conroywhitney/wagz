@@ -37,6 +37,8 @@ public class PedometerSettings {
 	private final String SETTING_WALK_PERCENT_COMPLETE = "walk_percent_complete";
 	private final String SETTING_WALK_FREQUENCY = "walk_frequency";
 	private final String SETTING_DOG_NAME = "dog_name";
+	private final String SETTING_SHOULD_SET_REMINDER = "reminder_on";
+	private final String SETTING_REMINDER_TIME = "preference_time";
 	
 	private final float DEFAULT_STEP_LENGTH = (float) 20.0;		// 20cm step
 	private final int DEFAULT_WALK_LENGTH = 15;		// 15 min
@@ -44,6 +46,8 @@ public class PedometerSettings {
 	private final int DEFAULT_WALK_PERCENT_COMPLETE = 90;	// 90% complete
 	private final int DEFAULT_WALK_FREQUENCY = 1440;	// once a day
 	private final String DEFAULT_DOG_NAME = "Wagz";
+	private final boolean DEFAULT_SHOULD_SET_REMINDER = false;
+	private final String DEFAULT_REMINDER_TIME = "18:00";
 	
     SharedPreferences mSettings;
     
@@ -92,9 +96,26 @@ public class PedometerSettings {
     	return getString(SETTING_DOG_NAME, DEFAULT_DOG_NAME);
     }
     
+    public boolean shouldSetReminder() {
+    	return mSettings.getBoolean(SETTING_SHOULD_SET_REMINDER, DEFAULT_SHOULD_SET_REMINDER);
+    }
+    
+    public String getReminderTime() {
+    	return getString(SETTING_REMINDER_TIME, DEFAULT_REMINDER_TIME);
+    }
+    
     public String getString(String sSettingKey, String sDefaultVal) {
     	return mSettings.getString(sSettingKey, sDefaultVal);  	
     }
+    
+//    public boolean getBoolean(String sSettingKey, boolean bDefaultVal) {
+//    	try {
+//    		return Boolean.valueOf(mSettings.getString(sSettingKey, Boolean.toString(bDefaultVal)));
+//    	} catch (NumberFormatException nfe) {
+//    		Log.e(TAG + ".getBoolean", "error getting boolean preference " + sSettingKey + ": " + nfe.getMessage());
+//    		return bDefaultVal;
+//    	}    	
+//    }    
     
     public int getInt(String sSettingKey, int iDefaultVal) {
     	try {
