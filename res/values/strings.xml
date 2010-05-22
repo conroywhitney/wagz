@@ -37,9 +37,9 @@
     <string name="medium">medium</string>
     <string name="low">low</string>
     <string name="very_low">very low</string>
-    <string name="walk_length_setting">Walk Duration</string>
-    <string name="walk_length_setting_details">How long do you want to walk?</string>
-    <string name="walk_length_setting_title">Select Walk Length</string>        
+    <string name="walk_length_setting">Dog Type</string>
+    <string name="walk_length_setting_details">Larger dogs require longer walks</string>
+    <string name="walk_length_setting_title">Select Dog Type</string>        
     <string name="walk_percent_complete_setting">Completed Walk %</string>
     <string name="walk_percent_complete_setting_details">How much of your walking goal do you need to reach?</string>
     <string name="walk_percent_complete_setting_title">Select Completed Walk %</string>

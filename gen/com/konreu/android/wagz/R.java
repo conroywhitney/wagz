@@ -17,8 +17,8 @@ public final class R {
         public static final int units_preference_values=0x7f07000b;
         public static final int walk_frequency_preference=0x7f070006;
         public static final int walk_frequency_preference_values=0x7f070007;
-        public static final int walk_length_preference=0x7f070002;
-        public static final int walk_length_preference_values=0x7f070003;
+        public static final int walk_length_preference=0x7f070003;
+        public static final int walk_length_preference_values=0x7f070002;
         public static final int walk_percent_complete_preference=0x7f070004;
         public static final int walk_percent_complete_preference_values=0x7f070005;
     }
