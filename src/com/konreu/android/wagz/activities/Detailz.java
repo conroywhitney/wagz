@@ -87,7 +87,7 @@ public class Detailz extends BetterDefaultActivity {
 				_notesIntent.createNote("I walked " + getFormattedDistance() + " " + 
 							getDistanceUnits() + 
 							" in " + getFormattedTime() + " minutes with my virtual dog " + 
-							"" + "\n\n#wagz");
+							PedometerSettings.getInstance(Detailz.this).getDogName() + "\n\n#wagz");
 			}        	
         });
         

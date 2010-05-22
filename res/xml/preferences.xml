@@ -30,7 +30,7 @@
 		<CheckBoxPreference
 			android:key="reminder_on"
 			android:title="@string/remind_setting_title"
-			android:defaultValue="true"
+			android:defaultValue="false"
 			android:summary="@string/remind_setting_details" />
 
 		<TimePickerPreference
