@@ -82,8 +82,6 @@ public class Wagz extends BetterDefaultActivity {
         mHappinessBar.setEnabled(false);
         mHappinessBar.setFocusable(false);
     	
-//    	mHappinessView = (TextView) findViewById(R.id.happiness_value);
-//    	mLoyaltyView = (TextView) findViewById(R.id.loyalty_value);
     	mLoyaltyRating = (ImageView) findViewById(R.id.loyalty_rating);
     }
         
@@ -119,11 +117,9 @@ public class Wagz extends BetterDefaultActivity {
         
     private void updateUI() {   	
     	int iHappiness = mDog.getHappiness();
-//        mHappinessView.setText(iHappiness + "%");
     	mHappinessBar.setProgress(iHappiness);
     	
     	int iLoyalty = mDog.getLoyalty();
-//    	mLoyaltyView.setText(iLoyalty + " of 7");
     	
     	if (iLoyalty == 0) { mLoyaltyRating.setImageResource(R.drawable.heart_0of7); }
     	else if (iLoyalty == 1) { mLoyaltyRating.setImageResource(R.drawable.heart_1of7); }
@@ -215,12 +211,13 @@ public class Wagz extends BetterDefaultActivity {
         Dog.resetInstance(this);
     }
     
-    private static final int MENU_PAUSE = 1;
-    private static final int MENU_RESUME = 2;
+    private static final int MENU_PAUSE = 0;
+    private static final int MENU_RESUME = 1;
+    private static final int MENU_SETTINGS = 2;
     private static final int MENU_DETAILS = 3;
     
-    private static final int MENU_SETTINGS = 7;
-    private static final int MENU_ABOUT = 8;
+    private static final int MENU_ABOUT = 7;
+    private static final int MENU_RESET = 8;
     private static final int MENU_QUIT = 9;
     
     /* Creates the menu items */
@@ -235,20 +232,26 @@ public class Wagz extends BetterDefaultActivity {
             .setIcon(android.R.drawable.ic_media_play)
             .setShortcut('1', 'w');
         }
+	    menu.add(0, MENU_SETTINGS, 0, R.string.settings)
+	        .setIcon(android.R.drawable.ic_menu_preferences)
+	        .setShortcut('2', 's')
+	        .setIntent(new Intent(this, Settingz.class));        
         menu.add(0, MENU_DETAILS, 0, R.string.menu_details)
 	        .setIcon(android.R.drawable.ic_menu_info_details)
-	        .setShortcut('2', 'd')
+	        .setShortcut('3', 'd')
         	.setIntent(new Intent(this, Detailz.class));
-        menu.add(0, MENU_SETTINGS, 0, R.string.settings)
-	        .setIcon(android.R.drawable.ic_menu_preferences)
-	        .setShortcut('7', 's')
-	        .setIntent(new Intent(this, Settingz.class));
+        
+        // Bottom row
         menu.add(0, MENU_ABOUT, 0, R.string.menu_about)
-        	.setIcon(android.R.drawable.ic_menu_help)
-        	.setShortcut('8', 'a');
-        menu.add(0, MENU_QUIT, 0, R.string.quit)
+	    	.setIcon(android.R.drawable.ic_menu_help)
+	    	.setShortcut('7', 'a');        
+        menu.add(0, MENU_RESET, 0, R.string.reset)
+	        .setIcon(android.R.drawable.ic_menu_close_clear_cancel)
+	        .setShortcut('8', 'r');                
+	    menu.add(0, MENU_QUIT, 0, R.string.quit)
 	        .setIcon(android.R.drawable.ic_lock_power_off)
 	        .setShortcut('9', 'q');
+        
         return true;
     }
 
@@ -261,22 +264,26 @@ public class Wagz extends BetterDefaultActivity {
             case MENU_RESUME:
                 startWalk();
                 return true;
-            case MENU_QUIT:
+            case MENU_RESET:
             	// Alert the user that they are about to lose their values
                 new AlertDialog.Builder(this)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle(R.string.really_reset_values)
                 .setMessage(R.string.warning_reset_values)
+                .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        resetValues(false);
-                        stopStepService();
-                        finish();
+                    	resetValues(true);
                     }
                 })
                 .setNegativeButton(R.string.cancel, null)
                 .show();
+
+                return true;                 
+            case MENU_QUIT:
+                stopStepService();
+                finish();
                 return true;
             case MENU_ABOUT:
             	showDialog(DIALOG_ABOUT);

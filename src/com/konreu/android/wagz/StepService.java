@@ -114,8 +114,7 @@ public class StepService extends Service {
 //		mStepDetector.addStepListener(mStepBuzzer);
 
         // Start voice
-        reloadSettings();
-        
+        reloadSettings();        
     }
     
     @Override
@@ -137,10 +136,10 @@ public class StepService extends Service {
         
         super.onDestroy();
         
-//        /* Save our Data */
-//        AppState.getInstance(this).setDistance(mDistance);
-//        AppState.getInstance(this).setElapsedTime(mElapsedTime);
-//        AppState.getInstance(this).setLastWalkDate(System.currentTimeMillis());
+        /* Save our Data */
+        AppState.getInstance(this).setDistance(mDistance);
+        AppState.getInstance(this).setElapsedTime(mElapsedTime);
+        AppState.getInstance(this).setLastWalkDate(System.currentTimeMillis());
         
         // Stop detecting
         mSensorManager.unregisterListener(mStepDetector);
@@ -222,10 +221,12 @@ public class StepService extends Service {
      */
     private void showNotification() {
         CharSequence text = getText(R.string.app_name);
+        
         Notification notification = new Notification(R.drawable.ic_notification, null,
                 System.currentTimeMillis());
         notification.flags = Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;
         notification.icon = R.drawable.ic_notification;
+        
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, Wagz.class), 0);
         notification.setLatestEventInfo(this, text,

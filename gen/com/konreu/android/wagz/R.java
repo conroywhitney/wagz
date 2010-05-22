@@ -131,6 +131,7 @@ public final class R {
         public static final int medium=0x7f060027;
         public static final int menu_about=0x7f060049;
         public static final int menu_details=0x7f06003f;
+        public static final int menu_dog=0x7f06005c;
         public static final int miles=0x7f060011;
         public static final int miles_per_hour=0x7f060014;
         public static final int notes_intent_error=0x7f060007;

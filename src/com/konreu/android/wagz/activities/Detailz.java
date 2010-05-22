@@ -192,12 +192,13 @@ public class Detailz extends BetterDefaultActivity {
     }
 
     
-    private static final int MENU_PAUSE = 1;
-    private static final int MENU_RESUME = 2;
-    private static final int MENU_RESET = 3;
+    private static final int MENU_PAUSE = 0;
+    private static final int MENU_RESUME = 1;
+    private static final int MENU_SETTINGS = 2;
+    private static final int MENU_DOG = 3;
     
-    private static final int MENU_SETTINGS = 7;
-    private static final int MENU_ABOUT = 8;
+    private static final int MENU_ABOUT = 7;
+    private static final int MENU_RESET = 8;
     private static final int MENU_QUIT = 9;
     
     /* Creates the menu items */
@@ -212,19 +213,26 @@ public class Detailz extends BetterDefaultActivity {
 	            .setIcon(android.R.drawable.ic_media_play)
 	            .setShortcut('1', 'w');
         }
-        menu.add(0, MENU_RESET, 0, R.string.reset)
-	        .setIcon(android.R.drawable.ic_menu_close_clear_cancel)
-	        .setShortcut('2', 'r');
         menu.add(0, MENU_SETTINGS, 0, R.string.settings)
 	        .setIcon(android.R.drawable.ic_menu_preferences)
-	        .setShortcut('7', 's')
-        .setIntent(new Intent(this, Settingz.class));
+	        .setShortcut('2', 's')
+	        .setIntent(new Intent(this, Settingz.class));           
+        menu.add(0, MENU_DOG, 0, R.string.menu_dog)
+	        .setIcon(android.R.drawable.ic_menu_info_details)
+	        .setShortcut('3', 'd')
+	    	.setIntent(new Intent(this, Wagz.class));
+        
+        // Bottom row
         menu.add(0, MENU_ABOUT, 0, R.string.menu_about)
 	    	.setIcon(android.R.drawable.ic_menu_help)
-	    	.setShortcut('8', 'a');
+	    	.setShortcut('7', 'a');     
+        menu.add(0, MENU_RESET, 0, R.string.reset)
+	        .setIcon(android.R.drawable.ic_menu_close_clear_cancel)
+	        .setShortcut('8', 'r');        
         menu.add(0, MENU_QUIT, 0, R.string.quit)
 	        .setIcon(android.R.drawable.ic_lock_power_off)
 	        .setShortcut('9', 'q');
+     
         return true;
     }
 
@@ -257,22 +265,9 @@ public class Detailz extends BetterDefaultActivity {
 
                 return true;            	
             case MENU_QUIT:
-            	// Alert the user that they are about to lose their values
-                new AlertDialog.Builder(this)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle(R.string.really_reset_values)
-                .setMessage(R.string.warning_reset_values)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        resetValues(false);
-                        stopStepService();
-                        finish();
-                    }
-                })
-                .setNegativeButton(R.string.cancel, null)
-                .show();
+                resetValues(false);
+                stopStepService();
+                finish();
                 return true;
             case MENU_ABOUT:
             	showDialog(DIALOG_ABOUT);

@@ -89,4 +89,5 @@
 <string name="pref_category_walk">Walk Settings</string>
 <string name="notification_walk_title">Let's Go For a Walk!</string>
 <string name="notification_walk_subtitle">Your Dog Wants to Go For a Walk</string>
+<string name="menu_dog">Dog Details</string>
 </resources>
