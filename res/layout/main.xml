@@ -10,7 +10,7 @@
 		android:layout_width="300px"
 		android:layout_height="193px"
 		android:layout_marginBottom="15px"
-		android:src="@drawable/dachshund"
+		android:src="@drawable/dalmation"
 		android:layout_gravity="top"
 	/>       
     
@@ -82,7 +82,7 @@
 		android:layout_width="300px"
 		android:layout_height="wrap_content"
 		android:layout_marginBottom="10px"
-		android:src="@drawable/heart_0of7" 
+		android:src="@drawable/heart_1of7" 
 	/>     	
    
 </LinearLayout>

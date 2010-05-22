@@ -121,8 +121,7 @@ public class Wagz extends BetterDefaultActivity {
     	
     	int iLoyalty = mDog.getLoyalty();
     	
-    	if (iLoyalty == 0) { mLoyaltyRating.setImageResource(R.drawable.heart_0of7); }
-    	else if (iLoyalty == 1) { mLoyaltyRating.setImageResource(R.drawable.heart_1of7); }
+    	if (iLoyalty == 1) { mLoyaltyRating.setImageResource(R.drawable.heart_1of7); }
     	else if (iLoyalty == 2) { mLoyaltyRating.setImageResource(R.drawable.heart_2of7); }
     	else if (iLoyalty == 3) { mLoyaltyRating.setImageResource(R.drawable.heart_3of7); }
     	else if (iLoyalty == 4) { mLoyaltyRating.setImageResource(R.drawable.heart_4of7); }

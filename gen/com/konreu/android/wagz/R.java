@@ -51,19 +51,17 @@ public final class R {
         public static final int dachshund=0x7f020001;
         public static final int dalmation=0x7f020002;
         public static final int happiness_grad=0x7f020003;
-        public static final int heart_0of7=0x7f020004;
-        public static final int heart_1of7=0x7f020005;
-        public static final int heart_2of7=0x7f020006;
-        public static final int heart_3of7=0x7f020007;
-        public static final int heart_4of7=0x7f020008;
-        public static final int heart_5of7=0x7f020009;
-        public static final int heart_6of7=0x7f02000a;
-        public static final int heart_7of7=0x7f02000b;
-        public static final int ic_notification=0x7f02000c;
-        public static final int icon=0x7f02000d;
-        public static final int line40=0x7f02000e;
-        public static final int market_icon=0x7f02000f;
-        public static final int snaptic_logo=0x7f020010;
+        public static final int heart_1of7=0x7f020004;
+        public static final int heart_2of7=0x7f020005;
+        public static final int heart_3of7=0x7f020006;
+        public static final int heart_4of7=0x7f020007;
+        public static final int heart_5of7=0x7f020008;
+        public static final int heart_6of7=0x7f020009;
+        public static final int heart_7of7=0x7f02000a;
+        public static final int ic_notification=0x7f02000b;
+        public static final int icon=0x7f02000c;
+        public static final int market_icon=0x7f02000d;
+        public static final int snaptic_logo=0x7f02000e;
     }
     public static final class id {
         public static final int about_snaptic=0x7f0a000a;

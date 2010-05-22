@@ -84,10 +84,10 @@ public class Dog {
 	private void setLoyalty(int iNewLoyalty) {
 		String sTAG = TAG + "setLoyalty";
 		Log.v(sTAG, "before loyalty: " + mLoyalty);
-		if (iNewLoyalty < 0) {
-			// Can't have negative loyalty !
-			Log.i(sTAG, "was going to lose more loyalty than they had... keeping at 0");
-			iNewLoyalty = 0;
+		if (iNewLoyalty < 1) {
+			// Can't have anything below 1!
+			Log.i(sTAG, "was going to lose more loyalty than they had... keeping at 1");
+			iNewLoyalty = 1;
 		}
 		mLoyalty = iNewLoyalty;
 		// Save this new loyalty value
