@@ -322,7 +322,7 @@ public class Detailz extends BetterDefaultActivity {
     }
     
     private String getFormattedDistance() {
-    	DecimalFormat df = new DecimalFormat("#.##");
+    	DecimalFormat df = new DecimalFormat("0.00");
         return df.format(mDistanceValue);
     }
     
