@@ -214,6 +214,7 @@ public class Wagz extends BetterDefaultActivity {
         }
         
         Dog.resetInstance(this);
+        mDog = Dog.getInstance(this);
     }
     
     private static final int MENU_PAUSE = 0;

@@ -31,6 +31,7 @@ public class Dog {
 		PREF_MIN_HAPPINESS_FOR_LOYALTY_GAIN = (double) PedometerSettings.getInstance(c).getWalkPercentComplete() / 100.0;
 		PREF_DESIRED_WALK_FREQUENCY = PedometerSettings.getInstance(c).getWalkFrequency();
 		PREF_DESIRED_WALK_DURATION = PedometerSettings.getInstance(c).getWalkLength();
+		Log.v(TAG + ".constructor", "pref desired walk duration: " + PREF_DESIRED_WALK_DURATION);
 		
 		NUM_MINS_BEFORE_CLEARING_HAPPINESS = PREF_DESIRED_WALK_FREQUENCY / 2;	// give them half as long as their frequency
 
@@ -141,6 +142,7 @@ public class Dog {
 	public void updateHappiness(long elapsedTime) {
 		if (elapsedTime <= 0) { elapsedTime = 0; }
 		mHappiness = (float)(elapsedTime / (PREF_DESIRED_WALK_DURATION * 60000.0));
+		Log.v(TAG + ".updateHappiness", "pref desired walk duration" + (PREF_DESIRED_WALK_DURATION * 60000.0));
 		Log.v(TAG + ".updateHappiness", "new happiness: " + mHappiness);
 		updateLoyalty();
 	}
