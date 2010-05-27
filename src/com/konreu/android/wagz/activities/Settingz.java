@@ -29,6 +29,7 @@ import com.konreu.android.wagz.AppState;
 import com.konreu.android.wagz.Dog;
 import com.konreu.android.wagz.PedometerSettings;
 import com.konreu.android.wagz.R;
+import com.konreu.android.wagz.WagzApp;
 
 /**
  * Activity for Pedometer settings.
@@ -68,5 +69,12 @@ public class Settingz extends PreferenceActivity implements OnSharedPreferenceCh
 		Dog.resetInstance(this);
 		
 		Log.v(TAG, PedometerSettings.getInstance(this).getReminderTime());
+		
+		try {
+			((WagzApp) this.getApplication()).updateAlarm();	
+		} catch (Exception e) {
+			Log.e(TAG + "onSharedPreferenceChanged", "error updating alarm");			
+		}
+		
 	}
 }

@@ -19,6 +19,7 @@
 
 package com.konreu.android.wagz.activities;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -51,13 +52,11 @@ public class Alarmz extends BroadcastReceiver {
     	notification.icon = R.drawable.ic_notification;
     	 
     	// The PendingIntent to launch our activity if the user selects this notification
-    	manager.notify(R.string.app_name, notification);
+    	manager.notify(R.string.app_name, notification);   	   	
     	
-//		PedometerSettings pedometerSettings = PedometerSettings.getInstance(this);    	
-    	
-//    	Log.v(TAG + ".onReceive", "Setting up subsequent alarm");
-//		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, new Intent(context, Alarmz.class), 0);
-//		AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-//		alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (5 * 1000), pendingIntent);
+    	Log.v(TAG + ".onReceive", "Setting up subsequent alarm");
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, new Intent(context, Alarmz.class), 0);
+		AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+		alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 }

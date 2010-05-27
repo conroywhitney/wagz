@@ -1,7 +1,6 @@
 package com.konreu.android.wagz;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -16,8 +15,17 @@ public class WagzApp extends DroidFuApplication {
 	
 	@Override
 	public void onCreate() {
-		super.onCreate();
-		String sTAG = TAG + ".onCreate";
+		super.onCreate();		
+		updateAlarm();
+	}
+	
+	public void updateAlarm() {
+		String sTAG = TAG + ".updateAlarm";
+		
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, new Intent(this, Alarmz.class), 0);
+		AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+		
+		alarmManager.cancel(pendingIntent);
 		
 		// Set alarm for next time
 		PedometerSettings pedometerSettings = PedometerSettings.getInstance(this);
@@ -44,15 +52,13 @@ public class WagzApp extends DroidFuApplication {
 				Log.w(sTAG, "alarm string not contain : like expected");
 			}
 			
-			if (iHour > -1 && iMin > -1) {
-				PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, new Intent(this, Alarmz.class), 0);
-				AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-				
+			if (iHour > -1 && iMin > -1) {				
 				Calendar now = Calendar.getInstance();
 				
 				Calendar cAlarmDate = Calendar.getInstance();
 				cAlarmDate.set(Calendar.HOUR_OF_DAY, iHour);
 				cAlarmDate.set(Calendar.MINUTE, iMin);
+				cAlarmDate.set(Calendar.SECOND, 0);
 				
 				Log.v(sTAG, now.get(Calendar.HOUR_OF_DAY) + " vs. " + iHour + " vs. " + cAlarmDate.get(Calendar.HOUR_OF_DAY));
 				Log.v(sTAG, now.get(Calendar.MINUTE) + " vs. " + iMin + " vs. " + cAlarmDate.get(Calendar.MINUTE));
@@ -66,18 +72,16 @@ public class WagzApp extends DroidFuApplication {
 					Log.v(sTAG, "Can still do alarm for today!");
 				}
 				
-				Date dAlarmDate = cAlarmDate .getTime();
-				Log.i(sTAG, "Setting alarm for: " + dAlarmDate.toGMTString());
+				Log.i(sTAG, System.currentTimeMillis() + " vs. " + cAlarmDate.getTimeInMillis() + " (" + (cAlarmDate.getTimeInMillis() - System.currentTimeMillis()) + ") ms from now");		
 								
 				// For now, just set it to notify me in 24 hours from when I started this app for the first time
-				alarmManager.set(AlarmManager.RTC_WAKEUP, dAlarmDate.getTime(), pendingIntent);		
+				alarmManager.set(AlarmManager.RTC_WAKEUP, cAlarmDate.getTimeInMillis(), pendingIntent);		
 			} else {
 				Log.w(sTAG, "Not setting alarm because not have proper hour and minute");
 			}
 		} else {
 			Log.i(sTAG, "Not setting alarm because preference was false");
 		}
-		
 	}
 
 	
