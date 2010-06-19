@@ -40,7 +40,7 @@ public class PedometerSettings {
 	private final String SETTING_SHOULD_SET_REMINDER = "reminder_on";
 	private final String SETTING_REMINDER_TIME = "preference_time";
 	
-	private final float DEFAULT_STEP_LENGTH = (float) 20.0;		// 20cm step
+	private final float DEFAULT_STEP_LENGTH = (float) 26.5;		// 20cm step
 	private final int DEFAULT_WALK_LENGTH = 15;		// 15 min
 	private final int DEFAULT_SENSITIVITY = 30;		// medium
 	private final int DEFAULT_WALK_PERCENT_COMPLETE = 90;	// 90% complete

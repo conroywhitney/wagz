@@ -77,14 +77,84 @@
         <item>4320</item>   
     </string-array>   
     
-    <string-array name="sex_preference">
-    	<item>Male</item>
-        <item>Female</item>
+    <string-array name="height_preference">
+		<item>3\'6"</item>
+		<item>3\'7"</item>
+		<item>3\'8"</item>
+		<item>3\'9"</item>
+		<item>3\'10"</item>
+		<item>3\'11"</item>
+		<item>4\'0"</item>
+		<item>4\'1"</item>
+		<item>4\'2"</item>
+		<item>4\'3"</item>
+		<item>4\'4"</item>
+		<item>4\'5"</item>
+		<item>4\'6"</item>
+		<item>4\'7"</item>
+		<item>4\'8"</item>
+		<item>4\'9"</item>
+		<item>4\'10"</item>
+		<item>4\'11"</item>
+		<item>5\'0"</item>
+		<item>5\'1"</item>
+		<item>5\'2"</item>
+		<item>5\'3"</item>
+		<item>5\'4"</item>
+		<item>5\'5"</item>
+		<item>5\'6"</item>
+		<item>5\'7"</item>
+		<item>5\'8"</item>
+		<item>5\'9"</item>
+		<item>5\'10"</item>
+		<item>5\'11"</item>
+		<item>6\'0"</item>
+		<item>6\'1"</item>
+		<item>6\'2"</item>
+		<item>6\'3"</item>
+		<item>6\'4"</item>
+		<item>6\'5"</item>
+		<item>6\'6"</item>
     </string-array>
 
-    <string-array name="sex_preference_values">
-    	<item>30</item>
-        <item>26</item>
+    <string-array name="height_preference_values">
+		<item>17.39</item>
+		<item>17.80</item>
+		<item>18.22</item>
+		<item>18.63</item>
+		<item>19.04</item>
+		<item>19.46</item>
+		<item>19.87</item>
+		<item>20.29</item>
+		<item>20.70</item>
+		<item>21.11</item>
+		<item>21.53</item>
+		<item>21.94</item>
+		<item>22.36</item>
+		<item>22.77</item>
+		<item>23.18</item>
+		<item>23.60</item>
+		<item>24.01</item>
+		<item>24.43</item>
+		<item>24.84</item>
+		<item>25.25</item>
+		<item>25.67</item>
+		<item>26.08</item>
+		<item>26.50</item>
+		<item>26.91</item>
+		<item>27.32</item>
+		<item>27.74</item>
+		<item>28.15</item>
+		<item>28.57</item>
+		<item>28.98</item>
+		<item>29.39</item>
+		<item>29.81</item>
+		<item>30.22</item>
+		<item>30.64</item>
+		<item>31.05</item>
+		<item>31.46</item>
+		<item>31.88</item>
+		<item>32.29</item>
     </string-array>      
 
     <string-array name="units_preference">

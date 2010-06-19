@@ -51,9 +51,9 @@
     <string name="units_setting_title">Choose Distance Units</string>
     <string name="units_metric">kilometers</string>
     <string name="units_imperial">miles</string>
-    <string name="step_length_setting">Are You Male or Female?</string>
-    <string name="step_length_setting_details">To determine how large of steps you take</string>
-    <string name="step_length_setting_title">Enter Your Sex</string>
+    <string name="step_length_setting">How Tall Are You?</string>
+    <string name="step_length_setting_details">To determine how far you have walked</string>
+    <string name="step_length_setting_title">Choose Your Height</string>
     <string name="alert_lost_loyalty_title">Lost Loyalty</string>
     <string name="alert_lost_loyalty_explanation">It has been too long since you have walked your dog! He has lost some loyalty for you.\n\nWalk your dog every day and he will love you!</string>
     <string name="quit">Quit</string>
@@ -61,7 +61,7 @@
 
 <string name="pref_category_notifications">Walk Reminder Settings</string>
 <string name="menu_details">Walk Details</string>
-<string name="start_walk">Let's Go For a Walk !</string>
+<string name="start_walk">Let\'s Go For a Walk !</string>
 <string name="ignore_reminder">I Will Not Go on a Walk Today</string>
 <string name="time_units">minutes : seconds</string>
 <string name="toast_quick_note">Walk Details Saved to Snaptic.com</string>
@@ -87,7 +87,7 @@
 <string name="loyalty_label">Loyalty:   </string>
 <string name="happiness_label">Happiness:   </string>
 <string name="pref_category_walk">Dog Settings</string>
-<string name="notification_walk_title">Let's Go For a Walk!</string>
+<string name="notification_walk_title">Let\'s Go For a Walk!</string>
 <string name="notification_walk_subtitle">Your Dog Wants to Go For a Walk</string>
 <string name="menu_dog">Dog Details</string>
 <string name="time_setting_title">Choose Reminder Time</string>

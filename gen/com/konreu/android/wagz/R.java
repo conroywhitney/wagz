@@ -9,10 +9,10 @@ package com.konreu.android.wagz;
 
 public final class R {
     public static final class array {
+        public static final int height_preference=0x7f070008;
+        public static final int height_preference_values=0x7f070009;
         public static final int sensitivity_preference=0x7f070000;
         public static final int sensitivity_preference_values=0x7f070001;
-        public static final int sex_preference=0x7f070008;
-        public static final int sex_preference_values=0x7f070009;
         public static final int units_preference=0x7f07000a;
         public static final int units_preference_values=0x7f07000b;
         public static final int walk_frequency_preference=0x7f070006;

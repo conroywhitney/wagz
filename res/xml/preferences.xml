@@ -52,8 +52,8 @@
 		        android:title="@string/step_length_setting"
 		        android:summary="@string/step_length_setting_details"
 		        android:dialogTitle="@string/step_length_setting_title"
-		        android:entries="@array/sex_preference"
-		        android:entryValues="@array/sex_preference_values"
+		        android:entries="@array/height_preference"
+		        android:entryValues="@array/height_preference_values"
 		        android:defaultValue="30" />	            
 	            
 		<ListPreference
