@@ -37,7 +37,7 @@ public class Dog {
 
 		mHappiness = mAppState.getElapsedTime();
 		mLoyalty = mAppState.getLoyalty();
-		mLastWalkedDate = mAppState.getLastWalkDate();
+		mLastWalkedDate = mAppState.getLastUpdateLoyaltyDate();
 		
 		mHasUpdatedLoyaltyRecently = false;
 	}
@@ -61,10 +61,18 @@ public class Dog {
 		boolean bLostLoyalty = false;
 		String sTAG = TAG + ".updateLoyaltyOnStartup";	
 		
-		if (getNumMinsSinceLastActivity() > getMaxMinsSinceLastActivity()) {
+		if (getNumMinsSinceLastActivity() > getMaxMinsSinceLastUpdateLoyalty()) {
+			// This could either be because:
+			// 1. They have not gotten their dog to a "Happy" state recently
+			// 2. We they have not lost any loyalty recently
+			
 			Log.i(sTAG, "They are over their grace period. Going to lose loyalty points");
+			
 			setLoyalty(mLoyalty - getNumHeartsToLose());
 			bLostLoyalty = true;
+			
+			// Since we have lost loyalty, we must update this setting so we do not lose it again !
+			mAppState.setLastLoyaltyUpdateDate(System.currentTimeMillis());
 		} else {
 			Log.i(sTAG, "They are still within their grace period. They will not lose any loyalty");
 		}
@@ -72,14 +80,14 @@ public class Dog {
 		return bLostLoyalty;
 	}
 	
-	private double getMaxMinsSinceLastActivity() {
-		String sTAG = TAG + "getMaxMinsSinceLastActivity";
+	private double getMaxMinsSinceLastUpdateLoyalty() {
+		String sTAG = TAG + "getMaxMinsSinceLastUpdateLoyalty";
 		// give them a grace window
-		double dblMaxMinsSinceLastActivity = (double) (PREF_DESIRED_WALK_FREQUENCY * GRACE_MULTIPLIER);
+		double dblMaxMinSinceLastUpdateLoyalty = (double) (PREF_DESIRED_WALK_FREQUENCY * GRACE_MULTIPLIER);
 		Log.v(sTAG, "PREF_DESIRED_WALK_FREQUENCY: " + PREF_DESIRED_WALK_FREQUENCY);
 		Log.v(sTAG, "GRACE_MULTIPLIER: " + GRACE_MULTIPLIER);
-		Log.v(sTAG, "dblMaxMinsSinceLastActivity: " + dblMaxMinsSinceLastActivity);
-		return dblMaxMinsSinceLastActivity;
+		Log.v(sTAG, "dblMaxMinSinceLastUpdateLoyalty: " + dblMaxMinSinceLastUpdateLoyalty);
+		return dblMaxMinSinceLastUpdateLoyalty;
 	}
 	
 	private void setLoyalty(int iNewLoyalty) {
@@ -159,7 +167,7 @@ public class Dog {
     		mLoyalty += 1;
     		
     		// We have made our dog happy -- this date will live in infamy !
-    		mAppState.setLastWalkDate(System.currentTimeMillis());
+    		mAppState.setLastLoyaltyUpdateDate(System.currentTimeMillis());
     		setLoyalty(mLoyalty);
     		
     		// Make sure we don't keep updating loyalty all day .......
@@ -168,3 +176,4 @@ public class Dog {
 	}
 	
 }
+

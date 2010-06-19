@@ -229,15 +229,19 @@ public class Wagz extends BetterDefaultActivity {
     /* Creates the menu items */
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
+        
+        // Should we show the "Pause" or "Resume" button ?
         if (this.isRunning()) {
+        	// When "Pause" (i.e., "Stop"), show Detailz so can know about Snaptic
             menu.add(0, MENU_PAUSE, 0, R.string.pause)
             .setIcon(android.R.drawable.ic_media_pause)
-            .setShortcut('1', 'w');
+            .setShortcut('1', 'w');            
         } else {
             menu.add(0, MENU_RESUME, 0, R.string.resume)
             .setIcon(android.R.drawable.ic_media_play)
             .setShortcut('1', 'w');
         }
+        
 	    menu.add(0, MENU_SETTINGS, 0, R.string.settings)
 	        .setIcon(android.R.drawable.ic_menu_preferences)
 	        .setShortcut('2', 's')
@@ -266,6 +270,8 @@ public class Wagz extends BetterDefaultActivity {
         switch (item.getItemId()) {
             case MENU_PAUSE:
                 stopWalk();
+                Intent i = new Intent(this, Detailz.class);
+                this.startActivity(i);
                 return true;
             case MENU_RESUME:
                 startWalk();

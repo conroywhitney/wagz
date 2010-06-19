@@ -4,7 +4,7 @@
     <string name="notification_subtitle">Taking Your Dog For A Walk!</string>
 
     <string name="started">You and Your Dog are on a Walk!</string>
-    <string name="stopped">You and Your Dog are Finished Walking.\n\nPress Menu to View Your Walk Details and See How Far You Went!</string>
+    <string name="stopped">You and Your Dog are Finished Walking.</string>
 
     <string name="steps">steps</string>
     <string name="kilometers">kilometers</string>

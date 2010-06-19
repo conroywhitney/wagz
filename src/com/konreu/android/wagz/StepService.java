@@ -139,7 +139,7 @@ public class StepService extends Service {
         /* Save our Data */
         AppState.getInstance(this).setDistance(mDistance);
         AppState.getInstance(this).setElapsedTime(mElapsedTime);
-        AppState.getInstance(this).setLastWalkDate(System.currentTimeMillis());
+        AppState.getInstance(this).setLastLoyaltyUpdateDate(System.currentTimeMillis());
         
         // Stop detecting
         mSensorManager.unregisterListener(mStepDetector);

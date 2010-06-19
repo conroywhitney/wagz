@@ -35,12 +35,12 @@ public class AppState {
 	
 	private final String STATE_DISTANCE = "distance";
 	private final String STATE_ELAPSED_TIME = "elapsed_time";
-	private final String STATE_LAST_WALK_DATE = "last_walk_date";
+	private final String STATE_LAST_UPDATE_LOYALTY_DATE = "last_walk_date";
 	private final String STATE_LOYALTY = "loyalty";
 	
 	private final float DEFAULT_DISTANCE = (float) 0.0;
 	private final long DEFAULT_ELAPSED_TIME = 0;
-	private final long DEFAULT_LAST_WALK_DATE = System.currentTimeMillis();
+	private final long DEFAULT_LAST_UPDATE_LOYTALTY_DATE = System.currentTimeMillis();
 	private final int DEFAULT_LOYALTY = 3;
 	
     SharedPreferences mState;
@@ -85,12 +85,12 @@ public class AppState {
     	this.commit();
     }
     
-    public long getLastWalkDate() {
-    	return mState.getLong(STATE_LAST_WALK_DATE, DEFAULT_LAST_WALK_DATE);
+    public long getLastUpdateLoyaltyDate() {
+    	return mState.getLong(STATE_LAST_UPDATE_LOYALTY_DATE, DEFAULT_LAST_UPDATE_LOYTALTY_DATE);
     }
-    public void setLastWalkDate(long dateMS) {
+    public void setLastLoyaltyUpdateDate(long dateMS) {
     	Log.v(TAG, "setting last walking date: " + dateMS);
-    	mStateEditor.putLong(STATE_LAST_WALK_DATE, dateMS);
+    	mStateEditor.putLong(STATE_LAST_UPDATE_LOYALTY_DATE, dateMS);
     	this.commit();
     }
     

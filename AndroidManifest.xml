@@ -5,7 +5,7 @@
       
     <uses-sdk android:minSdkVersion="3" />
 
-    <application android:name="WagzApp" android:icon="@drawable/icon" android:label="@string/app_name" android:debuggable="false">
+    <application android:name="WagzApp" android:icon="@drawable/icon" android:label="@string/app_name" android:debuggable="true">
         <activity android:name="com.konreu.android.wagz.activities.Wagz"
                   android:label="@string/app_name"
                   android:screenOrientation="portrait" >
