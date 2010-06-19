@@ -33,11 +33,13 @@ public class AppState {
 
 	private final String PREFERENCE_KEY = "state";
 	
+	private final String STATE_IS_FIRST_TIME = "is_first_time";	
 	private final String STATE_DISTANCE = "distance";
 	private final String STATE_ELAPSED_TIME = "elapsed_time";
 	private final String STATE_LAST_UPDATE_LOYALTY_DATE = "last_walk_date";
 	private final String STATE_LOYALTY = "loyalty";
 	
+	private final boolean DEFAULT_IS_FIRST_TIME = true;
 	private final float DEFAULT_DISTANCE = (float) 0.0;
 	private final long DEFAULT_ELAPSED_TIME = 0;
 	private final long DEFAULT_LAST_UPDATE_LOYTALTY_DATE = System.currentTimeMillis();
@@ -65,6 +67,13 @@ public class AppState {
     	mStateEditor.remove(STATE_ELAPSED_TIME);
     	Log.i(TAG, "clearing state");
     	this.commit();
+    }
+    
+    public boolean isFirstTime() {
+    	boolean bReturn = mState.getBoolean(STATE_IS_FIRST_TIME, DEFAULT_IS_FIRST_TIME);
+    	mStateEditor.putBoolean(STATE_IS_FIRST_TIME, false);
+    	this.commit();
+    	return bReturn;
     }
         
     public float getDistance() {

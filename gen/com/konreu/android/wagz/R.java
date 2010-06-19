@@ -114,6 +114,8 @@ public final class R {
         public static final int create_quick_note_button=0x7f060044;
         public static final int desired_pace=0x7f06001a;
         public static final int desired_speed=0x7f06001b;
+        public static final int dialog_message_choose_settings=0x7f060067;
+        public static final int dialog_title_choose_settings=0x7f060066;
         public static final int dog_name_setting_details=0x7f060063;
         public static final int dog_name_setting_title=0x7f060062;
         public static final int error_dialog_title=0x7f060003;

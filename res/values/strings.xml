@@ -99,4 +99,6 @@
 <string name="dog_name_setting_details">Give your new best friend a name</string>
 <string name="happiness_section_title">Happiness</string>
 <string name="loyalty_section_title">Loyalty</string>
+<string name="dialog_title_choose_settings">Personalize Wagz</string>
+<string name="dialog_message_choose_settings">Before you begin, give your dog a name and choose his or her breed.\n\nYou can also set up a daily reminder to walk your dog so that you do not forget and lose loyalty.</string>
 </resources>

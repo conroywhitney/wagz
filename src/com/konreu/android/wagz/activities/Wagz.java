@@ -67,6 +67,10 @@ public class Wagz extends BetterDefaultActivity {
     	Log.v(TAG + ".isRunning", "StepService.isRunning = " + StepService.isRunning());
 		return StepService.isRunning();
     }
+    
+    private boolean isFirstTime() {
+    	return AppState.getInstance(this).isFirstTime();
+    }
             
     /** Called when the activity is first created. */
     @Override
@@ -74,6 +78,13 @@ public class Wagz extends BetterDefaultActivity {
         super.onCreate(savedInstanceState);
                 
 //        String sTAG = TAG + "onCreate";
+        
+        // If is the first time, go directly to the settings page
+        if (this.isFirstTime()) {
+        	Intent iSettingzIntent = new Intent(this, Settingz.class);
+        	iSettingzIntent.putExtra(Settingz.SHOULD_SHOW_INTRO, true);
+        	this.startActivity(iSettingzIntent);
+        }
                 
         setContentView(R.layout.main);
           

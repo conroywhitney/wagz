@@ -54,7 +54,7 @@
 		        android:dialogTitle="@string/step_length_setting_title"
 		        android:entries="@array/height_preference"
 		        android:entryValues="@array/height_preference_values"
-		        android:defaultValue="30" />	            
+		        android:defaultValue="26.50" />	            
 	            
 		<ListPreference
 		        android:key="units"

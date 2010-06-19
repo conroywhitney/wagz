@@ -19,6 +19,7 @@
 
 package com.konreu.android.wagz.activities;
 
+import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
@@ -40,6 +41,9 @@ public class Settingz extends PreferenceActivity implements OnSharedPreferenceCh
 	private static final String TAG = "Settingz";
 	
 	 static final int TIME_DIALOG_ID = 0;
+	 public final static String SHOULD_SHOW_INTRO = "SHOULD_SHOW_INTRO";
+	 
+	 private boolean mShouldShowIntro = false;
 	
     /** Called when the activity is first created. */
     @Override
@@ -47,6 +51,21 @@ public class Settingz extends PreferenceActivity implements OnSharedPreferenceCh
         super.onCreate(savedInstanceState);
         
         addPreferencesFromResource(R.xml.preferences);
+        
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+        	mShouldShowIntro = extras.getBoolean(SHOULD_SHOW_INTRO);
+        }
+        
+        if (mShouldShowIntro) {
+        	new AlertDialog.Builder(this)
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setTitle(R.string.dialog_title_choose_settings)
+            .setMessage(R.string.dialog_message_choose_settings)
+            .setIcon(android.R.drawable.ic_dialog_info)
+            .setPositiveButton(R.string.ok, null)
+            .show();
+        }
     }
     
     @Override
