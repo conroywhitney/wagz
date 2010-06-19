@@ -37,6 +37,13 @@
 
         </LinearLayout>
 
+       	<Button android:id="@+id/btn_settingz_distance"
+        	android:layout_width="@dimen/box_distance_width"
+        	android:layout_height="wrap_content"
+        	android:gravity="center_horizontal"
+        	android:text="@string/btn_settingz_distance"
+        	android:layout_marginTop="20px" />
+
         <LinearLayout android:id="@+id/box_distance"
             android:orientation="vertical"
             android:layout_width="@dimen/box_distance_width" 
@@ -61,6 +68,7 @@
                 android:paddingBottom="@dimen/padding"/>
 
         </LinearLayout>
+        
     </LinearLayout>
     
     <ImageView android:id="@+id/snaptic_logo"

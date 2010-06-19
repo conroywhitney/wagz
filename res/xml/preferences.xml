@@ -46,6 +46,12 @@
 		
 	<PreferenceCategory
 		android:title="@string/pref_category_advanced">
+		
+		<CheckBoxPreference
+			android:key="distance_on"
+			android:title="@string/distance_toggle_setting_title"
+			android:defaultValue="false"
+			android:summary="@string/distance_toggle_setting_details" />		
 
 		<ListPreference
 		        android:key="step_length"
@@ -54,7 +60,8 @@
 		        android:dialogTitle="@string/step_length_setting_title"
 		        android:entries="@array/height_preference"
 		        android:entryValues="@array/height_preference_values"
-		        android:defaultValue="26.50" />	            
+		        android:defaultValue="26.50"
+		        android:dependency="distance_on" />	            
 	            
 		<ListPreference
 		        android:key="units"
@@ -63,7 +70,8 @@
 		        android:entries="@array/units_preference"
 		        android:entryValues="@array/units_preference_values"
 		        android:dialogTitle="@string/units_setting_title"
-		        android:defaultValue="imperial" />	            
+		        android:defaultValue="imperial"
+		        android:dependency="distance_on" />	            
 	            
 		<ListPreference
 		        android:key="sensitivity"
@@ -72,7 +80,8 @@
 		        android:entries="@array/sensitivity_preference"
 		        android:entryValues="@array/sensitivity_preference_values"
 		        android:dialogTitle="@string/sensitivity_setting_title"
-		        android:defaultValue="30" />
+		        android:defaultValue="30"
+		        android:dependency="distance_on" />
 		    
 	</PreferenceCategory>
 

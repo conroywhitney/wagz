@@ -101,4 +101,8 @@
 <string name="loyalty_section_title">Loyalty</string>
 <string name="dialog_title_choose_settings">Personalize Wagz</string>
 <string name="dialog_message_choose_settings">Before you begin, give your dog a name and choose his or her breed.\n\nYou can also set up a daily reminder to walk your dog so that you do not forget and lose loyalty.</string>
+
+<string name="distance_toggle_setting_title">Measure Distance</string>
+<string name="distance_toggle_setting_details">Measure How Far We Walked</string>
+<string name="btn_settingz_distance">Measure How Far We Walked (Settings)</string>
 </resources>

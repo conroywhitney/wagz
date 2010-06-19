@@ -67,6 +67,8 @@ public class Detailz extends BetterDefaultActivity {
     
     static final int DIALOG_ABOUT = 1;
     
+    private boolean mShouldShowDistance;
+    
     private boolean isRunning() {
     	Log.v(TAG + ".isRunning", "StepService.isRunning = " + StepService.isRunning());
 		return StepService.isRunning();
@@ -82,16 +84,50 @@ public class Detailz extends BetterDefaultActivity {
         	_notesIntent = new IntentIntegrator(this);	
         }
         
+        ((Button)findViewById(R.id.btn_settingz_distance)).setOnClickListener(new OnClickListener() {
+        	public void onClick(View v) {
+        		Intent iSettingzIntent = new Intent(Detailz.this, Settingz.class);
+        		Detailz.this.startActivity(iSettingzIntent);
+        	}
+        });
+                
         ((Button)findViewById(R.id.create_quick_note_button)).setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				_notesIntent.createNote("I walked " + getFormattedDistance() + " " + 
-							getDistanceUnits() + 
-							" in " + getFormattedTime() + " minutes with my virtual dog " + 
-							PedometerSettings.getInstance(Detailz.this).getDogName() + "\n\n#wagz");
+				PedometerSettings pedSettings = PedometerSettings.getInstance(Detailz.this);
+				/*
+				 * Four cases:
+				 * 1. Distance on: "I walked n miles in mm:ss minutes with my virtual dog"
+				 * 2. Distance off: "I waslked for mm:ss minutes with my virtual dog"
+				 * 3 & 4. Unique dog name: "... with my virutal dog <dog name>"
+				 */
+				StringBuilder sb = new StringBuilder();
+				sb.append("I walked ");
+				
+				if (pedSettings.getShouldMeasureDistance()) {
+					sb.append(getFormattedDistance());
+					sb.append(" ");
+					sb.append(getDistanceUnits());
+					sb.append(" in ");
+				} else {
+					sb.append(" for ");
+				}
+				
+				sb.append(getFormattedTime());
+				sb.append(" minutes with my virtual dog");
+				
+				String sDogName = pedSettings.getDogName();
+				if (!sDogName.equalsIgnoreCase("wagz")) {
+					sb.append(" ");
+					sb.append(sDogName);
+				}
+				
+				sb.append("\n\n#wagz");
+				
+				_notesIntent.createNote(sb.toString());
 			}        	
         });
         
-        mDistanceValueView = (TextView) findViewById(R.id.distance_value);
+        mDistanceValueView = (TextView) findViewById(R.id.distance_value);        
         mTimeValueView = (TextView) findViewById(R.id.time_value);
 
         ((TextView) findViewById(R.id.distance_units)).setText(getDistanceUnits());        
@@ -100,6 +136,15 @@ public class Detailz extends BetterDefaultActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        
+        mShouldShowDistance = PedometerSettings.getInstance(this).getShouldMeasureDistance();
+        if (mShouldShowDistance) {
+        	this.findViewById(R.id.box_distance).setVisibility(View.VISIBLE);
+        	this.findViewById(R.id.btn_settingz_distance).setVisibility(View.GONE);
+        } else {
+        	this.findViewById(R.id.box_distance).setVisibility(View.GONE);
+        	this.findViewById(R.id.btn_settingz_distance).setVisibility(View.VISIBLE);
+        }
         
         mDistanceValue = AppState.getInstance(this).getDistance();
         mElapsedTime = AppState.getInstance(this).getElapsedTime();
@@ -111,8 +156,14 @@ public class Detailz extends BetterDefaultActivity {
         updateUI();
     }
     
+    private void setDistanceValue(String s) {
+    	if (mShouldShowDistance) {
+    		mDistanceValueView.setText(s);	
+    	}    	
+    }
+    
     private void updateUI() {
-    	mDistanceValueView.setText(getFormattedDistance());
+    	setDistanceValue(getFormattedDistance());    	
     	mTimeValueView.setText(getFormattedTime());
     }
     
@@ -180,7 +231,7 @@ public class Detailz extends BetterDefaultActivity {
         if (this.isRunning()) {
             mService.resetValues();                    
         } else {
-            mDistanceValueView.setText("0.00");
+            setDistanceValue("0.00");
             mTimeValueView.setText("00:00");
             
             if (updateDisplay) {
@@ -297,7 +348,7 @@ public class Detailz extends BetterDefaultActivity {
                 case DISTANCE_MSG:
                     mDistanceValue = ((Integer)msg.obj)/1000f;
                     if (mDistanceValue <= 0) { mDistanceValue = 0; }
-                    mDistanceValueView.setText(getFormattedDistance());
+                    setDistanceValue(getFormattedDistance());
                     break;
                 case ELAPSED_TIME_MSG:
                 	mElapsedTime = (Long)msg.obj;

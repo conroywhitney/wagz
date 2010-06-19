@@ -64,23 +64,24 @@ public final class R {
         public static final int snaptic_logo=0x7f02000e;
     }
     public static final class id {
-        public static final int about_snaptic=0x7f0a000a;
+        public static final int about_snaptic=0x7f0a000b;
         public static final int app_version=0x7f0a0000;
-        public static final int box_distance=0x7f0a0005;
+        public static final int box_distance=0x7f0a0006;
         public static final int box_time=0x7f0a0002;
-        public static final int create_quick_note_button=0x7f0a0009;
-        public static final int distance_units=0x7f0a0007;
-        public static final int distance_value=0x7f0a0006;
-        public static final int dog_image=0x7f0a000b;
-        public static final int dog_name=0x7f0a000c;
-        public static final int happiness_bar=0x7f0a000f;
-        public static final int happiness_desc=0x7f0a000e;
-        public static final int happiness_section=0x7f0a000d;
-        public static final int loyalty_desc=0x7f0a0011;
-        public static final int loyalty_rating=0x7f0a0012;
-        public static final int loyalty_section=0x7f0a0010;
+        public static final int btn_settingz_distance=0x7f0a0005;
+        public static final int create_quick_note_button=0x7f0a000a;
+        public static final int distance_units=0x7f0a0008;
+        public static final int distance_value=0x7f0a0007;
+        public static final int dog_image=0x7f0a000c;
+        public static final int dog_name=0x7f0a000d;
+        public static final int happiness_bar=0x7f0a0010;
+        public static final int happiness_desc=0x7f0a000f;
+        public static final int happiness_section=0x7f0a000e;
+        public static final int loyalty_desc=0x7f0a0012;
+        public static final int loyalty_rating=0x7f0a0013;
+        public static final int loyalty_section=0x7f0a0011;
         public static final int row_1=0x7f0a0001;
-        public static final int snaptic_logo=0x7f0a0008;
+        public static final int snaptic_logo=0x7f0a0009;
         public static final int time_units=0x7f0a0004;
         public static final int time_value=0x7f0a0003;
     }
@@ -107,6 +108,7 @@ public final class R {
         public static final int alert_lost_loyalty_explanation=0x7f06003c;
         public static final int alert_lost_loyalty_title=0x7f06003b;
         public static final int app_name=0x7f06000b;
+        public static final int btn_settingz_distance=0x7f06006a;
         public static final int calories_burned=0x7f060015;
         public static final int cancel=0x7f060055;
         public static final int cancel_button=0x7f060000;
@@ -116,6 +118,8 @@ public final class R {
         public static final int desired_speed=0x7f06001b;
         public static final int dialog_message_choose_settings=0x7f060067;
         public static final int dialog_title_choose_settings=0x7f060066;
+        public static final int distance_toggle_setting_details=0x7f060069;
+        public static final int distance_toggle_setting_title=0x7f060068;
         public static final int dog_name_setting_details=0x7f060063;
         public static final int dog_name_setting_title=0x7f060062;
         public static final int error_dialog_title=0x7f060003;

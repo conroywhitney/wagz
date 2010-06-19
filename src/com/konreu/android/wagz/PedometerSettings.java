@@ -39,6 +39,7 @@ public class PedometerSettings {
 	private final String SETTING_DOG_NAME = "dog_name";
 	private final String SETTING_SHOULD_SET_REMINDER = "reminder_on";
 	private final String SETTING_REMINDER_TIME = "preference_time";
+	private final String SETTING_SHOULD_MEASURE_DISTANCE = "distance_on";
 	
 	private final float DEFAULT_STEP_LENGTH = (float) 26.5;		// 20cm step
 	private final int DEFAULT_WALK_LENGTH = 15;		// 15 min
@@ -48,6 +49,7 @@ public class PedometerSettings {
 	private final String DEFAULT_DOG_NAME = "Wagz";
 	private final boolean DEFAULT_SHOULD_SET_REMINDER = false;
 	private final String DEFAULT_REMINDER_TIME = "18:00";
+	private final boolean DEFAULT_SHOULD_MEASURE_DISTANCE = false;
 	
     SharedPreferences mSettings;
     
@@ -69,7 +71,7 @@ public class PedometerSettings {
     }
         
     public boolean isMetric() {
-        return mSettings.getString("units", "imperial").equals("metric");
+        return getString("units", "imperial").equals("metric");
     }
     
     public float getStepLength() {
@@ -97,15 +99,23 @@ public class PedometerSettings {
     }
     
     public boolean shouldSetReminder() {
-    	return mSettings.getBoolean(SETTING_SHOULD_SET_REMINDER, DEFAULT_SHOULD_SET_REMINDER);
+    	return getBoolean(SETTING_SHOULD_SET_REMINDER, DEFAULT_SHOULD_SET_REMINDER);
     }
     
     public String getReminderTime() {
     	return getString(SETTING_REMINDER_TIME, DEFAULT_REMINDER_TIME);
     }
     
+    public boolean getShouldMeasureDistance() {
+    	return getBoolean(SETTING_SHOULD_MEASURE_DISTANCE, DEFAULT_SHOULD_MEASURE_DISTANCE);
+    }
+    
     public String getString(String sSettingKey, String sDefaultVal) {
     	return mSettings.getString(sSettingKey, sDefaultVal);  	
+    }
+    
+    public boolean getBoolean(String sSettingKey, boolean bDefaultValue) {
+    	return mSettings.getBoolean(sSettingKey, bDefaultValue);
     }
     
 //    public boolean getBoolean(String sSettingKey, boolean bDefaultVal) {
